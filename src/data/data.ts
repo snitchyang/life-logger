@@ -1,47 +1,160 @@
-import {IUser} from "../interface";
-import {IDiary} from "../interface";
-import {IComment} from "../interface";
-import {ITag} from "../interface";
-import {IPost} from "../interface";
-import {IPlan} from "../interface";
+import { IUser, IDiary, IComment, ITag, IPost, IPlan } from "../interface";
 
-export const curUserID = 1;
 export const users: IUser[] = [
-    {
-        id: 1,
-        name: 'Alice',
-        profile: 'profile',
-        profilePicture: 'profilePicture',
-        phoneNumber: 123,
-        friends: [],
-        diary: [],
-        posts: [],
-        plans: [],
-
-    },
-    {
-        id: 2,
-        name: 'Bob',
-        profile: 'profile',
-        profilePicture: 'profilePicture',
-        phoneNumber: 123,
-        friends: [],
-        diary: [],
-        posts: [],
-        plans: [],
-    },
+  {
+    id: 1,
+    name: "Alice",
+    profile: "this is Alice",
+    profilePicture:
+      "https://pic1.zhimg.com/v2-987fc9aeba8aa3a4240d512533fc7700_1440w.jpg?source=172ae18b",
+    phoneNumber: 123,
+    friends: [],
+    diary: [],
+    posts: [],
+    plans: [],
+  },
+  {
+    id: 2,
+    name: "Bob",
+    profile: "this is Bob",
+    profilePicture:
+      "https://pic2.zhimg.com/80/v2-53a6334148d2aa30f3181bc4e4da3c69_1440w.webp",
+    phoneNumber: 123,
+    friends: [],
+    diary: [],
+    posts: [],
+    plans: [],
+  },
+  {
+    id: 3,
+    name: "Cathrine",
+    profile: "this is Cathrine",
+    profilePicture:
+      "https://pic2.zhimg.com/80/v2-8521854b606311b1cb9467515fbc0c2d_1440w.webp",
+    phoneNumber: 123,
+    friends: [],
+    diary: [],
+    posts: [],
+    plans: [],
+  },
+  {
+    id: 3,
+    name: "Dog",
+    profile: "this is Dog",
+    profilePicture:
+      "https://pic1.zhimg.com/v2-a64e9410ecdcb2f8e3f4231509c2f82d_1440w.jpg?source=172ae18b",
+    phoneNumber: 123,
+    friends: [],
+    diary: [],
+    posts: [],
+    plans: [],
+  },
+];
+export const currentUser = users[0];
+export const comments: IComment[] = [
+  {
+    id: 1,
+    date: new Date(1675916400810),
+    content: "comments",
+    user: users[1],
+  },
+  {
+    id: 2,
+    date: new Date(1677916400810),
+    content: "comments",
+    user: users[2],
+  },
+  {
+    id: 3,
+    date: new Date(1677916410810),
+    content: "comments",
+    user: users[3],
+  },
+  {
+    id: 4,
+    date: new Date(1677916420810),
+    content: "comments",
+    user: users[0],
+  },
+  {
+    id: 5,
+    date: new Date(1677916430810),
+    content: "comments",
+    user: users[0],
+  },
 ];
 export const posts: IPost[] = [
-    {
-        id: 1,
-        date: new Date(),
-        link: 'link',
-        location: 'location',
-        content: 'content',
-        image: 'image',
-        user: users[0],
-        likes: 5,
-        comments: [],
-        liker: [users[0], users[1]],
-    },
+  {
+    id: 1,
+    date: new Date(1675906430818),
+    link: "link",
+    location: "location",
+    content:
+      "contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent",
+    image: "image",
+    user: users[0],
+    likes: 5,
+    comments: [comments[0], comments[1]],
+    liker: [users[0], users[1], users[2]],
+  },
+  {
+    id: 2,
+    date: new Date(1677906400818),
+    link: "link",
+    location: "location",
+    content: "contentcontentcontentcontentcontent",
+    image: "image",
+    user: users[1],
+    likes: 100,
+    comments: [comments[2], comments[3]],
+    liker: [users[1], users[3]],
+  },
+  {
+    id: 3,
+    date: new Date(1677906400818),
+    link: "link",
+    location: "location",
+    content: "contentcontentcontentcontentcontent",
+    image: "image",
+    user: users[0],
+    likes: 100,
+    comments: [],
+    liker: [],
+  },
+  {
+    id: 4,
+    date: new Date(1677806400818),
+    link: "link",
+    location: "location",
+    content: "contentcontentcontentcontentcontent",
+    image: "image",
+    user: users[2],
+    likes: 10,
+    comments: [],
+    liker: [],
+  },
+  {
+    id: 5,
+    date: new Date(1677906400818),
+    link: "link",
+    location: "location",
+    content: "contentcontentcontentcontentcontent",
+    image: "image",
+    user: users[3],
+    likes: 0,
+    comments: [],
+    liker: [],
+  },
+  {
+    id: 6,
+    date: new Date(1676906400818),
+    link: "link",
+    location: "location",
+    content: "contentcontentcontentcontentcontent",
+    image: "image",
+    user: users[3],
+    likes: 100,
+    comments: [],
+    liker: [],
+  },
 ];

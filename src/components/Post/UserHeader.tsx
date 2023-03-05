@@ -1,29 +1,38 @@
-import {View} from 'react-native';
-import {User} from "../../interface";
+import { View } from "react-native";
+import { IUser } from "../../interface";
+import { Image, Text } from "@rneui/base";
+import { timeToNowChinese } from "../timeHandle";
 
 interface UserHeader {
-    date: Date;
-    user: User;
+  date: Date;
+  user: IUser;
+  location: string;
 }
 
-export const UserHeader = ({user, date}: UserHeader) => {
-    return (
-        <View>
-            <div className={'user-header'}>
-                <div className={'user-info-section'}>
-                    <img
-                        src={user.profilePicture}
-                        style={{}}
-                        className={'img-circle'}
-                        alt={''}
-                    />
-                    <a>{user.name}</a>
-                </div>
-                <small className={'date'}>
-                    {new Date().getTime() - new Date(date).getTime()}
-                    {' ago'}
-                </small>
-            </div>
+export const UserHeader = ({ date, user, location }: UserHeader) => {
+  return (
+    <View style={{ flexDirection: "row", paddingTop: 0, paddingLeft: 0 }}>
+      <Image
+        alt={"error"}
+        source={{ uri: user.profilePicture }}
+        style={{ height: 50, width: 50 }}
+      />
+      <View
+        style={{
+          flexDirection: "column",
+          paddingLeft: 10,
+          paddingBottom: 15,
+        }}
+      >
+        <Text style={{ fontSize: 20 }}>{user.name}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={{ fontSize: 13, paddingTop: 1 }}>
+            {timeToNowChinese(date)}
+            {"前"}
+          </Text>
+          <Text style={{ fontSize: 15, paddingLeft: 10 }}>{location}</Text>
         </View>
-    );
+      </View>
+    </View>
+  );
 };
