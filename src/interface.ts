@@ -25,8 +25,9 @@ export interface ITag {
 export interface IDiary {
     id: number;
     date: Date;
+    title: string;
     content: string;
-    image: string;
+    image: string[];
     tag: ITag[];
 }
 
