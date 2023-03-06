@@ -1,4 +1,4 @@
-import { diaries } from "../../data/data";
+import { diaries } from "../../../data/data";
 import { Text, View } from "react-native";
 import { DiaryHeader } from "./DiaryHeader";
 import { DetailedContent } from "./DiaryContent";

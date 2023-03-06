@@ -9,7 +9,7 @@ export const DiaryImg = ({ img }: DiaryImg) => {
   return (
     <Image
       style={diaryStyleSheet.contentImg}
-      source={require("../../assets/diaryImage/testPic.jpg")}
+      source={require("../../../assets/diaryImage/testPic.jpg")}
       alt="picture"
     />
   );
@@ -19,7 +19,7 @@ export const DetailImg = ({ img }: DiaryImg) => {
   return (
     <Image
       style={diaryStyleSheet.detailImg}
-      source={require("../../assets/diaryImage/testPic.jpg")}
+      source={require("../../../assets/diaryImage/testPic.jpg")}
       alt="picture"
     />
   );

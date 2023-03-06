@@ -1,9 +1,9 @@
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import { AvatarInfo } from "./AvatarInfo";
-import { NameInfo } from "./NameInfo";
+import { AvatarInfo } from "./DetailedInfo/AvatarInfo";
+import { NameInfo } from "./DetailedInfo/NameInfo";
 import { IUser } from "../../../interface";
-import { GenderInfo } from "./GenderInfo";
-import { SchoolInfo } from "./SchoolInfo";
+import { GenderInfo } from "./DetailedInfo/GenderInfo";
+import { SchoolInfo } from "./DetailedInfo/SchoolInfo";
 import { useEffect, useRef, useState } from "react";
 import { userInfoStyleSheet } from "./UserInfoStyleSheet";
 import { ChangeInfo } from "./ChangeInfo/ChangeInfo";

@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity, View } from "react-native";
-import { userInfoStyleSheet } from "./UserInfoStyleSheet";
+import { userInfoStyleSheet } from "../UserInfoStyleSheet";
 import { Ionicons } from "@expo/vector-icons";
-import { ChangeGenderInfo } from "./ChangeInfo/ChangeGenderInfo";
+import { ChangeGenderInfo } from "../ChangeInfo/ChangeGenderInfo";
 
 export const GenderInfo = ({ gender }) => {
   let Gender: string = undefined;

@@ -1,8 +1,8 @@
-import { IDiary } from "../../interface";
+import { IDiary } from "../../../interface";
 import { diaryStyleSheet } from "./DiaryStyleSheet";
 import { DiaryHeader } from "./DiaryHeader";
 import { DiaryContent } from "./DiaryContent";
-import { diaries, tags } from "../../data/data";
+import { diaries, tags } from "../../../data/data";
 import { DiaryDetail } from "./DiaryDetail";
 
 import { StyleSheet, Text, View } from "react-native";

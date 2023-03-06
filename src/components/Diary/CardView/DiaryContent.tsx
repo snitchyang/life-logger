@@ -1,6 +1,6 @@
 import { FlatList, Image, Text, View } from "react-native";
 import { diaryStyleSheet } from "./DiaryStyleSheet";
-import { ITag } from "../../interface";
+import { ITag } from "../../../interface";
 import { DiaryHeader } from "./DiaryHeader";
 import { DetailImg, DiaryImg } from "./DiaryImg";
 

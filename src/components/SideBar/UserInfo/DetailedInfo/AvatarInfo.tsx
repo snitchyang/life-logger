@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity, View } from "react-native";
-import { userInfoStyleSheet } from "./UserInfoStyleSheet";
+import { userInfoStyleSheet } from "../UserInfoStyleSheet";
 import { Avatar } from "@rneui/base";
 import { Ionicons } from "@expo/vector-icons";
 

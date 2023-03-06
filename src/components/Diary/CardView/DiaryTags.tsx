@@ -1,4 +1,4 @@
-import { ITag } from "../../interface";
+import { ITag } from "../../../interface";
 import { diaryStyleSheet } from "./DiaryStyleSheet";
 import { Text, View } from "react-native";
 
