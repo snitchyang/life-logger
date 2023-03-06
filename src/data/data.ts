@@ -230,4 +230,12 @@ export const diaries: IDiary[] = [
     image: ["testPic", "testPic2"],
     tag: [tags[2]],
   },
+  {
+    id: 21,
+    date: new Date(),
+    title: "yanjs nb",
+    content: "yes yes",
+    image: [],
+    tag: [tags[1]],
+  },
 ];

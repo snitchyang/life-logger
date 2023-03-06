@@ -11,34 +11,22 @@ import { CardDivider } from "@rneui/base/dist/Card/Card.Divider";
 import { DiaryTags } from "./DiaryTags";
 import React from "react";
 
-interface DiaryCard {
-  id: number;
-}
-
-export const DiaryCard = ({ id }: DiaryCard): JSX.Element => {
-  let diary = undefined;
-  diary = diaries.find((item) => {
-    return item.id === id;
-  });
+export const DiaryCard = ({ diary }): JSX.Element => {
   const date = diary.date;
   const title = diary.title;
   const content = diary.content;
   const image = diary.image;
   const tag = diary.tag;
-  if (diary !== undefined) {
-    return (
-      // <View style={diaryStyleSheet.wrapper}>
-      <Card wrapperStyle={{ flex: 1, flexDirection: "column" }}>
-        <Card.Title style={{ fontSize: 13 }}> {title}</Card.Title>
-        {/*<CardDivider />*/}
-        <View style={{ flexDirection: "column" }}>
-          <DiaryHeader tags={tag} date={date} />
-          <DiaryContent content={content} images={image} />
-        </View>
-      </Card>
-      // </View>
-    );
-  } else {
-    return <></>;
-  }
+  return (
+    // <View style={diaryStyleSheet.wrapper}>
+    <Card wrapperStyle={{ flex: 1, flexDirection: "column" }}>
+      <Card.Title style={{ fontSize: 13 }}> {title}</Card.Title>
+      {/*<CardDivider />*/}
+      <View style={{ flexDirection: "column" }}>
+        <DiaryHeader tags={tag} date={date} />
+        <DiaryContent content={content} images={image} />
+      </View>
+    </Card>
+    // </View>
+  );
 };

@@ -1,5 +1,12 @@
 import * as React from "react";
-import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+  SafeAreaView,
+} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -12,6 +19,7 @@ import { DiaryCard } from "./src/components/Diary/DiaryCard";
 import { DetailedPage } from "./src/components/Diary/DiaryDetail";
 import { diaryStyleSheet } from "./src/components/Diary/DiaryStyleSheet";
 import { diaries } from "./src/data/data";
+import { useState } from "react";
 
 const bottomNavigator = createBottomTabNavigator();
 
@@ -26,21 +34,88 @@ function HomeStackScreen() {
 }
 
 function Homepage({ navigation }) {
+  const [filterData, setFilterData] = useState(diaries);
+  const [allData, setAllData] = useState(diaries);
+  const [searchText, setSearchText] = useState("");
+
+  function ContentFilter({ item, text }) {
+    let title = item.title;
+    let content = item.content;
+    return title.indexOf(text) > -1 || content.indexOf(text) > -1;
+  }
+
+  function TagFilter({ item, t }) {
+    // item is an ITag object
+    let tags = item.tag;
+    for (const tag of tags) {
+      if (tag.content.indexOf(t) > -1) return true;
+    }
+    return false;
+  }
+
+  function FilterFun(text) {
+    if (text) {
+      text = text.toLowerCase();
+      let textGroup = text.trim().split(/\s+/);
+      let filter = [];
+      let newData = undefined;
+      for (const text of textGroup) {
+        // filter of data, #xxx means it's a tag
+        console.log(text);
+        newData = undefined;
+        if (text.at(0) === "#") {
+          console.log("tag");
+          let t = text.substring(1);
+          newData = allData.filter((item) => TagFilter({ item, t }));
+        } else {
+          newData = allData.filter((item) => ContentFilter({ item, text }));
+        }
+        if (newData) {
+          for (const data of newData) {
+            if (!filter.includes(data)) filter.push(data);
+          }
+        }
+      }
+      console.log(filter.length);
+      setFilterData(filter);
+      setSearchText(text);
+    } else {
+      setFilterData(allData);
+      setSearchText(text);
+    }
+  }
+
   return (
-    <ScrollView>
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        {diaries.map((item) => (
-          <View
-            style={diaryStyleSheet.wrapper}
-            onTouchEnd={() => {
-              navigation.navigate("Detail", { id: item.id });
-            }}
-          >
-            <DiaryCard id={item.id} />
-          </View>
-        ))}
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, maxHeight: 30 }}>
+        <TextInput
+          id="searchInput"
+          style={{ paddingLeft: 18 }}
+          autoCorrect={false}
+          onChangeText={(text) => FilterFun(text)}
+          placeholder="type here..."
+          value={searchText}
+        />
       </View>
-    </ScrollView>
+      <View style={{ flex: 10, minHeight: 200 }}>
+        <ScrollView style={{ flex: 1 }}>
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            {filterData.map((item) => (
+              <View
+                style={diaryStyleSheet.wrapper}
+                onTouchEnd={() => {
+                  navigation.navigate("Detail", { diary: item });
+                }}
+              >
+                <DiaryCard diary={item} />
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+      </View>
+    </View>
   );
 }
 
