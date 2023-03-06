@@ -74,9 +74,9 @@ export const diaries: IDiary[] = [
     id: 1,
     date: new Date(),
     title: "I want to sleep",
-    content: "zzz",
+    content: "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
     image: ["testPic", "testPic2"],
-    tag: [tags[0]],
+    tag: [tags[0], tags[2]],
   },
   {
     id: 2,
