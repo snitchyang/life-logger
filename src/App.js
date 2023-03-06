@@ -69,7 +69,7 @@ export default function App() {
                             return <Ionicons name="aperture-outline" size={size} color={color}/>
                         } else if (route.name === 'Plan') {
                             return <Ionicons name="calendar" size={size} color={color}/>
-                        } else if (route.name === 'data') {
+                        } else if (route.name === 'Data') {
                             return <Ionicons name="pie-chart" size={size} color={color}/>
                         } else if (route.name === 'Start') {
                             return (
