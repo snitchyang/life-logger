@@ -18,8 +18,9 @@ import theme from "./theme.json";
 import { DiaryCard } from "./src/components/Diary/DiaryCard";
 import { DetailedPage } from "./src/components/Diary/DiaryDetail";
 import { diaryStyleSheet } from "./src/components/Diary/DiaryStyleSheet";
-import { diaries } from "./src/data/data";
+import { diaries, users } from "./src/data/data";
 import { useState } from "react";
+import { UserInfo } from "./src/components/SideBar/UserInfo/UserInfo";
 
 const bottomNavigator = createBottomTabNavigator();
 
@@ -87,10 +88,14 @@ function Homepage({ navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, maxHeight: 30 }}>
+      <View style={{ flex: 1, maxHeight: 30, flexDirection: "row" }}>
+        <Ionicons
+          name="search-outline"
+          size={20}
+          style={{ marginLeft: 10, marginTop: 6 }}
+        ></Ionicons>
         <TextInput
-          id="searchInput"
-          style={{ paddingLeft: 18 }}
+          style={{ marginLeft: 10, marginTop: 6 }}
           autoCorrect={false}
           onChangeText={(text) => FilterFun(text)}
           placeholder="type here..."
@@ -100,7 +105,11 @@ function Homepage({ navigation }) {
       <View style={{ flex: 10, minHeight: 200 }}>
         <ScrollView style={{ flex: 1 }}>
           <View
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
             {filterData.map((item) => (
               <View
@@ -138,9 +147,9 @@ function ContentPage() {
 
 function PlanPage() {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>this is the plan page</Text>
-    </View>
+    // <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <UserInfo user={users[0]} />
+    // </View>
   );
 }
 

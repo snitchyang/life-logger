@@ -8,12 +8,9 @@ interface DiaryTags {
 }
 
 export const DiaryTags = ({ id, tag_name }: DiaryTags) => {
-  const Id = "tag" + id.toString();
   return (
     <View style={diaryStyleSheet.tagsContainer}>
-      <Text id={Id} style={diaryStyleSheet.tagsText}>
-        {"# " + tag_name}
-      </Text>
+      <Text style={diaryStyleSheet.tagsText}>{"# " + tag_name}</Text>
     </View>
   );
 };
