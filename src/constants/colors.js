@@ -1,3 +1,5 @@
 export default {
-    'primary': 'purple',
+    'primary': 'black',
+    'gray': '#666666',
+    'black': 'black'
 }

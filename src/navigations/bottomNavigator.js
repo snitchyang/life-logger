@@ -1,7 +1,8 @@
 import * as React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {Ionicons} from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons';
 import '../I18n'
 import {useTranslation} from "react-i18next";
 import {COLOR} from "../constants";
@@ -9,7 +10,7 @@ import {ActionPage, DataPage, DiscoveryPage, HomePage, PlanPage} from "../screen
 
 const bottomNavigator = createBottomTabNavigator()
 
-export default function BottomTabNavigator(){
+export default function BottomTabNavigator({navigation}){
     const {t, i18n} = useTranslation();
     return(
         <bottomNavigator.Navigator
@@ -45,8 +46,18 @@ export default function BottomTabNavigator(){
                 tabBarLabelStyle: {fontSize: 13},
             })}
         >
-            <bottomNavigator.Screen name="Home" options={{headerTitleAlign: 'center', title: t('home')}}
-                                    component={HomePage}/>
+            <bottomNavigator.Screen
+                name="Home"
+                options={{
+                    headerTitleAlign: 'center',
+                    title: t('home'),
+                    headerLeft: () => (
+                        <TouchableOpacity style={{marginLeft: 20}} onPress={() => navigation.openDrawer()}>
+                            <AntDesign name="user" size={24} color={COLOR.black} />
+                        </TouchableOpacity>
+                    )
+                }}
+                component={HomePage}/>
             <bottomNavigator.Screen name="Content" options={{headerTitleAlign: 'center', title: t('discovery')}}
                                     component={DiscoveryPage}/>
             <bottomNavigator.Screen name="Start" options={{headerStyle: {height: 0}, title: ''}}
