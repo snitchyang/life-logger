@@ -5,16 +5,21 @@ import { Ionicons } from "@expo/vector-icons";
 
 export const AvatarInfo = ({ avaUri }) => {
   return (
-    <TouchableOpacity style={userInfoStyleSheet.boxContainer}>
+    <>
       <View style={userInfoStyleSheet.boxTitle}>
-        <Text>{"Avatar:"}</Text>
+        <Text style={userInfoStyleSheet.boxTitleText}>{"Avatar:"}</Text>
       </View>
       <View style={userInfoStyleSheet.boxInfo}>
-        <Avatar size={32} rounded={true} source={{ uri: avaUri }} />
+        <Avatar
+          containerStyle={{ marginLeft: 9 }}
+          size={32}
+          rounded={true}
+          source={{ uri: avaUri }}
+        />
       </View>
       <View style={userInfoStyleSheet.boxIcon}>
         <Ionicons name="chevron-forward-outline"></Ionicons>
       </View>
-    </TouchableOpacity>
+    </>
   );
 };

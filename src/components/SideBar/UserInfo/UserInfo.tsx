@@ -6,7 +6,8 @@ import { GenderInfo } from "./GenderInfo";
 import { SchoolInfo } from "./SchoolInfo";
 import { useEffect, useRef, useState } from "react";
 import { userInfoStyleSheet } from "./UserInfoStyleSheet";
-import { ChangeInfo } from "./ChangeInfo";
+import { ChangeInfo } from "./ChangeInfo/ChangeInfo";
+import { ChangeGenderInfo } from "./ChangeInfo/ChangeGenderInfo";
 
 interface UserInfo {
   user: IUser;
@@ -17,7 +18,11 @@ export const UserInfo = ({ user }: UserInfo) => {
   const [kind, setKind] = useState(-1);
   return (
     <View style={{ flex: 1 }}>
-      <ChangeInfo kind={kind} visible={modalVisible} />
+      <ChangeInfo
+        kind={kind}
+        visible={modalVisible}
+        setVisible={setModalVisible}
+      />
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
         onPress={() => {
@@ -45,6 +50,7 @@ export const UserInfo = ({ user }: UserInfo) => {
       >
         <GenderInfo gender={user.gender} />
       </TouchableOpacity>
+      {/*<ChangeGenderInfo />*/}
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
         onPress={() => {

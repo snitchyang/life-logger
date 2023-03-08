@@ -9,15 +9,30 @@ export const userInfoStyleSheet = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#FFF",
     padding: 10,
+    minHeight: 60,
   },
   boxTitle: {
     flex: 8,
-    justifyContent: "flex-start",
+  },
+  boxTitleText: {
+    paddingLeft: 15,
   },
   boxInfo: {
     flex: 2,
+    // maxWidth: 100,
     height: "100%",
-    textAlign: "right",
+    backgroundColor: "#FFF",
+  },
+  boxInfoText: {
+    fontSize: 13,
+    paddingTop: 10,
+    paddingLeft: 9,
+  },
+  selectInfoText: {
+    fontSize: 13,
+  },
+  selectedText: {
+    color: "#16699d",
   },
   boxIcon: {
     flex: 1,
@@ -29,22 +44,29 @@ export const userInfoStyleSheet = StyleSheet.create({
 export const changeInfoStyleSheet = StyleSheet.create({
   wrapper: {
     flex: 1,
+    backgroundColor: "#FFF",
+    alignItems: "center",
   },
   titleContainer: {
     width: "100%",
-    marginVertical: 20,
-    alignContent: "center",
+    marginTop: 20,
   },
   titleText: {
+    textAlign: "center",
     fontSize: 20,
   },
   inputContainer: {
+    minWidth: 40,
     width: "100%",
-    marginVertical: 20,
+    // marginVertical: 20,
+    paddingLeft: 30,
+    borderWidth: 0.5,
+    borderColor: "#dcdcdc",
   },
   buttonWrapper: {
     width: "100%",
     flexDirection: "row",
+    marginTop: 20,
   },
   buttonContainer: {
     flex: 1,
