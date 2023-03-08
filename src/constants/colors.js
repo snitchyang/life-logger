@@ -1,5 +1,7 @@
 export default {
     'primary': 'black',
     'gray': '#666666',
-    'black': 'black'
+    'black': '#000000',
+    'white': '#FFFFFF',
+    'card': 'white'
 }
