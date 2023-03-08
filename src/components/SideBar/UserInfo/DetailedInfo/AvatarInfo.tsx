@@ -11,7 +11,7 @@ export const AvatarInfo = ({ avaUri }) => {
       </View>
       <View style={userInfoStyleSheet.boxInfo}>
         <Avatar
-          containerStyle={{ marginLeft: 9 }}
+          containerStyle={userInfoStyleSheet.boxInfoAvatar}
           size={32}
           rounded={true}
           source={{ uri: avaUri }}

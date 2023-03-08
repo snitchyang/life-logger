@@ -6,16 +6,17 @@ import { IPost } from "../interface";
 import { IPlan } from "../interface";
 
 export const curUserID = 1;
+
 export const users: IUser[] = [
   {
     id: 1,
     name: "Alice",
-    profile: "profile",
-    profilePicture: "https://randomuser.me/api/portraits/men/36.jpg",
+    profile: "I'm Alice",
+    profilePicture: "https://randomuser.me/api/portraits/lego/2.jpg",
     school: "Fudan University",
     phoneNumber: 123,
     gender: 1,
-    friends: [],
+    friends: [3, 4],
     diary: [],
     posts: [],
     plans: [],
@@ -23,8 +24,8 @@ export const users: IUser[] = [
   {
     id: 2,
     name: "Bob",
-    profile: "profile",
-    profilePicture: "profilePicture",
+    profile: "I'm Bob",
+    profilePicture: "https://randomuser.me/api/portraits/men/25.jpg",
     school: "Fudan University",
     phoneNumber: 123,
     gender: 0,
@@ -33,7 +34,34 @@ export const users: IUser[] = [
     posts: [],
     plans: [],
   },
+  {
+    id: 3,
+    name: "Kitty",
+    profile: "I'm Kitty",
+    profilePicture: "https://randomuser.me/api/portraits/lego/2.jpg",
+    school: "SJTU",
+    phoneNumber: 54749110,
+    gender: 1,
+    posts: [],
+    diary: [],
+    friends: [],
+    plans: [],
+  },
+  {
+    id: 4,
+    name: "Meggie",
+    profile: "I'm Meggie",
+    profilePicture: "https://randomuser.me/api/portraits/lego/2.jpg",
+    school: "ZJU",
+    phoneNumber: 54741523,
+    gender: 1,
+    posts: [],
+    diary: [],
+    friends: [],
+    plans: [],
+  },
 ];
+
 export const posts: IPost[] = [
   {
     id: 1,

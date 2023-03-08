@@ -8,7 +8,7 @@ export interface IUser {
   gender: number;
   posts: IPost[];
   diary: IDiary[];
-  friends: IUser[];
+  friends: number[];
   plans: IPlan[];
 }
 

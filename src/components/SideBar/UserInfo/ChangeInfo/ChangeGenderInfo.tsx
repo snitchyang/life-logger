@@ -15,7 +15,6 @@ export const ChangeGenderInfo = ({ Gender }) => {
     <SelectDropdown
       data={gender}
       defaultButtonText={Gender}
-      // statusBarTranslucent={true}
       buttonStyle={userInfoStyleSheet.boxInfo}
       buttonTextStyle={userInfoStyleSheet.selectInfoText}
       defaultValueByIndex={gender2Index(Gender)}

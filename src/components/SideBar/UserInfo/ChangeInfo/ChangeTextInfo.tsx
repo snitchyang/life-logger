@@ -3,11 +3,19 @@ import { Modal, Text, TextInput, View } from "react-native";
 import { changeInfoStyleSheet } from "../UserInfoStyleSheet";
 import { Button } from "@rneui/base";
 
-export const ChangeTextInfo = ({ kind, visible, setVisible }) => {
+export const ChangeTextInfo = ({ usr, setUser, kind, visible, setVisible }) => {
   const [inputText, setInputText] = useState("");
-  function changeNameInfo(text) {
-    // ????
-    if (text) console.log("change name " + text);
+  function changeInfo(text) {
+    if (text) {
+      let newUser = usr;
+      if (kind === 1) {
+        newUser.name = text;
+        setUser(newUser);
+      } else if (kind === 3) {
+        newUser.school = text;
+        setUser(newUser);
+      }
+    }
   }
   let title = undefined;
   let placeHolder = undefined;
@@ -40,7 +48,12 @@ export const ChangeTextInfo = ({ kind, visible, setVisible }) => {
         </View>
         <View style={changeInfoStyleSheet.buttonWrapper}>
           <View style={changeInfoStyleSheet.buttonContainer}>
-            <SubmitButton setVisible={setVisible} setInputText={setInputText} />
+            <SubmitButton
+              inputText={inputText}
+              changeInfo={changeInfo}
+              setVisible={setVisible}
+              setInputText={setInputText}
+            />
           </View>
           <View style={changeInfoStyleSheet.buttonContainer}>
             <CancelButton setVisible={setVisible} setInputText={setInputText} />
@@ -51,7 +64,7 @@ export const ChangeTextInfo = ({ kind, visible, setVisible }) => {
   );
 };
 
-const SubmitButton = ({ setVisible, setInputText }) => {
+const SubmitButton = ({ inputText, changeInfo, setVisible, setInputText }) => {
   return (
     <Button
       title={"submit"}
@@ -59,6 +72,7 @@ const SubmitButton = ({ setVisible, setInputText }) => {
         console.log("submit");
         setVisible(false);
         setInputText("");
+        changeInfo(inputText);
       }}
     />
   );

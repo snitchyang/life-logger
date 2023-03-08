@@ -8,8 +8,9 @@ import "./src/I18n";
 import { useTranslation } from "react-i18next";
 import theme from "./theme.json";
 import { users } from "./src/data/data";
-import { UserInfo } from "./src/components/SideBar/UserInfo/UserInfo";
+import { UserInfo } from "./src/components/SideBar/UserInfo/UserInfoRoute";
 import { HomeStackScreen } from "./src/components/Diary/DiaryRoute";
+import { FriendsRoute } from "./src/components/SideBar/Friends/FriendsRoute";
 
 const bottomNavigator = createBottomTabNavigator();
 
@@ -33,7 +34,7 @@ function ContentPage() {
 function PlanPage() {
   return (
     // <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-    <UserInfo user={users[0]} />
+    <FriendsRoute user={users[0]} />
     // </View>
   );
 }

@@ -1,4 +1,4 @@
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { AvatarInfo } from "./DetailedInfo/AvatarInfo";
 import { NameInfo } from "./DetailedInfo/NameInfo";
 import { IUser } from "../../../interface";
@@ -7,18 +7,20 @@ import { SchoolInfo } from "./DetailedInfo/SchoolInfo";
 import { useEffect, useRef, useState } from "react";
 import { userInfoStyleSheet } from "./UserInfoStyleSheet";
 import { ChangeInfo } from "./ChangeInfo/ChangeInfo";
-import { ChangeGenderInfo } from "./ChangeInfo/ChangeGenderInfo";
 
-interface UserInfo {
+interface UserInfoRoute {
   user: IUser;
 }
 
-export const UserInfo = ({ user }: UserInfo) => {
+export const UserInfo = ({ user }: UserInfoRoute) => {
   const [modalVisible, setModalVisible] = useState(true);
   const [kind, setKind] = useState(-1);
+  const [usr, setUser] = useState(user);
   return (
     <View style={{ flex: 1 }}>
       <ChangeInfo
+        usr={usr}
+        setUser={setUser}
         kind={kind}
         visible={modalVisible}
         setVisible={setModalVisible}
@@ -50,7 +52,6 @@ export const UserInfo = ({ user }: UserInfo) => {
       >
         <GenderInfo gender={user.gender} />
       </TouchableOpacity>
-      {/*<ChangeGenderInfo />*/}
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
         onPress={() => {

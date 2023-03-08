@@ -18,15 +18,18 @@ export const userInfoStyleSheet = StyleSheet.create({
     paddingLeft: 15,
   },
   boxInfo: {
-    flex: 2,
+    flex: 3,
     // maxWidth: 100,
     height: "100%",
     backgroundColor: "#FFF",
   },
+  boxInfoAvatar: {
+    marginLeft: 16,
+  },
   boxInfoText: {
     fontSize: 13,
     paddingTop: 10,
-    paddingLeft: 9,
+    paddingLeft: 16,
   },
   selectInfoText: {
     fontSize: 13,

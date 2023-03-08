@@ -13,7 +13,6 @@ interface DiaryHeader {
 }
 
 export const DiaryHeader = ({ tags, date }: DiaryHeader) => {
-  // console.log(new Date().getTime() - new Date(date).getTime());
   return (
     <View style={diaryStyleSheet.headerWrapper}>
       <View style={diaryStyleSheet.tagsWrapper}>
