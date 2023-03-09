@@ -18,7 +18,7 @@ i18n
     .init({
         compatibilityJSON: 'v3', // 对安卓进行兼容
         resources,
-        fallbackLng: 'en', // 默认语言，也是设置语言时设置了不存在的语言时使用的
+        fallbackLng: 'zh', // 默认语言，也是设置语言时设置了不存在的语言时使用的
         interpolation: {
             escapeValue: false
         }

@@ -4,6 +4,14 @@
   "plan": "计划",
   "data": "统计",
   "GO": "出发",
-  "click here to change language": "点击此处切换语言"
+  "click here to change language": "点击此处切换语言",
+  "setting": "设置",
+  "profiles": "个人资料",
+  "friends": "好友",
+  "phone number": "手机号",
+  "change password": "更改密码",
+  "language": "语言",
+  "about": "关于",
+  "log out": "退出登录"
 }
 
