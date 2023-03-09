@@ -1,9 +1,9 @@
 import {View} from 'react-native';
-import {User} from "../../interface";
+import {IUser} from "../../interface";
 
 interface UserHeader {
     date: Date;
-    user: User;
+    user: IUser;
 }
 
 export const UserHeader = ({user, date}: UserHeader) => {

@@ -6,14 +6,17 @@ import { IPost } from "../interface";
 import { IPlan } from "../interface";
 
 export const curUserID = 1;
+
 export const users: IUser[] = [
   {
     id: 1,
     name: "Alice",
-    profile: "profile",
-    profilePicture: "profilePicture",
+    profile: "I'm Alice",
+    profilePicture: "https://randomuser.me/api/portraits/lego/2.jpg",
+    school: "Fudan University",
     phoneNumber: 123,
-    friends: [],
+    gender: 1,
+    friends: [3, 4],
     diary: [],
     posts: [],
     plans: [],
@@ -21,15 +24,44 @@ export const users: IUser[] = [
   {
     id: 2,
     name: "Bob",
-    profile: "profile",
-    profilePicture: "profilePicture",
+    profile: "I'm Bob",
+    profilePicture: "https://randomuser.me/api/portraits/men/25.jpg",
+    school: "Fudan University",
     phoneNumber: 123,
+    gender: 0,
     friends: [],
     diary: [],
     posts: [],
     plans: [],
   },
+  {
+    id: 3,
+    name: "Kitty",
+    profile: "I'm Kitty",
+    profilePicture: "https://randomuser.me/api/portraits/lego/2.jpg",
+    school: "SJTU",
+    phoneNumber: 54749110,
+    gender: 1,
+    posts: [],
+    diary: [],
+    friends: [1],
+    plans: [],
+  },
+  {
+    id: 4,
+    name: "Meggie",
+    profile: "I'm Meggie",
+    profilePicture: "https://randomuser.me/api/portraits/lego/2.jpg",
+    school: "ZJU",
+    phoneNumber: 54741523,
+    gender: 1,
+    posts: [],
+    diary: [],
+    friends: [1],
+    plans: [],
+  },
 ];
+
 export const posts: IPost[] = [
   {
     id: 1,
@@ -74,9 +106,9 @@ export const diaries: IDiary[] = [
     id: 1,
     date: new Date(),
     title: "I want to sleep",
-    content: "zzz",
+    content: "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
     image: ["testPic", "testPic2"],
-    tag: [tags[0]],
+    tag: [tags[0], tags[2]],
   },
   {
     id: 2,
@@ -229,5 +261,13 @@ export const diaries: IDiary[] = [
     content: "eat eat eat",
     image: ["testPic", "testPic2"],
     tag: [tags[2]],
+  },
+  {
+    id: 21,
+    date: new Date(),
+    title: "yanjs nb",
+    content: "yes yes",
+    image: [],
+    tag: [tags[1]],
   },
 ];
