@@ -71,26 +71,34 @@ export const searchFriendsStyleSheet = StyleSheet.create({
   titleContainer: {
     paddingVertical: 20,
     flexDirection: "row",
+    justifyContent: "center",
   },
   titleText: {
+    flex: 8,
     fontSize: 30,
     fontWeight: "bold",
     textAlign: "center",
+    paddingLeft: 40,
   },
   cancelContainer: {
-    justifyContent: "flex-end",
+    justifyContent: "center",
   },
   cancelText: {
-    fontSize: 20,
+    fontSize: 10,
+    textAlign: "center",
     color: "#3f90a8",
+    marginRight: 20,
+    paddingTop: 10,
   },
   inputItem: {
     marginHorizontal: 10,
+    marginLeft: 20,
     borderWidth: 0.5,
     borderColor: "#dedede",
   },
   listItem: {
     width: "90%",
+    marginVertical: 10,
   },
 });
 
@@ -99,17 +107,26 @@ export const searchListStyleSheet = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     width: "100%",
+    marginVertical: 5,
   },
   avatarContainer: {
-    flex: 2,
+    flex: 1,
     marginLeft: 10,
   },
   nameContainer: {
-    flex: 2,
+    flex: 12,
     textAlign: "center",
+    justifyContent: "center",
+    // borderWidth: 1,
+    // borderColor: "black",
   },
   nameText: {
+    textAlign: "center",
     fontSize: 12,
+  },
+  friendsText: {
+    fontSize: 10,
+    color: "grey",
   },
   iconItem: {
     flex: 1,

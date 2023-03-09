@@ -44,7 +44,7 @@ export const users: IUser[] = [
     gender: 1,
     posts: [],
     diary: [],
-    friends: [],
+    friends: [1],
     plans: [],
   },
   {
@@ -57,7 +57,7 @@ export const users: IUser[] = [
     gender: 1,
     posts: [],
     diary: [],
-    friends: [],
+    friends: [1],
     plans: [],
   },
 ];

@@ -13,7 +13,6 @@ interface RenderList {
 }
 
 const RenderList = ({ item }) => {
-  console.log(item.name);
   return (
     <View style={friendsStyleSheet.wrapper}>
       <View style={friendsStyleSheet.avatarContainer}>

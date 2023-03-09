@@ -28,7 +28,11 @@ export const FriendsRoute = ({ user }: FriendsRoute) => {
   }
   return (
     <View style={friendsViewStyleSheet.wrapper}>
-      <SearchFriends isVisible={isVisible} setVisible={setIsVisible} />
+      <SearchFriends
+        me={user.id}
+        isVisible={isVisible}
+        setVisible={setIsVisible}
+      />
       <View style={friendsViewStyleSheet.titleContainer}>
         <Text style={friendsViewStyleSheet.titleText}>{"Friends"}</Text>
       </View>

@@ -16,12 +16,13 @@ import {
 import { Avatar } from "@rneui/base";
 import { Ionicons } from "@expo/vector-icons";
 
-export const SearchFriends = ({ isVisible, setVisible }) => {
+export const SearchFriends = ({ me, isVisible, setVisible }) => {
   const [inputText, setInputText] = useState("");
   const [filter, setFilter] = useState(users);
   const [allUsers] = useState(users);
 
   function search(text) {
+    console.log(text);
     if (text) {
       let newFilter: IUser[] = [];
       for (const usr of users) {
@@ -64,14 +65,14 @@ export const SearchFriends = ({ isVisible, setVisible }) => {
         </View>
         <TextInput
           style={searchFriendsStyleSheet.inputItem}
-          placeholder={"id, name or school"}
+          placeholder={"> id, name or school"}
           value={inputText}
-          onChangeText={() => search(inputText)}
+          onChangeText={(item) => search(item)}
         />
         <FlatList
           style={searchFriendsStyleSheet.listItem}
           data={filter}
-          renderItem={({ item }) => <SearchFriendsList friend={item} />}
+          renderItem={({ item }) => <SearchFriendsList me={me} friend={item} />}
         />
       </View>
     </Modal>
@@ -79,14 +80,20 @@ export const SearchFriends = ({ isVisible, setVisible }) => {
 };
 
 interface SearchFriendsList {
+  me: number;
   friend: IUser;
 }
 
-const SearchFriendsList = ({ friend }: SearchFriendsList) => {
+const SearchFriendsList = ({ me, friend }: SearchFriendsList) => {
+  function isFriend() {
+    return friend.friends.includes(me);
+  }
+
   return (
     <View style={searchListStyleSheet.wrapper}>
       <View style={searchListStyleSheet.avatarContainer}>
         <Avatar
+          containerStyle={{ marginLeft: 15 }}
           size={20}
           rounded={true}
           source={{ uri: friend.profilePicture }}
@@ -95,10 +102,20 @@ const SearchFriendsList = ({ friend }: SearchFriendsList) => {
       <View style={searchListStyleSheet.nameContainer}>
         <Text style={searchListStyleSheet.nameText}>{friend.name}</Text>
       </View>
-      <Ionicons
-        style={searchListStyleSheet.iconItem}
-        name="add-circle-outline"
-      ></Ionicons>
+      <TouchableOpacity
+        onPress={() => {
+          console.log("add friend" + friend.id);
+        }}
+      >
+        {isFriend() ? (
+          <Ionicons name="close-circle-outline"></Ionicons>
+        ) : (
+          <Ionicons
+            style={searchListStyleSheet.iconItem}
+            name="add-circle-outline"
+          ></Ionicons>
+        )}
+      </TouchableOpacity>
     </View>
   );
 };
