@@ -7,6 +7,7 @@ import {COLOR} from "../constants";
 import customDrawer from "./customDrawer";
 import {AntDesign, FontAwesome, FontAwesome5, Ionicons} from "@expo/vector-icons";
 import {StyleSheet} from "react-native";
+import SettingsPage from "../screens/SettingsPage";
 import {View} from "react-native";
 
 const drawerNavigator = createDrawerNavigator();
@@ -39,8 +40,9 @@ export default function DrawerNavigator() {
                 }}/>
             <drawerNavigator.Screen
                 name={t("setting")}
-                component={BottomTabNavigator}
+                component={SettingsPage}
                 options={{
+                    headerShown:true,
                     drawerIcon: (focused) => {
                         let color=focused.focused?COLOR.white:COLOR.black;
                         return <Ionicons name="settings" size={24} color={color} style={styles.IconStyle}/>

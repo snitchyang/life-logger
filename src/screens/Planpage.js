@@ -11,8 +11,8 @@ function PlanPage() {
     const eventList = [
         {date: "Mar 3", eventName: ["ICS homework", "Jogging"]},
         {date: "Mar 5", eventName: ["ADS homework", "PRP"]},
-        {date: "Mar 5", eventName: ["ADS homework", "PRP"]},
-        {date: "Mar 5", eventName: ["ADS homework", "PRP"]}
+        {date: "Mar 7", eventName: ["ADS homework", "PRP"]},
+        {date: "Mar 9", eventName: ["ADS homework", "PRP"]}
     ]
     return(
         <View style={{ flex:1}}>
@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
     },
     addButton:{
         left:125,
-        top:-20
+        top:-40,
+        height:1
     }
 })
 
