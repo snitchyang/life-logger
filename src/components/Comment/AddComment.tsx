@@ -45,7 +45,8 @@ export const AddComment = ({
         }}
         rightIcon={{
           name: "plussquare",
-          color: content.length === 0 ? "gray" : "blue",
+          color:
+            content.length === 0 ? "rgb(133,130,130)" : "rgba(17,17,231,0.71)",
           size: 25,
           type: "antdesign",
           onPress: handleAddComment,
@@ -55,7 +56,7 @@ export const AddComment = ({
           name: "cancel",
           type: "material-community",
           size: 25,
-          color: "red",
+          color: "rgb(218,18,18)",
           onPress: handleCancelComment,
         }}
       />

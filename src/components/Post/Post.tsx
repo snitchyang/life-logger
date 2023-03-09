@@ -1,13 +1,10 @@
 import { View } from "react-native";
 import { UserHeader } from "./UserHeader";
 import { PostActionSection } from "./PostActionSection";
-import { Link } from "@react-navigation/native";
 import { IPost } from "../../interface";
 import { Image, Card, Text } from "@rneui/base";
-import { CommentsList } from "../Comment/CommentsList";
 import { useEffect, useState } from "react";
 import { comments } from "../../data/data";
-import { CardImage } from "@rneui/base/dist/Card/Card.Image";
 
 interface Post {
   post: IPost;

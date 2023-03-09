@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+<script src="../js/chart.js"></script>
+<script>
+    function getData(data) {
+        alert(data);
+    }
+
+    const data = {
+        labels: [
+            'Red',
+            'Blue',
+            'Yellow'
+        ],
+        datasets: [{
+            label: 'My First Dataset',
+            data: [300, 50, 100],
+            backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)',
+                'rgb(255,86,86)',
+                'rgb(241,111,61)',
+                'rgb(25,246,6)',
+                'rgb(143,99,225)',
+                'rgb(86,255,204)',
+                'rgb(52,0,255)',
+                'rgb(194,185,167)',
+                'rgb(199,7,239)',
+                'rgb(96,197,69)',
+            ],
+            hoverOffset: 4
+        }]
+    };
+    const config = {
+        type: 'doughnut',
+        data: data,
+    };
+    const ctx = document.getElementById('myChart');
+    new Chart(ctx, config);
+</script>
+</html>

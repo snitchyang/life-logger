@@ -10,6 +10,7 @@ import {
 } from "@expo/vector-icons";
 import { CommentsList } from "../Comment/CommentsList";
 import { AddComment } from "../Comment/AddComment";
+import { Dialog } from "@rneui/base";
 
 interface PostActionSection {
   post: IPost;
@@ -48,7 +49,7 @@ export const PostActionSection = ({ post }: PostActionSection) => {
         <View style={{ paddingTop: 2 }}>
           <AntDesign
             name={liked ? "like1" : "like2"}
-            color={liked ? "red" : "black"}
+            color={liked ? "rgb(255,2,2)" : "rgb(0,0,0)"}
             onPress={() => {
               liked ? removeLike() : addLike();
               setLiked(!liked);
