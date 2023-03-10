@@ -7,8 +7,11 @@ import {COLOR} from "../constants";
 import customDrawer from "./customDrawer";
 import {AntDesign, FontAwesome, FontAwesome5, Ionicons} from "@expo/vector-icons";
 import {StyleSheet} from "react-native";
-import SettingsPage from "../screens/SettingsPage";
+import SettingsPage from "../screens/Settings/SettingsPage";
 import {View} from "react-native";
+import {UserInfo} from "../screens/Profiles/UserInfoRoute";
+import {users} from "../data/data";
+import {FriendsRoute} from "../components/SideBar/Friends/FriendsRoute";
 
 const drawerNavigator = createDrawerNavigator();
 export default function DrawerNavigator() {
@@ -51,7 +54,8 @@ export default function DrawerNavigator() {
             />
             <drawerNavigator.Screen
                 name={t("profiles")}
-                component={BottomTabNavigator}
+                component={UserInfo}
+                initialParams={{user:users[0]}}
                 options={{
                     drawerIcon: (focused) => {
                         let color=focused.focused?COLOR.white:COLOR.black;
@@ -61,7 +65,8 @@ export default function DrawerNavigator() {
             />
             <drawerNavigator.Screen
                 name={t("friends")}
-                component={BottomTabNavigator}
+                component={FriendsRoute}
+                initialParams={{user:users[0]}}
                 options={{
                     drawerIcon: (focused) => {
                         let color=focused.focused?COLOR.white:COLOR.black;

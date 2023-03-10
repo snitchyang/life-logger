@@ -8,8 +8,8 @@ import "./src/I18n";
 import { useTranslation } from "react-i18next";
 import theme from "./theme.json";
 import { users } from "./src/data/data";
-import { UserInfo } from "./src/components/SideBar/UserInfo/UserInfoRoute";
-import { HomeStackScreen } from "./src/components/Diary/DiaryRoute";
+import { UserInfo } from "./src/screens/Profiles/UserInfoRoute";
+import { HomeStackScreen } from "./src/navigations/HomeStackNavigator";
 import { FriendsRoute } from "./src/components/SideBar/Friends/FriendsRoute";
 
 const bottomNavigator = createBottomTabNavigator();

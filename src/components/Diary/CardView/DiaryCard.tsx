@@ -3,7 +3,7 @@ import { diaryStyleSheet } from "./DiaryStyleSheet";
 import { DiaryHeader } from "./DiaryHeader";
 import { DiaryContent } from "./DiaryContent";
 import { diaries, tags } from "../../../data/data";
-import { DiaryDetail } from "./DiaryDetail";
+import { DiaryDetailPage } from "../../../screens/Home/DiaryDetailPage";
 
 import { StyleSheet, Text, View } from "react-native";
 import { Card } from "@rneui/base";

@@ -1,12 +1,12 @@
-import { diaries } from "../../../data/data";
+import { diaries } from "../../data/data";
 import { Text, View } from "react-native";
-import { DiaryHeader } from "./DiaryHeader";
-import { DetailedContent } from "./DiaryContent";
-import { diaryStyleSheet } from "./DiaryStyleSheet";
+import { DiaryHeader } from "../../components/Diary/CardView/DiaryHeader";
+import { DetailedContent } from "../../components/Diary/CardView/DiaryContent";
+import { diaryStyleSheet } from "../../components/Diary/CardView/DiaryStyleSheet";
 import { Button, color } from "@rneui/base";
 import { Ionicons } from "@expo/vector-icons";
 
-export const DiaryDetail = ({ diary }) => {
+export const DiaryDetailPage = ({ diary }) => {
   let date = diary.date;
   let title = diary.title;
   let tags = diary.tag;
@@ -39,5 +39,5 @@ export const DiaryDetail = ({ diary }) => {
 
 export function DetailedPage({ route }) {
   const { diary } = route.params;
-  return <DiaryDetail diary={diary} />;
+  return <DiaryDetailPage diary={diary} />;
 }

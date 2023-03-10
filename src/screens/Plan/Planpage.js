@@ -1,10 +1,10 @@
 import {Text, View} from "react-native";
-import ToDoListCard from "../components/ToDoListCard";
+import ToDoListCard from "../../components/Plan/ToDoListCard";
 import {FlatList} from "react-native";
 import * as React from "react";
 import {StyleSheet} from "react-native";
 import {Button, FAB} from "@rneui/base";
-import {COLOR} from "../constants";
+import {COLOR} from "../../constants";
 import {AntDesign} from "@expo/vector-icons";
 
 function PlanPage() {

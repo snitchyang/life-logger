@@ -11,7 +11,8 @@ interface FriendsRoute {
   user: IUser;
 }
 
-export const FriendsRoute = ({ user }: FriendsRoute) => {
+export const FriendsRoute = ({route}) => {
+    const {user} = route.params;
   const [isVisible, setIsVisible] = useState(false);
 
   function getFriends(friendsList: number[]) {

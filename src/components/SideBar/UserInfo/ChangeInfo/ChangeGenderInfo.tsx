@@ -2,7 +2,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import {
   changeInfoStyleSheet,
   userInfoStyleSheet,
-} from "../UserInfoStyleSheet";
+} from "../../../../screens/Profiles/UserInfoStyleSheet";
 
 const gender = ["male", "female", "unknown"];
 export const ChangeGenderInfo = ({ Gender }) => {

@@ -7,6 +7,7 @@ import '../I18n'
 import {useTranslation} from "react-i18next";
 import {COLOR} from "../constants";
 import {ActionPage, DataPage, DiscoveryPage, HomePage, PlanPage} from "../screens";
+import {HomeStackScreen} from "./HomeStackNavigator";
 
 const bottomNavigator = createBottomTabNavigator()
 
@@ -57,7 +58,7 @@ export default function BottomTabNavigator({navigation}){
                         </TouchableOpacity>
                     )
                 }}
-                component={HomePage}/>
+                component={HomeStackScreen}/>
             <bottomNavigator.Screen name="Content" options={{headerTitleAlign: 'center', title: t('discovery')}}
                                     component={DiscoveryPage}/>
             <bottomNavigator.Screen name="Start" options={{headerStyle: {height: 0}, title: ''}}

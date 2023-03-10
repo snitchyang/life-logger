@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Modal, Text, TextInput, View } from "react-native";
-import { changeInfoStyleSheet } from "../UserInfoStyleSheet";
+import { changeInfoStyleSheet } from "../../../../screens/Profiles/UserInfoStyleSheet";
 import { Button } from "@rneui/base";
 
 export const ChangeTextInfo = ({ usr, setUser, kind, visible, setVisible }) => {

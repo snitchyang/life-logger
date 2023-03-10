@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { userInfoStyleSheet } from "../UserInfoStyleSheet";
+import { userInfoStyleSheet } from "../../../../screens/Profiles/UserInfoStyleSheet";
 import { Ionicons } from "@expo/vector-icons";
 import { ChangeGenderInfo } from "../ChangeInfo/ChangeGenderInfo";
 
