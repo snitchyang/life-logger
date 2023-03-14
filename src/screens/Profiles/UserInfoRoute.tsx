@@ -18,7 +18,7 @@ export const UserInfo = ({route}) => {
     const [kind, setKind] = useState(-1);
     const [usr, setUser] = useState(user);
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1, marginTop:25}}>
             <ChangeInfo
                 usr={usr}
                 setUser={setUser}
