@@ -1,8 +1,9 @@
 export interface IUser {
   id: number;
-  name: string;
-  profile: string;
-  profilePicture: string;
+  username: string;
+  password: string;
+  biography: string;
+  avatar: string;
   school: string;
   phoneNumber: number;
   gender: number;
@@ -10,6 +11,7 @@ export interface IUser {
   diary: IDiary[];
   friends: number[];
   plans: IPlan[];
+  likePost: IPost[];
 }
 
 export interface IPlan {
@@ -22,6 +24,7 @@ export interface IPlan {
 export interface ITag {
   id: number;
   content: string;
+  diary: IDiary[];
 }
 
 export interface IDiary {
@@ -38,6 +41,7 @@ export interface IComment {
   user: IUser;
   date: Date;
   content: string;
+  post: IPost;
 }
 
 // 盆友圈帖子
