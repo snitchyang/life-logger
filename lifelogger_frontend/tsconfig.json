@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "module": "esnext"
+  },
+  "extends": "expo/tsconfig.base",
+  "strict": false,
+  "allowSyntheticDefaultImports": true,
+  "emitDecoratorMetadata": true,
+  "experimentalDecorators": true,
+  "skipLibCheck": true
+}
