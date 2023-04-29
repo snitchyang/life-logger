@@ -26,12 +26,15 @@ i18n.use(initReactI18next).init(
     // 錯誤
     if (err) throw err;
     // 这里放多一层函数是为了方便之后切换语言的同时做一些其他的统一处理
-    i18n.setLocalLanguage = function (value) {
+    // @ts-ignore
+    i18n.setLocalLanguage = (value) => {
       // 設置項目文本的語言
+      // @ts-ignore
       this.changeLanguage(value);
       // 做点别的，比如同时切换别的插件的语言
     };
     // 初始化
+    // @ts-ignore
     i18n.setLocalLanguage(i18n.language);
   }
 );
