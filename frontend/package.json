@@ -38,7 +38,7 @@
     "react-native-tags": "^2.2.1",
     "react-native-webview": "11.26.0",
     "realm": "^11.8.0",
-    "typescript": "*"
+    "typescript": "^4.9.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
