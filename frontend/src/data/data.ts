@@ -1,16 +1,11 @@
-import { IUser } from "../interface";
-import { IDiary } from "../interface";
-import { IComment } from "../interface";
-import { ITag } from "../interface";
-import { IPost } from "../interface";
-import { IPlan } from "../interface";
+import { IDiary, IPost, ITag, IUser } from "../interface";
 
 export const curUserID = 1;
 
 export const users: IUser[] = [
   {
     id: 1,
-    name: "Alice",
+    username: "Alice",
     profile: "I'm Alice",
     profilePicture: "https://randomuser.me/api/portraits/lego/2.jpg",
     school: "Fudan University",
@@ -23,7 +18,7 @@ export const users: IUser[] = [
   },
   {
     id: 2,
-    name: "Bob",
+    username: "Bob",
     profile: "I'm Bob",
     profilePicture: "https://randomuser.me/api/portraits/men/25.jpg",
     school: "Fudan University",
@@ -36,7 +31,7 @@ export const users: IUser[] = [
   },
   {
     id: 3,
-    name: "Kitty",
+    username: "Kitty",
     profile: "I'm Kitty",
     profilePicture: "https://randomuser.me/api/portraits/lego/2.jpg",
     school: "SJTU",
@@ -49,7 +44,7 @@ export const users: IUser[] = [
   },
   {
     id: 4,
-    name: "Meggie",
+    username: "Meggie",
     profile: "I'm Meggie",
     profilePicture: "https://randomuser.me/api/portraits/lego/2.jpg",
     school: "ZJU",
