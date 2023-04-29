@@ -1,7 +1,7 @@
 interface Content {
-    content: string;
+  content: string;
 }
 
-export const Content = ({content}: Content) => {
-    return <p className={'content'}>{content}</p>;
+export const Content = ({ content }: Content) => {
+  return <p className={"content"}>{content}</p>;
 };

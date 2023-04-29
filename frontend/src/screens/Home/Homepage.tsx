@@ -1,56 +1,52 @@
-import { useTranslation } from "react-i18next";
-import { ScrollView, TextInput, View } from "react-native";
-import * as React from "react";
+import React, { ScrollView, TextInput, View } from "react-native";
+
 import { useState } from "react";
 import { diaries } from "../../data/data";
 import { Ionicons } from "@expo/vector-icons";
 import { diaryStyleSheet } from "../../components/Diary/CardView/DiaryStyleSheet";
 import { DiaryCard } from "../../components/Diary/CardView/DiaryCard";
-import { useNavigation } from "@react-navigation/native";
+import { type IDiary } from "../../interface";
 
-export const HomePage = () => {
-  const navigation = useNavigation();
-  const { t, i18n } = useTranslation();
+export const HomePage = (): JSX.Element => {
   const [filterData, setFilterData] = useState(diaries);
-  const [allData, setAllData] = useState(diaries);
+  const [allData] = useState<IDiary[]>(diaries);
   const [searchText, setSearchText] = useState("");
 
-  function ContentFilter({ item, text }) {
-    let title = item.title;
-    let content = item.content;
+  function ContentFilter({ item, text }): boolean {
+    const title = item.title;
+    const content = item.content;
     return title.indexOf(text) > -1 || content.indexOf(text) > -1;
   }
 
-  function TagFilter({ item, t }) {
+  function TagFilter({ item, t }): boolean {
     // item is an ITag object
-    let tags = item.tag;
+    const tags = item.tag;
     for (const tag of tags) {
       if (tag.content.indexOf(t) > -1) return true;
     }
     return false;
   }
 
-  function FilterFun(text) {
-    if (text) {
+  function FilterFun(text): void {
+    if (text !== undefined) {
       text = text.toLowerCase();
-      let textGroup = text.trim().split(/\s+/);
-      let filter = [];
-      let newData = undefined;
+      const textGroup = text.trim().split(/\s+/);
+      const filter: IDiary[] = [];
+      let newData: IDiary[] = [];
       for (const text of textGroup) {
         // filter of data, #xxx means it's a tag
         console.log(text);
-        newData = undefined;
         if (text.at(0) === "#") {
           console.log("tag");
-          let t = text.substring(1);
+          const t = text.substring(1);
           newData = allData.filter((item) => TagFilter({ item, t }));
         } else {
           newData = allData.filter((item) => ContentFilter({ item, text }));
         }
-        if (newData) {
-          for (const data of newData) {
-            if (!filter.includes(data)) filter.push(data);
-          }
+        if (newData.length !== 0) {
+          newData.forEach((value) => {
+            if (!filter.includes(value)) filter.push(value);
+          });
         }
       }
       console.log(filter.length);
@@ -75,7 +71,9 @@ export const HomePage = () => {
             id="searchInput"
             style={{ paddingLeft: 18 }}
             autoCorrect={false}
-            onChangeText={(text) => FilterFun(text)}
+            onChangeText={(text) => {
+              FilterFun(text);
+            }}
             placeholder="type here..."
             value={searchText}
           />
@@ -86,12 +84,13 @@ export const HomePage = () => {
           <View
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
-            {filterData.map((item) => (
+            {filterData.map((item, index) => (
               <View
                 style={diaryStyleSheet.wrapper}
                 onTouchEnd={() => {
                   // navigation.navigate("Detail", { diary: item });
                 }}
+                key={index}
               >
                 <DiaryCard diary={item} />
               </View>

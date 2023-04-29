@@ -21,7 +21,7 @@ export const DiaryCard = ({ diary }): JSX.Element => {
     // <View style={diaryStyleSheet.wrapper}>
     <Card wrapperStyle={{ flex: 1, flexDirection: "column" }}>
       <Card.Title style={{ fontSize: 13 }}> {title}</Card.Title>
-      {/*<CardDivider />*/}
+      {/* <CardDivider /> */}
       <View style={{ flexDirection: "column" }}>
         <DiaryHeader tags={tag} date={date} />
         <DiaryContent content={content} images={image} />

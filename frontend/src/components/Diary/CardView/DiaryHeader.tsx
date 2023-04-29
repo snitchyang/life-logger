@@ -1,7 +1,7 @@
 import React from "react";
 import { Animated, StyleSheet, Text, View } from "react-native";
 import { Card } from "@rneui/base";
-import { ITag } from "../../../interface";
+import { type ITag } from "../../../interface";
 import { DiaryTags } from "./DiaryTags";
 import { DiaryContent } from "./DiaryContent";
 import { diaryStyleSheet } from "./DiaryStyleSheet";

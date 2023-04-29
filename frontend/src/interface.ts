@@ -41,7 +41,6 @@ export interface IComment {
   user: IUser;
   date: Date;
   content: string;
-  post: IPost;
 }
 
 // 盆友圈帖子

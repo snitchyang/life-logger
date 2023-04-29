@@ -1,15 +1,18 @@
-import { Modal, Text, TextInput, View } from "react-native";
-import { useState } from "react";
-import { changeInfoStyleSheet } from "../../../../screens/Profiles/UserInfoStyleSheet";
-import { IUser } from "../../../../interface";
-import { Button } from "@rneui/base";
-import { use } from "i18next";
+import React, { View } from "react-native";
 import { ChangeTextInfo } from "./ChangeTextInfo";
 
-export const ChangeInfo = ({ usr, setUser, kind, visible, setVisible }) => {
-  console.log("modal");
-  console.log(kind);
-
+export const ChangeInfo = ({
+  // eslint-disable-next-line react/prop-types
+  usr,
+  // eslint-disable-next-line react/prop-types
+  setUser,
+  // eslint-disable-next-line react/prop-types
+  kind,
+  // eslint-disable-next-line react/prop-types
+  visible,
+  // eslint-disable-next-line react/prop-types
+  setVisible,
+}): JSX.Element => {
   if (kind === 1 || kind === 3) {
     return (
       <ChangeTextInfo
@@ -21,4 +24,5 @@ export const ChangeInfo = ({ usr, setUser, kind, visible, setVisible }) => {
       />
     );
   }
+  return <View />;
 };

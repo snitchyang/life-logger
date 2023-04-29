@@ -1,6 +1,6 @@
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
-import { IDiary, IPlan, IPost, IUser } from "../../../interface";
+import { IDiary, IPlan, IPost, type IUser } from "../../../interface";
 import { FriendsList } from "./FriendsView/FriendsList";
 import { friendsViewStyleSheet } from "./FriendsStyleSheet";
 import { Ionicons } from "@expo/vector-icons";
@@ -11,12 +11,12 @@ interface FriendsRoute {
   user: IUser;
 }
 
-export const FriendsRoute = ({route}) => {
-    const {user} = route.params;
+export const FriendsRoute = ({ route }) => {
+  const { user } = route.params;
   const [isVisible, setIsVisible] = useState(false);
 
   function getFriends(friendsList: number[]) {
-    let f: IUser[] = [];
+    const f: IUser[] = [];
     for (const friendsListElement of friendsList) {
       for (const usr of users) {
         if (usr.id === friendsListElement) {

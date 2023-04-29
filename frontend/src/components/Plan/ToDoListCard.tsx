@@ -24,7 +24,9 @@ export const ToDoListCard = ({ eventName, isDone }: Prop) => {
         }}
         size={25}
         checkedColor={COLOR.gray}
-        onPress={() => setFinished(!finished)}
+        onPress={() => {
+          setFinished(!finished);
+        }}
       />
     </View>
   );

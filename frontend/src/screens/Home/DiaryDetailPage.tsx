@@ -1,17 +1,20 @@
-import { diaries } from "../../data/data";
-import { Text, View } from "react-native";
+import React, { Text, View } from "react-native";
 import { DiaryHeader } from "../../components/Diary/CardView/DiaryHeader";
 import { DetailedContent } from "../../components/Diary/CardView/DiaryContent";
 import { diaryStyleSheet } from "../../components/Diary/CardView/DiaryStyleSheet";
-import { Button, color } from "@rneui/base";
-import { Ionicons } from "@expo/vector-icons";
+import { type IDiary } from "../../interface";
+import { type Route } from "@react-navigation/native";
 
-export const DiaryDetailPage = ({ diary }) => {
-  let date = diary.date;
-  let title = diary.title;
-  let tags = diary.tag;
-  let content = diary.content;
-  let imgs = diary.image;
+interface Props {
+  diary: IDiary;
+}
+
+export const DiaryDetailPage = ({ diary }: Props): JSX.Element => {
+  const date = diary.date;
+  const title = diary.title;
+  const tags = diary.tag;
+  const content = diary.content;
+  const imgs = diary.image;
   return (
     <View style={{ flex: 1, minWidth: 350 }}>
       <View style={diaryStyleSheet.detailHeaderWrapper}>
@@ -37,7 +40,18 @@ export const DiaryDetailPage = ({ diary }) => {
   );
 };
 
-export function DetailedPage({ route }) {
-  const { diary } = route.params;
-  return <DiaryDetailPage diary={diary} />;
+interface Prop {
+  route: Route<any>;
+}
+
+export function DetailedPage({ route }: Prop): JSX.Element {
+  const params = route.params;
+
+  if (params !== undefined) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    const { diary } = params;
+    return <DiaryDetailPage diary={diary} />;
+  }
+  return <View />;
 }

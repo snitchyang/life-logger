@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { ChangeGenderInfo } from "../ChangeInfo/ChangeGenderInfo";
 
 export const GenderInfo = ({ gender }) => {
-  let Gender: string = undefined;
+  let Gender: string;
   if (gender === 0) Gender = "male";
   else if (gender === 1) Gender = "female";
   else Gender = "unknown";

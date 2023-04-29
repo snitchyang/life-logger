@@ -9,7 +9,7 @@ import { HomeStackScreen } from "./HomeStackNavigator";
 import { ActionPage } from "../screens/Action/Actionpage";
 import { DiscoveryPage } from "../screens/Discovery/Discoverypage";
 import { PlanPage } from "../screens/Plan/Planpage";
-import Datapage from "../screens/Data/Datapage";
+import { DataPage } from "../screens/Data/Datapage";
 
 const bottomNavigator = createBottomTabNavigator();
 
@@ -58,7 +58,7 @@ export default function BottomTabNavigator({ navigation }) {
         name="Home"
         options={{
           headerTitleAlign: "center",
-          title: t("home"),
+          title: "home",
           headerLeft: () => (
             <TouchableOpacity
               style={{ marginLeft: 20 }}
@@ -88,7 +88,7 @@ export default function BottomTabNavigator({ navigation }) {
       <bottomNavigator.Screen
         name="Data"
         options={{ headerTitleAlign: "center", title: t("data") }}
-        component={Datapage}
+        component={DataPage}
       />
     </bottomNavigator.Navigator>
   );

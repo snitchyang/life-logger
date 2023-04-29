@@ -5,11 +5,10 @@ import { FAB } from "@rneui/base";
 import { COLOR } from "../../constants";
 import { AntDesign } from "@expo/vector-icons";
 import Modal from "react-native-modal";
-import { useTranslation } from "react-i18next";
 import { ToDoListCard } from "../../components/Plan/ToDoListCard";
 
-export const PlanPage = () => {
-  const { t } = useTranslation();
+export const PlanPage = (): JSX.Element => {
+  // const {t}  = useTranslation();
   const [isAddingEvent, setIsAddingEvent] = useState(false);
   const eventList = [
     { date: "Mar 3", eventName: ["ICS homework", "Jogging"] },
@@ -17,7 +16,7 @@ export const PlanPage = () => {
     { date: "Mar 7", eventName: ["ADS homework", "PRP"] },
     { date: "Mar 9", eventName: ["ADS homework", "PRP"] },
   ];
-  const addEvent = () => {
+  const addEvent = (): void => {
     setIsAddingEvent(true);
   };
   return (
@@ -44,10 +43,12 @@ export const PlanPage = () => {
       </FAB>
       <Modal
         isVisible={isAddingEvent}
-        onBackButtonPress={() => setIsAddingEvent(false)}
+        onBackButtonPress={() => {
+          setIsAddingEvent(false);
+        }}
       >
         <View style={styles.containerStyle}>
-          <TextInput style={styles.textInput} placeholder={t("Add an event")} />
+          <TextInput style={styles.textInput} placeholder={"Add an event"} />
         </View>
       </Modal>
     </View>

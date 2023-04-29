@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { users } from "../../../../data/data";
-import { IUser } from "../../../../interface";
+import { type IUser } from "../../../../interface";
 import {
   searchFriendsStyleSheet,
   searchListStyleSheet,
@@ -24,14 +24,15 @@ export const SearchFriends = ({ me, isVisible, setVisible }) => {
   function search(text) {
     console.log(text);
     if (text) {
-      let newFilter: IUser[] = [];
+      const newFilter: IUser[] = [];
       for (const usr of users) {
         if (
-          usr.id.toString().indexOf(text) > -1 ||
+          usr.id.toString().includes(text) ||
           usr.name.indexOf(text) > -1 ||
-          usr.school.indexOf(text) > -1
-        )
+          usr.school.includes(text)
+        ) {
           newFilter.push(usr);
+        }
       }
       setFilter(newFilter);
       setInputText(text);
@@ -67,7 +68,9 @@ export const SearchFriends = ({ me, isVisible, setVisible }) => {
           style={searchFriendsStyleSheet.inputItem}
           placeholder={"> id, name or school"}
           value={inputText}
-          onChangeText={(item) => search(item)}
+          onChangeText={(item) => {
+            search(item);
+          }}
         />
         <FlatList
           style={searchFriendsStyleSheet.listItem}
