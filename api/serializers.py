@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import User, Plan, Tag, Diary, Comment, Post, Friendship
+from .models import *
 
 
 class UserSerializer(serializers.ModelSerializer):

@@ -95,10 +95,10 @@ class Friendship(models.Model):
 class PostImage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     path = models.ImageField(upload_to='image/post/', verbose_name='路径')
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images', verbose_name='图片')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images', verbose_name='帖子')
 
     def __str__(self):
-        return self.id
+        return self.path.url
 
     class Meta:
         verbose_name_plural = '帖子图片'
@@ -107,10 +107,10 @@ class PostImage(models.Model):
 class DiaryImage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     path = models.ImageField(upload_to='image/diary/', verbose_name='路径')
-    diary = models.ForeignKey(Diary, on_delete=models.CASCADE, related_name='images', verbose_name='图片')
+    diary = models.ForeignKey(Diary, on_delete=models.CASCADE, related_name='images', verbose_name='日记')
 
     def __str__(self):
-        return self.id
+        return self.path.url
 
     class Meta:
         verbose_name_plural = '日记图片'

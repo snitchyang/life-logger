@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm
@@ -14,9 +15,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from lifelogger import settings
-from .models import User, Plan, Tag, Diary, Comment, Post, Friendship
-from .serializers import UserSerializer, PlanSerializer, TagSerializer, DiarySerializer, CommentSerializer, \
-    PostSerializer, FriendshipSerializer
+from .serializers import *
 
 
 @api_view(['GET'])
@@ -32,6 +31,11 @@ def api_root(request):
     })
 
 
+def get_user(request: Request) -> User:
+    token = request.headers.get('Authorization').split()[-1]
+    return Token.objects.get(key=token).user
+
+
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -44,10 +48,65 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
-class PlanList(APIView):
+class UserSelf(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get(self, request: Request):
+        token = request.headers.get('Authorization').split()[-1]
+        user: User = Token.objects.get(key=token).user
+        if user is not None:
+            return Response(UserSerializer(user).data, status=200)
+        return Response(status=401)
+
+    def put(self, request: Request):
+        user = get_user(request)
+        data = request.data
+        username = data['username']
+        if username != user.username and len(User.objects.filter(username=username)) > 0:
+            return Response({'message': 'username'}, status=400)
+        user.username = username
+        email = data['email']
+        if email != user.email and len(User.objects.filter(email=email)) > 0:
+            return Response({'message': 'email'}, status=400)
+        user.email = email
+        phone_number = data['phone_number']
+        if phone_number != user.phone_number and len(User.objects.filter(phone_number=phone_number)) > 0:
+            return Response({'message': 'phone_number'}, status=400)
+        user.phone_number = phone_number
+        biography = data['biography']
+        school = data['school']
+        user.biography = biography
+        user.school = school
+        user.save()
+        return Response({'message': 'success'}, status=200)
+
+
+class UserFriends(APIView):
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get(self, request: Request):
+        user = get_user(request)
+        response = [UserHeaderSerializer(friendship.friend).data for friendship in
+                    Friendship.objects.filter(user=user).all()]
+        return Response(response, status=200)
+
+    def post(self, request: Request):
+        user = get_user(request)
+        friend_id = request.data['friend']
+        Friendship.objects.update_or_create(friend_id=friend_id, user=user)
+        return Response({'message': 'success'}, status=200)
+
+    def delete(self, request: Request):
+        user = get_user(request)
+        friend_id = request.data['friend']
+        friendship = Friendship.objects.get(friend_id=friend_id, user=user)
+        friendship.delete()
+        return Response({'message': 'success'}, status=200)
+
+
+class PlanList(generics.ListAPIView):
     queryset = Plan.objects.all().order_by('-due')
     serializer_class = PlanSerializer
-    paginate_by = 10
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
@@ -55,6 +114,31 @@ class PlanDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Plan.objects.all()
     serializer_class = PlanSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class PlanAdd(APIView):
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def post(self, request: Request):
+        user = get_user(request)
+        data = request.data
+        due = data['due']
+        content = data['content']
+        Plan.objects.update_or_create(content=content, user=user, due=due, finished=False)
+        return Response({'message': 'success'}, status=200)
+
+    def put(self, request: Request):
+        data = request.data
+        id = data['id']
+        due = data['due']
+        content = data['content']
+        finished = data['finished']
+        plan: Plan = Plan.objects.get(id=id)
+        plan.due = due
+        plan.content = content
+        plan.finished = finished
+        plan.save()
+        return Response({'message': 'success'}, status=200)
 
 
 class TagList(generics.ListCreateAPIView):
@@ -69,16 +153,64 @@ class TagDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
-class DiaryList(generics.ListAPIView):
-    queryset = Diary.objects.all().order_by('-date')
-    serializer_class = DiarySerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+class DiaryList(APIView):
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get(self, request: Request):
+        user = get_user(request)
+        diaries = DiarySerializer(Diary.objects.filter(user=user).order_by('-date'), many=True)
+        return Response(diaries.data, status=200)
 
 
 class DiaryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Diary.objects.all()
     serializer_class = DiarySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class DiaryImageDetail(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def post(self, request: Request):
+        data = request.data
+        diary_id = data['diary']
+        image = data['image']
+        DiaryImage.objects.update_or_create(post_id=diary_id, path=image)
+        return Response({'message': 'success'}, status=200)
+
+
+class DiaryAdd(APIView):
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def post(self, request: Request):
+        user = get_user(request)
+        data = request.data
+        title = data['title']
+        content = data['content']
+        tag_ids = request.data['tags']
+        tag_ids = json.loads(tag_ids)
+        diary = Diary.objects.create(title=title, content=content, user=user)
+        diary.tag.clear()
+        for tag_id in tag_ids:
+            diary.tag.add(Tag.objects.get(pk=int(tag_id)))
+        diary.save()
+        return Response({'message': 'success'}, status=200)
+
+    def put(self, request: Request):
+        data = request.data
+        id = data['id']
+        title = data['title']
+        content = data['content']
+        tag_ids = request.data['tags']
+        tag_ids = json.loads(tag_ids)
+        diary = Diary.objects.get(id=id)
+        diary.title = title
+        diary.content = content
+        diary.tag.clear()
+        for tag_id in tag_ids:
+            diary.tag.add(Tag.objects.get(pk=int(tag_id)))
+        diary.save()
+        return Response({'message': 'success'}, status=200)
 
 
 class CommentList(generics.ListAPIView):
@@ -93,11 +225,25 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
+class CommentAdd(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def post(self, request: Request):
+        user = get_user(request)
+        data = request.data
+        content = data['content']
+        post_id = data['post']
+        Comment.objects.create(post_id=post_id, content=content, user=user)
+        return Response({'message': 'success'}, status=200)
+
+
 class PostList(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request: Request):
-        queryset = Post.objects.all().order_by('-date')
+        user = get_user(request)
+        friends = [friendship.friend for friendship in Friendship.objects.filter(user=user).all()]
+        queryset = Post.objects.filter(user__in=friends).order_by('-date')
         paginator = Paginator(queryset, 10)
         page = paginator.page(request.query_params['page'])
         posts = PostSerializer(page, many=True)
@@ -108,6 +254,29 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class PostAdd(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def post(self, request: Request):
+        data = request.data
+        location = data['location']
+        content = data['content']
+        user = get_user(request)
+        post: Post = Post.objects.create(location=location, content=content, user=user)
+        return Response({'post': post.id}, status=200)
+
+
+class PostImageAdd(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def post(self, request: Request):
+        data = request.data
+        post_id = data['post']
+        image = data['image']
+        PostImage.objects.create(post_id=post_id, path=image)
+        return Response({'message': 'success'}, status=200)
 
 
 class FriendshipList(generics.ListCreateAPIView):
@@ -133,6 +302,7 @@ class UserLoginView(APIView):
         if user is not None:
             token, created = Token.objects.get_or_create(user=user)
             user.last_login = datetime.datetime.now()
+            user.save()
             return Response({'token': token.key})
         else:
             return Response({'error': 'Invalid username or password.'}, status=401)
