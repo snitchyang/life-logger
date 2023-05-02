@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import User, Plan, Tag, Diary, Comment, Post, Friendship
+from .models import *
 
 
 @admin.register(User)
@@ -20,8 +20,10 @@ class DiaryAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('content',)
-    search_fields = ('content',)
+    list_display = ('id', 'content',)
+    list_display_links = ('id',)
+    list_editable = ('content',)
+    # search_fields = ('content',)
 
 
 @admin.register(Plan)
@@ -49,3 +51,15 @@ class PostAdmin(admin.ModelAdmin):
 class FriendshipAdmin(admin.ModelAdmin):
     list_display = ('user', 'friend')
     search_fields = ('user',)
+
+
+@admin.register(DiaryImage)
+class DiaryImageAdmin(admin.ModelAdmin):
+    list_display = ('path', 'diary')
+    search_fields = ('path', 'diary')
+
+
+@admin.register(PostImage)
+class PostImageAdmin(admin.ModelAdmin):
+    list_display = ('path', 'post')
+    search_fields = ('path', 'post')
