@@ -1,21 +1,22 @@
 import datetime
 
 from django.contrib.auth import authenticate
-from django.contrib.auth.forms import PasswordResetForm, UserCreationForm
+from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.hashers import make_password
-from rest_framework import generics, permissions, status
+from django.core.paginator import Paginator
+from django.urls import reverse
+from rest_framework import generics, permissions
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
+from rest_framework.permissions import AllowAny
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from lifelogger import settings
 from .models import User, Plan, Tag, Diary, Comment, Post, Friendship
 from .serializers import UserSerializer, PlanSerializer, TagSerializer, DiarySerializer, CommentSerializer, \
     PostSerializer, FriendshipSerializer
-from django.shortcuts import get_object_or_404
-from django.urls import reverse
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
 
 
 @api_view(['GET'])
@@ -34,7 +35,7 @@ def api_root(request):
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -43,9 +44,10 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
-class PlanList(generics.ListCreateAPIView):
-    queryset = Plan.objects.all()
+class PlanList(APIView):
+    queryset = Plan.objects.all().order_by('-due')
     serializer_class = PlanSerializer
+    paginate_by = 10
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
@@ -67,8 +69,8 @@ class TagDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
-class DiaryList(generics.ListCreateAPIView):
-    queryset = Diary.objects.all()
+class DiaryList(generics.ListAPIView):
+    queryset = Diary.objects.all().order_by('-date')
     serializer_class = DiarySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
@@ -79,7 +81,7 @@ class DiaryDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
-class CommentList(generics.ListCreateAPIView):
+class CommentList(generics.ListAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -91,25 +93,21 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
-class PostList(generics.ListCreateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
+class PostList(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get(self, request: Request):
+        queryset = Post.objects.all().order_by('-date')
+        paginator = Paginator(queryset, 10)
+        page = paginator.page(request.query_params['page'])
+        posts = PostSerializer(page, many=True)
+        return Response(posts.data, status=200)
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-
-@api_view(['POST'])
-def like_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    post.likes += 1
-    post.save()
-    serializer = PostSerializer(post)
-    return Response(serializer.data)
 
 
 class FriendshipList(generics.ListCreateAPIView):

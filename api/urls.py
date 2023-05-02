@@ -5,7 +5,6 @@ from rest_framework_simplejwt.views import (
 )
 
 from .views import *
-from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('', api_root, name='api-root'),
@@ -27,7 +26,6 @@ urlpatterns = [
 
     path('posts', PostList.as_view(), name='post-list'),
     path('posts/<int:pk>', PostDetail.as_view(), name='post-detail'),
-    path('posts/<int:pk>/like', like_post, name='like-post'),
 
     path('friendships', FriendshipList.as_view(), name='friendship-list'),
     path('friendships/<int:pk>', FriendshipDetail.as_view(), name='friendship-detail'),

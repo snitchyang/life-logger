@@ -1,12 +1,19 @@
 from rest_framework import serializers
+
 from .models import User, Plan, Tag, Diary, Comment, Post, Friendship
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'biography', 'avatar', 'school', 'phoneNumber',
-                  'gender']
+        fields = ['id', 'avatar', 'biography', 'phone_number', 'email', 'school', 'last_login', 'username',
+                  'is_superuser']
+
+
+class UserHeaderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'avatar']
 
 
 class PlanSerializer(serializers.ModelSerializer):
@@ -18,7 +25,7 @@ class PlanSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = '__all__'
+        fields = ['content', ]
 
 
 class DiarySerializer(serializers.ModelSerializer):
@@ -30,7 +37,7 @@ class DiarySerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserHeaderSerializer()
 
     class Meta:
         model = Comment
@@ -38,7 +45,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserHeaderSerializer()
     comments = CommentSerializer(many=True)
 
     class Meta:

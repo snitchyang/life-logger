@@ -25,11 +25,12 @@ SECRET_KEY = 'django-insecure-ia$7o961_zi(q_+3%1*&q4a=9@-kh8&inawbf%n!!+fc6ud%u1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
 INSTALLED_APPS = [
+    'simpleui',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,10 +40,8 @@ INSTALLED_APPS = [
     'api',
     'corsheaders',
     'rest_framework',
-    'rest_framework.authtoken'
-]
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
+    'rest_framework.authtoken',
+
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -127,9 +126,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -155,3 +154,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'me@gmail.com'
 EMAIL_HOST_PASSWORD = 'password'
 APPEND_SLASH = False
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
