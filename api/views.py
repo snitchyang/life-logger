@@ -141,7 +141,7 @@ class PlanAdd(APIView):
 class TagList(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self):
+    def get(self, request):
         response = TagSerializer(Tag.objects.all(), many=True).data
         return Response(response, status=200)
 

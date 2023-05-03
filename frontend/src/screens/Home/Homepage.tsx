@@ -49,10 +49,8 @@ function HomePage({ navigation }) {
       let newData = undefined;
       for (const text of textGroup) {
         // filter of data, #xxx means it's a tag
-        console.log(text);
         newData = undefined;
         if (text.at(0) === "#") {
-          console.log("tag");
           let t = text.substring(1);
           newData = allData.filter((item) => TagFilter({ item, t }));
         } else {
@@ -64,7 +62,6 @@ function HomePage({ navigation }) {
           }
         }
       }
-      console.log(filter.length);
       setFilterData(filter);
       setSearchText(text);
     } else {
@@ -73,6 +70,7 @@ function HomePage({ navigation }) {
     }
   }
 
+  if (!allTags || !allData) return <></>;
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, maxHeight: 30, flexDirection: "row" }}>
