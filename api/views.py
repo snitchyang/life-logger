@@ -80,7 +80,7 @@ class UserSelf(APIView):
 
 
 class UserFriends(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request: Request):
         user = get_user(request)
@@ -102,6 +102,16 @@ class UserFriends(APIView):
         friendship = Friendship.objects.get(friend_id=friend_id, user=user)
         friendship.delete()
         return Response({'message': 'success'}, status=200)
+
+
+class SearchFriends(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    def post(self,request:Request):
+        user = get_user(request)
+        friend_name = request.data['friend']
+        friends:[] = User.objects.get(username__contains=friend_name)
+        return Response(friends,status=200)
+
 
 
 class PlanList(APIView):

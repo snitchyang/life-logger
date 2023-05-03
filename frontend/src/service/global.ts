@@ -24,6 +24,18 @@ export const put_request_header = (body: string) => {
     headers: {
       Authorization: "Token " + test_token,
     },
+    credentials: "include",
+  };
+  return request;
+};
+export const delete_request_header = (body: string) => {
+  let request: RequestInit = {
+    method: "DELETE",
+    body: body,
+    headers: {
+      Authorization: "Token " + test_token,
+    },
+    credentials: "include",
   };
   return request;
 };
