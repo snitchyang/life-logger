@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { Button, View } from "react-native";
-import { curUserID, posts } from "../../data/data";
-import { type IPost } from "../../interface";
+import { curUserID } from "../../data/data";
+import { posts } from "../../data/data";
+import { IPost } from "../../interface";
 
-interface Props {
+interface PostActionSection {
   postID: number;
 }
 
-export const PostActionSection = ({ postID }: Props) => {
+export const PostActionSection = ({ postID }: PostActionSection) => {
   const getNewPost = (): IPost => {
     return posts.find((item) => postID === item.id);
   };
@@ -23,9 +24,8 @@ export const PostActionSection = ({ postID }: Props) => {
   }, []);
   const [liked, setLiked] = useState(false);
   useEffect(() => {
-    if (post.liker.find((item) => item.id === curUserID) !== undefined) {
+    if (post.liker.find((item) => item.id === curUserID) !== undefined)
       setLiked(true);
-    }
   });
   const addLike = () => {
     setLikes(likes + 1);
@@ -57,7 +57,7 @@ export const PostActionSection = ({ postID }: Props) => {
           setShowComments(!showComments);
         }}
       ></Button>
-      {/* <CommentsList></CommentsList> */}
+      {/*<CommentsList></CommentsList>*/}
     </View>
   );
 };

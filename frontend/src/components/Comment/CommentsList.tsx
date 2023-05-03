@@ -1,8 +1,8 @@
-import { type IComment } from "../../interface";
+import { IComment } from "../../interface";
 import {
   FlatList,
   ListRenderItem,
-  type ListRenderItemInfo,
+  ListRenderItemInfo,
   View,
 } from "react-native";
 import { Card, Divider, Text } from "@rneui/base";

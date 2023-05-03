@@ -1,10 +1,10 @@
 import { Text, View } from "react-native";
 import { userInfoStyleSheet } from "../../../../screens/Profiles/UserInfoStyleSheet";
 import { Ionicons } from "@expo/vector-icons";
-import { ChangeGenderInfo } from "../ChangeInfo/ChangeGenderInfo";
+import { ChangeGenderInfo } from "../InfoChange/ChangeGenderInfo";
 
 export const GenderInfo = ({ gender }) => {
-  let Gender: string;
+  let Gender: string = undefined;
   if (gender === 0) Gender = "male";
   else if (gender === 1) Gender = "female";
   else Gender = "unknown";

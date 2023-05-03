@@ -1,7 +1,8 @@
-import React, { type Dispatch, type SetStateAction, useState } from "react";
-import { type IComment, type IUser } from "../../interface";
-import { Input } from "@rneui/base";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { IComment, IUser } from "../../interface";
+import { Input, Text } from "@rneui/base";
 import { View } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 
 interface AddComment {
   setComment: Dispatch<SetStateAction<IComment[]>>;
@@ -15,22 +16,22 @@ export const AddComment = ({
   comments,
   setAddComment,
   user,
-}: AddComment): JSX.Element => {
+}: AddComment) => {
   const [content, setContent] = useState("");
 
-  const handleAddComment = (): void => {
+  const handleAddComment = () => {
     setComment(() => {
       comments.push({
         id: comments.length === 0 ? 0 : comments[comments.length - 1].id + 1,
-        content,
-        user,
+        content: content,
+        user: user,
         date: new Date(),
       });
       return comments;
     });
     setAddComment(false);
   };
-  const handleCancelComment = (): void => {
+  const handleCancelComment = () => {
     setAddComment(false);
   };
   return (

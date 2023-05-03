@@ -1,5 +1,5 @@
-import { diaryStyleSheet } from "./DiaryStyleSheet";
-import { Image, View } from "react-native";
+import React from "react";
+import { Image } from "react-native";
 
 interface DiaryImg {
   img: string;
@@ -8,7 +8,15 @@ interface DiaryImg {
 export const DiaryImg = ({ img }: DiaryImg) => {
   return (
     <Image
-      style={diaryStyleSheet.contentImg}
+      style={{
+        flex: 1,
+        paddingLeft: 10,
+        marginRight: 20,
+        width: "100%",
+        height: "100%",
+        // width: 100,
+        // height: 100,
+      }}
       source={require("../../../assets/diaryImage/testPic.jpg")}
       alt="picture"
     />
@@ -18,7 +26,12 @@ export const DiaryImg = ({ img }: DiaryImg) => {
 export const DetailImg = ({ img }: DiaryImg) => {
   return (
     <Image
-      style={diaryStyleSheet.detailImg}
+      style={{
+        flex: 1,
+        width: 100,
+        height: 130,
+        // marginHorizontal: 10,
+      }}
       source={require("../../../assets/diaryImage/testPic.jpg")}
       alt="picture"
     />

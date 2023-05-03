@@ -7,7 +7,7 @@ export const ChangeTextInfo = ({ usr, setUser, kind, visible, setVisible }) => {
   const [inputText, setInputText] = useState("");
   function changeInfo(text) {
     if (text) {
-      const newUser = usr;
+      let newUser = usr;
       if (kind === 1) {
         newUser.name = text;
         setUser(newUser);
@@ -17,8 +17,8 @@ export const ChangeTextInfo = ({ usr, setUser, kind, visible, setVisible }) => {
       }
     }
   }
-  let title;
-  let placeHolder;
+  let title = undefined;
+  let placeHolder = undefined;
   if (kind === 1) {
     title = "Change Name:";
     placeHolder = "> Input new name...";

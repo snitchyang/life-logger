@@ -1,4 +1,4 @@
-import { type IComment } from "../../interface";
+import { IComment } from "../../interface";
 import { Card, Text } from "@rneui/base";
 import { UserHeader } from "../Post/UserHeader";
 import { comments } from "../../data/data";

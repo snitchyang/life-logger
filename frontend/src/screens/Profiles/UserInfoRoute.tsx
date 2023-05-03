@@ -5,20 +5,17 @@ import { GenderInfo } from "../../components/SideBar/UserInfo/DetailedInfo/Gende
 import { SchoolInfo } from "../../components/SideBar/UserInfo/DetailedInfo/SchoolInfo";
 import React, { useState } from "react";
 import { userInfoStyleSheet } from "./UserInfoStyleSheet";
-import { ChangeInfo } from "../../components/SideBar/UserInfo/ChangeInfo/ChangeInfo";
-import { type IUser } from "../../interface";
+import { ChangeInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeInfo";
 
 // interface UserInfoRoute {
 //     user: IUser;
 // }
 
-// eslint-disable-next-line react/prop-types
-export const UserInfo = ({ route }): JSX.Element => {
-  // eslint-disable-next-line react/prop-types
+export const UserInfo = ({ route }) => {
   const { user } = route.params;
   const [modalVisible, setModalVisible] = useState(true);
   const [kind, setKind] = useState(-1);
-  const [usr, setUser] = useState<IUser>(user);
+  const [usr, setUser] = useState(user);
   return (
     <SafeAreaView style={{ flex: 1, marginTop: 25 }}>
       <ChangeInfo
@@ -35,7 +32,7 @@ export const UserInfo = ({ route }): JSX.Element => {
           setModalVisible(true);
         }}
       >
-        <AvatarInfo avaUri={usr.avatar} />
+        <AvatarInfo avaUri={user.profilePicture} />
       </TouchableOpacity>
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
@@ -44,7 +41,7 @@ export const UserInfo = ({ route }): JSX.Element => {
           setModalVisible(!modalVisible);
         }}
       >
-        <NameInfo name={usr.username} />
+        <NameInfo name={user.name} />
       </TouchableOpacity>
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
@@ -53,7 +50,7 @@ export const UserInfo = ({ route }): JSX.Element => {
           setModalVisible(!modalVisible);
         }}
       >
-        <GenderInfo gender={usr.gender} />
+        <GenderInfo gender={user.gender} />
       </TouchableOpacity>
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
@@ -62,7 +59,7 @@ export const UserInfo = ({ route }): JSX.Element => {
           setModalVisible(!modalVisible);
         }}
       >
-        <SchoolInfo school={usr.school} />
+        <SchoolInfo school={user.school} />
       </TouchableOpacity>
     </SafeAreaView>
   );

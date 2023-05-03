@@ -4,17 +4,16 @@ import BottomTabNavigator from "./bottomNavigator";
 import "../I18n";
 import { useTranslation } from "react-i18next";
 import { COLOR } from "../constants";
+import customDrawer from "./customDrawer";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
+import SettingsPage from "../screens/Settings/SettingsPage";
 import { UserInfo } from "../screens/Profiles/UserInfoRoute";
 import { users } from "../data/data";
 import { FriendsRoute } from "../components/SideBar/Friends/FriendsRoute";
-import { SettingsPage } from "../screens/Settings/SettingsPage";
-import { customDrawer } from "./customDrawer";
 
 const drawerNavigator = createDrawerNavigator();
-
-export function DrawerNavigator() {
+export default function DrawerNavigator() {
   const { t } = useTranslation();
   return (
     <drawerNavigator.Navigator
@@ -38,7 +37,7 @@ export function DrawerNavigator() {
         component={BottomTabNavigator}
         options={{
           drawerIcon: (focused) => {
-            const color = focused.focused ? COLOR.white : COLOR.black;
+            let color = focused.focused ? COLOR.white : COLOR.black;
             return (
               <FontAwesome
                 name="home"
@@ -56,7 +55,7 @@ export function DrawerNavigator() {
         options={{
           headerShown: true,
           drawerIcon: (focused) => {
-            const color = focused.focused ? COLOR.white : COLOR.black;
+            let color = focused.focused ? COLOR.white : COLOR.black;
             return (
               <Ionicons
                 name="settings"
@@ -74,7 +73,7 @@ export function DrawerNavigator() {
         initialParams={{ user: users[0] }}
         options={{
           drawerIcon: (focused) => {
-            const color = focused.focused ? COLOR.white : COLOR.black;
+            let color = focused.focused ? COLOR.white : COLOR.black;
             return (
               <FontAwesome
                 name="user"
@@ -92,7 +91,7 @@ export function DrawerNavigator() {
         initialParams={{ user: users[0] }}
         options={{
           drawerIcon: (focused) => {
-            const color = focused.focused ? COLOR.white : COLOR.black;
+            let color = focused.focused ? COLOR.white : COLOR.black;
             return (
               <FontAwesome5
                 name="user-friends"

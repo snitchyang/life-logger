@@ -1,14 +1,14 @@
 import { Tab } from "@rneui/base";
-import React, { type Dispatch, useEffect, useState } from "react";
-import WebView, { type WebViewMessageEvent } from "react-native-webview";
+import React, { Dispatch, useEffect, useState } from "react";
+import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { Alert, View } from "react-native";
 import { chartHTML, mapHTML } from "./WebViewHTML";
-import { getCurrentPositionAsync, type LocationObject } from "expo-location";
+import { getCurrentPositionAsync, LocationObject } from "expo-location";
 
 export const Statistic = () => {
   const [index, setIndex] = useState(0);
-  const AMAP_KEY = "751df63e511df1470816c41d9a4f0ae4"; // 申请的高德api密钥
-  const AMAP_PREFIX = "https://restapi.amap.com/v3"; // 高德api前缀
+  const AMAP_KEY = "751df63e511df1470816c41d9a4f0ae4"; //申请的高德api密钥
+  const AMAP_PREFIX = "https://restapi.amap.com/v3"; //高德api前缀
   const [location, setLocation]: [LocationObject, Dispatch<LocationObject>] =
     useState(null);
   const [errorMsg, setErrorMsg] = useState("");
@@ -21,12 +21,7 @@ export const Statistic = () => {
   }, []);
   return (
     <View style={{ flex: 1 }}>
-      <Tab
-        value={index}
-        onChange={(i: number) => {
-          setIndex(i);
-        }}
-      >
+      <Tab value={index} onChange={(i: number) => setIndex(i)}>
         <Tab.Item title={"Chart"}></Tab.Item>
         <Tab.Item title={"Map"}></Tab.Item>
       </Tab>

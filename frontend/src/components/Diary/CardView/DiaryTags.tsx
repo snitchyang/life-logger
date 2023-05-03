@@ -1,16 +1,37 @@
-import { ITag } from "../../../interface";
-import { diaryStyleSheet } from "./DiaryStyleSheet";
 import { Text, View } from "react-native";
+import React from "react";
 
-interface DiaryTags {
+interface IDiaryTags {
   id: number;
   tag_name: string;
 }
 
-export const DiaryTags = ({ id, tag_name }: DiaryTags) => {
+export const DiaryTags = ({ id, tag_name }: IDiaryTags) => {
   return (
-    <View style={diaryStyleSheet.tagsContainer}>
-      <Text style={diaryStyleSheet.tagsText}>{"# " + tag_name}</Text>
+    <View
+      style={{
+        borderWidth: 1,
+        borderColor: "#90a0c2",
+        borderBottomWidth: 1,
+        borderRadius: 10,
+        paddingHorizontal: 10,
+        height: 15,
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        marginLeft: 5,
+        backgroundColor: "#FFF",
+      }}
+    >
+      <Text
+        style={{
+          justifyContent: "flex-start",
+          fontStyle: "italic",
+          fontSize: 7,
+        }}
+      >
+        {"# " + tag_name}
+      </Text>
     </View>
   );
 };

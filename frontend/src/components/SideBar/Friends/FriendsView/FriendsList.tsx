@@ -1,4 +1,4 @@
-import { type IUser } from "../../../../interface";
+import { IUser } from "../../../../interface";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { Avatar } from "@rneui/base";
 import { Ionicons } from "@expo/vector-icons";

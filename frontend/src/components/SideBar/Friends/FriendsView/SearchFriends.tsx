@@ -1,18 +1,15 @@
 import {
   FlatList,
   Modal,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import { useState } from "react";
+import React, { useState } from "react";
 import { users } from "../../../../data/data";
-import { type IUser } from "../../../../interface";
-import {
-  searchFriendsStyleSheet,
-  searchListStyleSheet,
-} from "../FriendsStyleSheet";
+import { IUser } from "../../../../interface";
 import { Avatar } from "@rneui/base";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -24,15 +21,14 @@ export const SearchFriends = ({ me, isVisible, setVisible }) => {
   function search(text) {
     console.log(text);
     if (text) {
-      const newFilter: IUser[] = [];
+      let newFilter: IUser[] = [];
       for (const usr of users) {
         if (
-          usr.id.toString().includes(text) ||
-          usr.name.indexOf(text) > -1 ||
-          usr.school.includes(text)
-        ) {
+          usr.id.toString().indexOf(text) > -1 ||
+          usr.username.indexOf(text) > -1 ||
+          usr.school.indexOf(text) > -1
+        )
           newFilter.push(usr);
-        }
       }
       setFilter(newFilter);
       setInputText(text);
@@ -68,9 +64,7 @@ export const SearchFriends = ({ me, isVisible, setVisible }) => {
           style={searchFriendsStyleSheet.inputItem}
           placeholder={"> id, name or school"}
           value={inputText}
-          onChangeText={(item) => {
-            search(item);
-          }}
+          onChangeText={(item) => search(item)}
         />
         <FlatList
           style={searchFriendsStyleSheet.listItem}
@@ -99,11 +93,11 @@ const SearchFriendsList = ({ me, friend }: SearchFriendsList) => {
           containerStyle={{ marginLeft: 15 }}
           size={20}
           rounded={true}
-          source={{ uri: friend.profilePicture }}
+          source={{ uri: friend.avatar }}
         />
       </View>
       <View style={searchListStyleSheet.nameContainer}>
-        <Text style={searchListStyleSheet.nameText}>{friend.name}</Text>
+        <Text style={searchListStyleSheet.nameText}>{friend.username}</Text>
       </View>
       <TouchableOpacity
         onPress={() => {
@@ -122,3 +116,70 @@ const SearchFriendsList = ({ me, friend }: SearchFriendsList) => {
     </View>
   );
 };
+const searchFriendsStyleSheet = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+  },
+  titleContainer: {
+    paddingVertical: 20,
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  titleText: {
+    flex: 8,
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+    paddingLeft: 40,
+  },
+  cancelContainer: {
+    justifyContent: "center",
+  },
+  cancelText: {
+    fontSize: 10,
+    textAlign: "center",
+    color: "#3f90a8",
+    marginRight: 20,
+    paddingTop: 10,
+  },
+  inputItem: {
+    marginHorizontal: 10,
+    marginLeft: 20,
+    borderWidth: 0.5,
+    borderColor: "#dedede",
+  },
+  listItem: {
+    width: "90%",
+    marginVertical: 10,
+  },
+});
+const searchListStyleSheet = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    flexDirection: "row",
+    width: "100%",
+    marginVertical: 5,
+  },
+  avatarContainer: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  nameContainer: {
+    flex: 12,
+    textAlign: "center",
+    justifyContent: "center",
+    // borderWidth: 1,
+    // borderColor: "black",
+  },
+  nameText: {
+    textAlign: "center",
+    fontSize: 12,
+  },
+  friendsText: {
+    fontSize: 10,
+    color: "grey",
+  },
+  iconItem: {
+    flex: 1,
+  },
+});

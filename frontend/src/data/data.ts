@@ -1,4 +1,4 @@
-import { type IDiary, type IPost, type ITag, type IUser } from "../interface";
+import { IDiary, IPost, ITag, IUser } from "../interface";
 
 export const curUserID = 1;
 

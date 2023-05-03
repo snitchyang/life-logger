@@ -5,11 +5,8 @@ import { AntDesign, Ionicons } from "@expo/vector-icons";
 import "../I18n";
 import { useTranslation } from "react-i18next";
 import { COLOR } from "../constants";
+import { ActionPage, DataPage, DiscoveryPage, PlanPage } from "../screens";
 import { HomeStackScreen } from "./HomeStackNavigator";
-import { ActionPage } from "../screens/Action/Actionpage";
-import { DiscoveryPage } from "../screens/Discovery/Discoverypage";
-import { PlanPage } from "../screens/Plan/Planpage";
-import { DataPage } from "../screens/Data/Datapage";
 
 const bottomNavigator = createBottomTabNavigator();
 
@@ -58,7 +55,7 @@ export default function BottomTabNavigator({ navigation }) {
         name="Home"
         options={{
           headerTitleAlign: "center",
-          title: "home",
+          title: t("home"),
           headerLeft: () => (
             <TouchableOpacity
               style={{ marginLeft: 20 }}

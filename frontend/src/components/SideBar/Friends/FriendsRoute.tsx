@@ -1,32 +1,28 @@
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
-import { IDiary, IPlan, IPost, type IUser } from "../../../interface";
+import { IUser } from "../../../interface";
 import { FriendsList } from "./FriendsView/FriendsList";
 import { friendsViewStyleSheet } from "./FriendsStyleSheet";
 import { Ionicons } from "@expo/vector-icons";
 import { SearchFriends } from "./FriendsView/SearchFriends";
 import { users } from "../../../data/data";
 
-interface FriendsRoute {
-  user: IUser;
-}
-
 export const FriendsRoute = ({ route }) => {
   const { user } = route.params;
   const [isVisible, setIsVisible] = useState(false);
 
   function getFriends(friendsList: number[]) {
-    const f: IUser[] = [];
+    let f: IUser[] = [];
     for (const friendsListElement of friendsList) {
       for (const usr of users) {
         if (usr.id === friendsListElement) {
           f.push(usr);
-          continue;
         }
       }
     }
     return f;
   }
+
   return (
     <View style={friendsViewStyleSheet.wrapper}>
       <SearchFriends

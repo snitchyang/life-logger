@@ -1,5 +1,5 @@
 import { diaries, tags } from "../../data/data";
-import { type IDiary, type ITag } from "../../interface";
+import { IDiary, ITag } from "../../interface";
 
 const chartTypes = {
   bar: "bar",
@@ -14,7 +14,7 @@ const chartType = chartTypes.pie;
 const diaryList = diaries;
 const tagList: string[] = tags.map((item: ITag) => item.content);
 const getData = () => {
-  const list: number[] = [];
+  let list: number[] = [];
   for (let i = 0; i < tagList.length; i++) {
     list.push(0);
   }
