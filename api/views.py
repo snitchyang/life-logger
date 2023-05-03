@@ -248,6 +248,8 @@ class PostList(APIView):
         paginator = Paginator(queryset, 10)
         page = paginator.page(request.query_params['page'])
         posts = PostSerializer(page, many=True, context={'request': request}).data
+        for post in posts:
+            post['liked'] = post['liker'].count(user.id) > 0
         return Response(posts, status=200)
 
 

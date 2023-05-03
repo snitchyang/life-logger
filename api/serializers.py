@@ -70,7 +70,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ['id', 'user', 'comments', 'images', 'date', 'location', 'content', 'likes', 'liker']
 
 
 class FriendshipSerializer(serializers.ModelSerializer):

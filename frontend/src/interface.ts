@@ -39,19 +39,18 @@ export interface IComment {
   user: IUser;
   date: Date;
   content: string;
-  post: IPost;
 }
 
 // 盆友圈帖子
 export interface IPost {
   id: number;
   date: Date;
-  link: string;
   location: string;
   content: string;
   image: string;
   user: IUser;
   likes: number;
   comments: IComment[];
-  liker: IUser[];
+  liker: number[];
+  liked: boolean;
 }
