@@ -11,9 +11,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserHeaderSerializer(serializers.ModelSerializer):
+    avatar = serializers.ImageField(use_url=True)
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'avatar']
+        fields = ('id', 'username', 'avatar')
 
 
 class PlanSerializer(serializers.ModelSerializer):
@@ -25,7 +27,7 @@ class PlanSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ['content', ]
+        fields = ['id', 'content', ]
 
 
 class DiarySerializer(serializers.ModelSerializer):
@@ -59,3 +61,19 @@ class FriendshipSerializer(serializers.ModelSerializer):
     class Meta:
         model = Friendship
         fields = ['id', 'friend']
+
+
+class PostImageSerializer(serializers.ModelSerializer):
+    path = serializers.ImageField(use_url=True)
+
+    class Meta:
+        model = PostImage
+        fields = ['path', ]
+
+
+class DiaryImageSerializer(serializers.ModelSerializer):
+    path = serializers.ImageField(use_url=True)
+
+    class Meta:
+        model = DiaryImage
+        fields = ['path', ]
