@@ -17,11 +17,11 @@ export const CommentsList = ({ comments }: CommentsList): JSX.Element => {
     );
     setComments(newComments);
   }, [comments]);
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item, index }) => {
     return (
       <View>
         <Divider />
-        <Comment comment={item} />
+        <Comment comment={item} key={index} />
       </View>
     );
   };

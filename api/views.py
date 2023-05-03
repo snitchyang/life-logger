@@ -106,12 +106,12 @@ class UserFriends(APIView):
 
 class SearchFriends(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    def post(self,request:Request):
+
+    def post(self, request: Request):
         user = get_user(request)
         friend_name = request.data['friend']
-        friends:[] = User.objects.get(username__contains=friend_name)
-        return Response(friends,status=200)
-
+        friends: [] = User.objects.get(username__contains=friend_name)
+        return Response(friends, status=200)
 
 
 class PlanList(APIView):

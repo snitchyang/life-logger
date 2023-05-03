@@ -1,6 +1,6 @@
 import { FlatList, Image, View } from "react-native";
 import { IPost } from "../../interface";
-import React, { useState } from "react";
+import React from "react";
 import { Card, Text } from "@rneui/base";
 import { UserHeader } from "./UserHeader";
 import { PostActionSection } from "./PostActionSection";
@@ -10,18 +10,6 @@ interface Props {
 }
 
 export const Post = ({ post }: Props): JSX.Element => {
-  const getNewPost = async () => {};
-  const [likes, setLikes] = useState(post.likes);
-  const [liked, setLiked] = useState(post.liked);
-
-  const addLike = () => {
-    setLikes(likes + 1);
-  };
-  const removeLike = () => {
-    setLikes(likes - 1);
-  };
-  const [showComments, setShowComments] = useState(false);
-
   return (
     <Card wrapperStyle={{ width: "100%" }}>
       <View style={{ flexDirection: "column" }}>
@@ -32,10 +20,11 @@ export const Post = ({ post }: Props): JSX.Element => {
       </View>
       <FlatList
         data={post.image}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <Image
             style={{ width: 100, height: 100 }}
             source={{ uri: item.path }}
+            key={index}
           />
         )}
       />

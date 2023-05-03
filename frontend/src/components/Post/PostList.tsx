@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { VirtualizedList } from "react-native";
+import { FlatList } from "react-native";
 import { IPost } from "../../interface";
 import { get_request_header, root_path } from "../../service/global";
 import { Post } from "./Post";
+import { GetPostList } from "../../service/PostService";
 
 export const PostList = () => {
   const [page, setPage] = useState(1);
@@ -13,20 +14,31 @@ export const PostList = () => {
       get_request_header()
     ).then((res) => res.json());
   };
-
+  const [postEnd, setPostEnd] = useState(false);
   useEffect(() => {
-    getPosts(page).then((res) => setPosts(res));
+    getPosts(page).then((res) => {
+      setPosts(res);
+      if (res.length !== 10) setPostEnd(true);
+    });
   }, []);
   return (
-    <VirtualizedList
+    <FlatList
       data={posts}
-      renderItem={({ item }) => {
-        return <Post post={item} />;
+      renderItem={({ item, index }) => {
+        return <Post post={item} key={item.id} />;
       }}
-      initialNumToRender={5}
-      getItemCount={(data: IPost[]) => data.length}
-      getItem={(data: IPost[], index: number) => data[index]}
-      style={{ width: "90%" }}
+      onEndReached={async () => {
+        if (postEnd) return;
+        setPage(page + 1);
+        await GetPostList(page + 1).then((res) => {
+          setPosts(posts.concat(res));
+          if (res.length !== 10) setPostEnd(true);
+        });
+      }}
+      initialNumToRender={10}
+      // getItemCount={(data: IPost[]) => data.length}
+      // getItem={(data: IPost[], index: number) => data[index]}
+      style={{ width: "95%" }}
     />
   );
 };
