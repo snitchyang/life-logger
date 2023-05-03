@@ -10,11 +10,15 @@ import {useEffect, useState} from "react";
 import Modal from "react-native-modal";
 import {useTranslation} from "react-i18next";
 import {IPlan} from "../../interface";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 function PlanPage() {
     const {t} = useTranslation();
     const [isAddingEvent, setIsAddingEvent] = useState(false)
+    const [isDateShown, setIsDateShown] = useState(false)
     const [eventList, setEventList] = useState([])
+    const [newEventName, setNewEventName] = useState("")
+    const [newEventDate, setNewEventDate] = useState(new Date())
     //fetch IPlan[] from backend
     useEffect(() => {fetch('http://10.0.2.2:8000/api/plan/', {
         method: 'GET',
@@ -44,6 +48,18 @@ function PlanPage() {
     const addEvent = () => {
         setIsAddingEvent(true)
     }
+    const dateChange = (event, selectedDate) => {
+        setIsDateShown(false);
+
+        if (event.type !== 'set') {
+            return;
+        }
+
+        const currentDate = selectedDate || newEventDate;
+
+        setNewEventDate(currentDate);
+        setIsDateShown(false);
+    }
     return(
         <View style={{ flex:1}}>
             <FlatList style={{flex:1}}
@@ -69,7 +85,28 @@ function PlanPage() {
                 isVisible={isAddingEvent}
                 onBackButtonPress={()=>setIsAddingEvent(false)}>
                 <View style={styles.containerStyle}>
-                    <TextInput style={styles.textInput} placeholder={t('Add an event')}/>
+                    <TextInput style={styles.textInput} placeholder={t('Add an event')} onChangeText={(text) => setNewEventName(text)}/>
+                    <Button style={{margin:"5%"}} onPress={()=>setIsDateShown(true)}>{t('Select a date')}</Button>
+                    {isDateShown && <DateTimePicker value={new Date()} modal={true} onChange={dateChange}/>}
+                    <Button style={{margin:"5%"}} onPress={()=> {
+                        setIsAddingEvent(false)
+                        //add the event to the eventList
+                        setEventList([...eventList, {date: newEventDate.toDateString(), eventName: [newEventName]}])
+                        //add the event to the backend
+                        fetch('http://10.0.2.2:8000/api/plan/', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                name: newEventName,
+                                date: newEventDate.toDateString(),
+                                finished: false,
+                            }),
+                            }).then((res)=>res.json()).then(
+                                (response) => {
+                                    console.log(response.data)
+                                }
+                            )
+                        }
+                    }>{t('Add')}</Button>
                 </View>
             </Modal>
         </View>
