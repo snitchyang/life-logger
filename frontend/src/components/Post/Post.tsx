@@ -5,6 +5,7 @@ import {Link} from '@react-navigation/native';
 import {Content} from './Content';
 import {Image} from './Image';
 import {IPost} from "../../interface";
+import React from 'react';
 
 export const Post = ({
                          id,

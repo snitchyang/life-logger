@@ -6,19 +6,41 @@ import {StyleSheet} from "react-native";
 import {Button, FAB} from "@rneui/base";
 import {COLOR} from "../../constants";
 import {AntDesign} from "@expo/vector-icons";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Modal from "react-native-modal";
 import {useTranslation} from "react-i18next";
+import {IPlan} from "../../interface";
 
 function PlanPage() {
-    const {t} = useTranslation()
+    const {t} = useTranslation();
     const [isAddingEvent, setIsAddingEvent] = useState(false)
-    const eventList = [
-        {date: "Mar 3", eventName: ["ICS homework", "Jogging"]},
-        {date: "Mar 5", eventName: ["ADS homework", "PRP"]},
-        {date: "Mar 7", eventName: ["ADS homework", "PRP"]},
-        {date: "Mar 9", eventName: ["ADS homework", "PRP"]}
-    ]
+    const [eventList, setEventList] = useState([])
+    //fetch IPlan[] from backend
+    useEffect(() => {fetch('http://10.0.2.2:8000/api/plan/', {
+        method: 'GET',
+    }).then((res)=>res.json()).then(
+        (response) => {
+            //convert planList to eventList. eventList is a json data, which is a list of {date: string, eventName: string[]}
+            let newList = []
+            for (let i = 0; i < response.length; i++) {
+                //if the date of the plan is already in the eventList, add the plan to the eventName of the eventList
+                if (newList.some((event) => event.date === response[i].date)) {
+                    newList.find((event) => event.date === response[i].date).eventName.push(planList[i].name)
+                }else{
+                    //if the date of the plan is not in the eventList, add a new event to the eventList
+                    newList.push({date: response[i].date, eventName: [response[i].name]})
+                }
+            }
+            setEventList(newList)
+        }
+    )},[])
+
+    // const eventList = [
+    //     {date: "Mar 3", eventName: ["ICS homework", "Jogging"]},
+    //     {date: "Mar 5", eventName: ["ADS homework", "PRP"]},
+    //     {date: "Mar 7", eventName: ["ADS homework", "PRP"]},
+    //     {date: "Mar 9", eventName: ["ADS homework", "PRP"]}
+    // ]
     const addEvent = () => {
         setIsAddingEvent(true)
     }
