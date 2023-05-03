@@ -24,8 +24,7 @@ export const Comment = ({ comment }: Comment) => {
             paddingTop: 2,
           }}
         >
-          {comment.date.toString()}
-          {"前"}
+          {/*{getTimeDistance(comment.date)}*/}
         </Text>
       </View>
       <Text>{comment.content}</Text>
