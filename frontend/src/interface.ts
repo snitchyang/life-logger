@@ -34,6 +34,10 @@ export interface IDiary {
   tag: ITag[];
 }
 
+export interface IMessage {
+  message: string;
+}
+
 export interface IComment {
   id: number;
   user: IUser;
@@ -47,7 +51,7 @@ export interface IPost {
   date: Date;
   location: string;
   content: string;
-  image: string;
+  image: IImage[];
   user: IUser;
   likes: number;
   comments: IComment[];

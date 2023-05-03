@@ -1,29 +1,27 @@
 import { IComment } from "../../interface";
-import {
-  FlatList,
-  ListRenderItem,
-  ListRenderItemInfo,
-  View,
-} from "react-native";
-import { Card, Divider, Text } from "@rneui/base";
+import { FlatList, View } from "react-native";
+import { Divider } from "@rneui/base";
 import { Comment } from "./Comment";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface CommentsList {
   comments: IComment[];
 }
 
 export const CommentsList = ({ comments }: CommentsList): JSX.Element => {
-  const [sortedComments, setComments] = useState(() =>
-    comments.sort((a: IComment, b: IComment) =>
-      a.date > b.date ? 1 : a.date < b.date ? -1 : 0
-    )
-  );
-  const renderItem = (item: ListRenderItemInfo<IComment>) => {
+  const [sortedComments, setComments] = useState<IComment[]>([]);
+  useEffect(() => {
+    let newComments = comments;
+    newComments.sort((a: IComment, b: IComment) =>
+      a.date > b.date ? -1 : a.date < b.date ? 1 : 0
+    );
+    setComments(newComments);
+  }, [comments]);
+  const renderItem = ({ item }) => {
     return (
       <View>
         <Divider />
-        <Comment comment={item.item} />
+        <Comment comment={item} />
       </View>
     );
   };

@@ -226,7 +226,7 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class CommentAdd(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def post(self, request: Request):
         user = get_user(request)
@@ -269,6 +269,24 @@ class PostAdd(APIView):
         user = get_user(request)
         post: Post = Post.objects.create(location=location, content=content, user=user)
         return Response({'post': post.id}, status=200)
+
+
+class PostLike(APIView):
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    def post(self, request: Request):
+        data = request.data
+        post_id = data['post']
+        like = data['like']
+        user = get_user(request)
+        post: Post = Post.objects.get(id=post_id)
+        if like is True:
+            post.liker.add(user)
+            post.likes += 1
+        else:
+            post.liker.remove(user)
+            post.likes -= 1
+        post.save()
+        return Response({'message': 'success'}, status=200)
 
 
 class PostImageAdd(APIView):

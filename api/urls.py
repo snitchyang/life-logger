@@ -32,6 +32,7 @@ urlpatterns = [
 
     path('posts', PostList.as_view(), name='post-list'),
     path('post/<int:pk>', PostDetail.as_view(), name='post-detail'),
+    path('post/like', PostLike.as_view(), name='post-add'),
     path('post/add', PostAdd.as_view(), name='post-add'),
     path('post/image/add', PostImageAdd.as_view(), name='post-image-add'),
 

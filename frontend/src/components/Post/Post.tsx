@@ -1,9 +1,9 @@
-import { Button, View } from "react-native";
-import { UserHeader } from "./UserHeader";
-import { Link } from "@react-navigation/native";
+import { FlatList, Image, View } from "react-native";
 import { IPost } from "../../interface";
 import React, { useState } from "react";
-import { Text } from "@rneui/base";
+import { Card, Text } from "@rneui/base";
+import { UserHeader } from "./UserHeader";
+import { PostActionSection } from "./PostActionSection";
 
 interface Props {
   post: IPost;
@@ -23,33 +23,23 @@ export const Post = ({ post }: Props): JSX.Element => {
   const [showComments, setShowComments] = useState(false);
 
   return (
-    <View onTouchEnd={() => console.log(post.id)}>
-      <Link to={`/posts/${post.id}`}>
+    <Card wrapperStyle={{ width: "100%" }}>
+      <View style={{ flexDirection: "column" }}>
         <UserHeader date={post.date} user={post.user} />
-        <Text>{post.content}</Text>
-      </Link>
-      <View>
-        <Button
-          title={"like"}
-          onPress={() => {
-            if (liked) {
-              removeLike();
-            } else {
-              addLike();
-            }
-            setLiked(!liked);
-          }}
-        ></Button>
-        {likes}
-        <Button
-          title={"showComments"}
-          disabled={!showComments}
-          onPress={() => {
-            setShowComments(!showComments);
-          }}
-        ></Button>
-        {/*<CommentsList></CommentsList>*/}
       </View>
-    </View>
+      <View style={{ marginTop: 5 }}>
+        <Text>{post.content}</Text>
+      </View>
+      <FlatList
+        data={post.image}
+        renderItem={({ item }) => (
+          <Image
+            style={{ width: 100, height: 100 }}
+            source={{ uri: item.path }}
+          />
+        )}
+      />
+      <PostActionSection post={post} />
+    </Card>
   );
 };

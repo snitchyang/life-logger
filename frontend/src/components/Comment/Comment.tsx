@@ -1,9 +1,7 @@
 import { IComment } from "../../interface";
-import { Card, Text } from "@rneui/base";
-import { UserHeader } from "../Post/UserHeader";
-import { comments } from "../../data/data";
-import { timeToNowChinese } from "../timeHandle";
-import { View } from "react-native";
+import { Text } from "@rneui/base";
+import { Image, View } from "react-native";
+import React from "react";
 
 interface Comment {
   comment: IComment;
@@ -13,8 +11,12 @@ export const Comment = ({ comment }: Comment) => {
   return (
     <View>
       <View style={{ flexDirection: "row" }}>
-        <Text style={{ paddingRight: 10, fontSize: 16 }}>
-          {comment.user.name}
+        <Image
+          source={{ uri: comment.user.avatar }}
+          style={{ width: 15, marginRight: 15 }}
+        />
+        <Text style={{ marginRight: 10, fontSize: 16 }}>
+          {comment.user.username}
         </Text>
         <Text
           style={{
@@ -22,7 +24,7 @@ export const Comment = ({ comment }: Comment) => {
             paddingTop: 2,
           }}
         >
-          {timeToNowChinese(comment.date)}
+          {comment.date.toString()}
           {"前"}
         </Text>
       </View>

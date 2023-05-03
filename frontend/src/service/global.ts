@@ -9,8 +9,10 @@ export const post_request_header = (body: string) => {
     method: "POST",
     body: body,
     headers: {
-      Authorization: "token " + test_token,
+      Authorization: "Token " + test_token,
+      "Content-Type": "application/json",
     },
+    credentials: "include",
   };
   return request;
 };
