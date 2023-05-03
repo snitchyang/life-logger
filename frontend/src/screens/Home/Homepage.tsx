@@ -2,29 +2,28 @@ import { useTranslation } from "react-i18next";
 import { ScrollView, TextInput, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { IDiary } from "../../interface";
+import { IDiary, ITag } from "../../interface";
 import { DiaryCard } from "../../components/Diary/CardView/DiaryCard";
+import { get_diary, get_tags } from "../../service/DiaryService";
 
 function HomePage({ navigation }) {
   const { t, i18n } = useTranslation();
   const [filterData, setFilterData] = useState<IDiary[]>([]);
+  const [allTags, setAllTags] = useState<ITag[]>([]);
   const [allData, setAllData] = useState<IDiary[]>([]);
-  const getDiary = async (): Promise<IDiary[]> => {
-    return await fetch("http://10.0.2.2:8000/api/diaries", {
-      headers: {
-        Authorization: "Token 3518f3f1a74627cb896612ac4634b82ef6d2848f",
-      },
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .catch((err) => console.error(err));
-  };
+
   useEffect(() => {
-    getDiary().then((res) => {
+    get_diary().then((res) => {
       setAllData(res);
       setFilterData(res);
     });
   }, []);
+  useEffect(() => {
+    get_tags().then((res) => {
+      setAllTags(res);
+    });
+  }, []);
+
   const [searchText, setSearchText] = useState("");
 
   function ContentFilter({ item, text }) {
@@ -35,7 +34,7 @@ function HomePage({ navigation }) {
 
   function TagFilter({ item, t }) {
     // item is an ITag object
-    let tags = item.tag;
+    let tags = allTags;
     for (const tag of tags) {
       if (tag.content.indexOf(t) > -1) return true;
     }

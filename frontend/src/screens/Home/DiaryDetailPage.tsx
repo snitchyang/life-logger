@@ -14,7 +14,7 @@ export const DiaryDetailPage = ({ diary }: Props) => {
   let title = diary.title;
   let tags = diary.tag;
   let content = diary.content;
-  let imgs = diary.images;
+  let images = diary.images;
   return (
     <View style={{ flex: 1, minWidth: 350 }}>
       <View style={{ flexDirection: "row" }}>
@@ -41,7 +41,7 @@ export const DiaryDetailPage = ({ diary }: Props) => {
         <DiaryHeader tags={tags} date={date} />
       </View>
       <View style={{ flex: 9 }}>
-        <DetailedContent content={content} images={imgs} />
+        <DetailedContent content={content} images={images} />
       </View>
     </View>
   );

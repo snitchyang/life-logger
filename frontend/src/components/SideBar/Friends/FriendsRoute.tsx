@@ -13,6 +13,7 @@ export const FriendsRoute = ({ route }) => {
 
   function getFriends(friendsList: number[]) {
     let f: IUser[] = [];
+    let user: IUser;
     for (const friendsListElement of friendsList) {
       for (const usr of users) {
         if (usr.id === friendsListElement) {
