@@ -158,8 +158,8 @@ class DiaryList(APIView):
     def get(self, request: Request):
         user = get_user(request)
         diaries = DiarySerializer(Diary.objects.filter(user=user).order_by('-date'), many=True,
-                                  context={'request': request})
-        return Response(diaries.data, status=200)
+                                  context={'request': request}).data
+        return Response(diaries, status=200)
 
 
 # class DiaryDetail(generics.RetrieveUpdateDestroyAPIView):

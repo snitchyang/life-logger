@@ -18,6 +18,22 @@ class UserHeaderSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'avatar')
 
 
+class PostImageSerializer(serializers.ModelSerializer):
+    path = serializers.ImageField(use_url=True)
+
+    class Meta:
+        model = PostImage
+        fields = ['path', ]
+
+
+class DiaryImageSerializer(serializers.ModelSerializer):
+    path = serializers.ImageField(use_url=True)
+
+    class Meta:
+        model = DiaryImage
+        fields = ['path', ]
+
+
 class PlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plan
@@ -32,6 +48,7 @@ class TagSerializer(serializers.ModelSerializer):
 
 class DiarySerializer(serializers.ModelSerializer):
     tag = TagSerializer(many=True)
+    images = DiaryImageSerializer(many=True)
 
     class Meta:
         model = Diary
@@ -49,6 +66,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     user = UserHeaderSerializer()
     comments = CommentSerializer(many=True)
+    images = PostImageSerializer(many=True)
 
     class Meta:
         model = Post
@@ -61,19 +79,3 @@ class FriendshipSerializer(serializers.ModelSerializer):
     class Meta:
         model = Friendship
         fields = ['id', 'friend']
-
-
-class PostImageSerializer(serializers.ModelSerializer):
-    path = serializers.ImageField(use_url=True)
-
-    class Meta:
-        model = PostImage
-        fields = ['path', ]
-
-
-class DiaryImageSerializer(serializers.ModelSerializer):
-    path = serializers.ImageField(use_url=True)
-
-    class Meta:
-        model = DiaryImage
-        fields = ['path', ]

@@ -26,8 +26,8 @@ urlpatterns = [
     path('diary/add', DiaryAdd.as_view(), name='diary-add'),
     path('diary/image/add', DiaryImageDetail.as_view(), name='diary-image-add'),
 
-    path('comments', CommentList.as_view(), name='comment-list'),
-    path('comment/<int:pk>', CommentDetail.as_view(), name='comment-detail'),
+    # path('comments', CommentList.as_view(), name='comment-list'),
+    # path('comment/<int:pk>', CommentDetail.as_view(), name='comment-detail'),
     path('comment/add', CommentAdd.as_view(), name='comment-add'),
 
     path('posts', PostList.as_view(), name='post-list'),

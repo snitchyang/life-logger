@@ -15,7 +15,8 @@ export const DiaryTags = ({ id, tag_name }: IDiaryTags) => {
         borderBottomWidth: 1,
         borderRadius: 10,
         paddingHorizontal: 10,
-        height: 15,
+        height: 20,
+        width: 70,
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
@@ -27,7 +28,7 @@ export const DiaryTags = ({ id, tag_name }: IDiaryTags) => {
         style={{
           justifyContent: "flex-start",
           fontStyle: "italic",
-          fontSize: 7,
+          fontSize: 10,
         }}
       >
         {"# " + tag_name}

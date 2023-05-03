@@ -1,13 +1,30 @@
 import { useTranslation } from "react-i18next";
 import { ScrollView, TextInput, View } from "react-native";
-import React, { useState } from "react";
-import { diaries } from "../../data/data";
+import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { IDiary } from "../../interface";
+import { DiaryCard } from "../../components/Diary/CardView/DiaryCard";
 
 function HomePage({ navigation }) {
   const { t, i18n } = useTranslation();
-  const [filterData, setFilterData] = useState(diaries);
-  const [allData, setAllData] = useState(diaries);
+  const [filterData, setFilterData] = useState<IDiary[]>([]);
+  const [allData, setAllData] = useState<IDiary[]>([]);
+  const getDiary = async (): Promise<IDiary[]> => {
+    return await fetch("http://10.0.2.2:8000/api/diaries", {
+      headers: {
+        Authorization: "Token 3518f3f1a74627cb896612ac4634b82ef6d2848f",
+      },
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+  };
+  useEffect(() => {
+    getDiary().then((res) => {
+      setAllData(res);
+      setFilterData(res);
+    });
+  }, []);
   const [searchText, setSearchText] = useState("");
 
   function ContentFilter({ item, text }) {
@@ -76,27 +93,29 @@ function HomePage({ navigation }) {
           />
         </View>
       </View>
+
       <View style={{ flex: 10, minHeight: 200 }}>
         <ScrollView style={{ flex: 1 }}>
-          {/*<View*/}
-          {/*  style={{ flex: 1, alignItems: "center", justifyContent: "center" }}*/}
-          {/*>*/}
-          {/*  {filterData.map((item) => (*/}
-          {/*    <View*/}
-          {/*      style={{*/}
-          {/*        flex: 1,*/}
-          {/*        maxHeight: 200,*/}
-          {/*        minWidth: 400,*/}
-          {/*        overflow: "hidden",*/}
-          {/*      }}*/}
-          {/*      onTouchEnd={() => {*/}
-          {/*        navigation.navigate("Detail", { diary: item });*/}
-          {/*      }}*/}
-          {/*    >*/}
-          {/*<DiaryCard diary={item} />*/}
-          {/*    </View>*/}
-          {/*  ))}*/}
-          {/*</View>*/}
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            {filterData.map((item, index) => (
+              <View
+                style={{
+                  flex: 1,
+                  maxHeight: 200,
+                  minWidth: 400,
+                  overflow: "hidden",
+                }}
+                onTouchEnd={() => {
+                  navigation.navigate("Detail", { diary: item });
+                }}
+                key={index}
+              >
+                <DiaryCard diary={item} />
+              </View>
+            ))}
+          </View>
         </ScrollView>
       </View>
     </View>
