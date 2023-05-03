@@ -80,7 +80,7 @@ class UserSelf(APIView):
 
 
 class UserFriends(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request: Request):
         user = get_user(request)
@@ -102,6 +102,16 @@ class UserFriends(APIView):
         friendship = Friendship.objects.get(friend_id=friend_id, user=user)
         friendship.delete()
         return Response({'message': 'success'}, status=200)
+
+
+class SearchFriends(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    def post(self,request:Request):
+        user = get_user(request)
+        friend_name = request.data['friend']
+        friends:[] = User.objects.get(username__contains=friend_name)
+        return Response(friends,status=200)
+
 
 
 class PlanList(APIView):
@@ -141,7 +151,7 @@ class PlanAdd(APIView):
 class TagList(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self):
+    def get(self, request):
         response = TagSerializer(Tag.objects.all(), many=True).data
         return Response(response, status=200)
 
@@ -158,8 +168,8 @@ class DiaryList(APIView):
     def get(self, request: Request):
         user = get_user(request)
         diaries = DiarySerializer(Diary.objects.filter(user=user).order_by('-date'), many=True,
-                                  context={'request': request})
-        return Response(diaries.data, status=200)
+                                  context={'request': request}).data
+        return Response(diaries, status=200)
 
 
 # class DiaryDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -248,6 +258,8 @@ class PostList(APIView):
         paginator = Paginator(queryset, 10)
         page = paginator.page(request.query_params['page'])
         posts = PostSerializer(page, many=True, context={'request': request}).data
+        for post in posts:
+            post['liked'] = post['liker'].count(user.id) > 0
         return Response(posts, status=200)
 
 

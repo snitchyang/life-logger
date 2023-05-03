@@ -1,10 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Modal, Text, TextInput, View } from "react-native";
 import { changeInfoStyleSheet } from "../../../../screens/Profiles/UserInfoStyleSheet";
 import { Button } from "@rneui/base";
 
 export const ChangeTextInfo = ({ usr, setUser, kind, visible, setVisible }) => {
   const [inputText, setInputText] = useState("");
+
   function changeInfo(text) {
     if (text) {
       let newUser = usr;
@@ -17,6 +18,7 @@ export const ChangeTextInfo = ({ usr, setUser, kind, visible, setVisible }) => {
       }
     }
   }
+
   let title = undefined;
   let placeHolder = undefined;
   if (kind === 1) {

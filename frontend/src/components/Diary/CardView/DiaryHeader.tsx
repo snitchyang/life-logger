@@ -13,7 +13,7 @@ export const DiaryHeader = ({ tags, date }: IDiaryHeader) => {
     <View style={diaryStyleSheet.headerWrapper}>
       <View style={diaryStyleSheet.tagsWrapper}>
         {tags.map((element, index) => (
-          <DiaryTags id={index} tag_name={element.content} />
+          <DiaryTags id={index} tag_name={element.content} key={index} />
         ))}
       </View>
       <View style={diaryStyleSheet.dateWrapper}>

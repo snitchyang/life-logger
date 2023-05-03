@@ -7,11 +7,20 @@ export interface IUser {
   school: string;
   phoneNumber: number;
   gender: number;
-  posts: IPost[];
-  diary: IDiary[];
-  friends: number[];
-  plans: IPlan[];
-  likePost: IPost[];
+}
+export interface IFriend {
+  id: number;
+  username: string;
+  avatar: string;
+}
+
+export interface ResponseFriends {
+  following: IFriend[];
+  follow_me: IFriend[];
+}
+
+export interface IImage {
+  path: string;
 }
 
 export interface IPlan {
@@ -24,7 +33,6 @@ export interface IPlan {
 export interface ITag {
   id: number;
   content: string;
-  diary: IDiary[];
 }
 
 export interface IDiary {
@@ -32,7 +40,7 @@ export interface IDiary {
   date: Date;
   title: string;
   content: string;
-  image: string[];
+  images: IImage[];
   tag: ITag[];
 }
 
@@ -41,19 +49,18 @@ export interface IComment {
   user: IUser;
   date: Date;
   content: string;
-  post: IPost;
 }
 
 // 盆友圈帖子
 export interface IPost {
   id: number;
   date: Date;
-  link: string;
   location: string;
   content: string;
   image: string;
   user: IUser;
   likes: number;
   comments: IComment[];
-  liker: IUser[];
+  liker: number[];
+  liked: boolean;
 }

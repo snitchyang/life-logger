@@ -1,13 +1,29 @@
 import { useTranslation } from "react-i18next";
 import { ScrollView, TextInput, View } from "react-native";
-import React, { useState } from "react";
-import { diaries } from "../../data/data";
+import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { IDiary, ITag } from "../../interface";
+import { DiaryCard } from "../../components/Diary/CardView/DiaryCard";
+import { get_diary, get_tags } from "../../service/DiaryService";
 
 function HomePage({ navigation }) {
   const { t, i18n } = useTranslation();
-  const [filterData, setFilterData] = useState(diaries);
-  const [allData, setAllData] = useState(diaries);
+  const [filterData, setFilterData] = useState<IDiary[]>([]);
+  const [allTags, setAllTags] = useState<ITag[]>([]);
+  const [allData, setAllData] = useState<IDiary[]>([]);
+
+  useEffect(() => {
+    get_diary().then((res) => {
+      setAllData(res);
+      setFilterData(res);
+    });
+  }, []);
+  useEffect(() => {
+    get_tags().then((res) => {
+      setAllTags(res);
+    });
+  }, []);
+
   const [searchText, setSearchText] = useState("");
 
   function ContentFilter({ item, text }) {
@@ -18,7 +34,7 @@ function HomePage({ navigation }) {
 
   function TagFilter({ item, t }) {
     // item is an ITag object
-    let tags = item.tag;
+    let tags = allTags;
     for (const tag of tags) {
       if (tag.content.indexOf(t) > -1) return true;
     }
@@ -33,10 +49,8 @@ function HomePage({ navigation }) {
       let newData = undefined;
       for (const text of textGroup) {
         // filter of data, #xxx means it's a tag
-        console.log(text);
         newData = undefined;
         if (text.at(0) === "#") {
-          console.log("tag");
           let t = text.substring(1);
           newData = allData.filter((item) => TagFilter({ item, t }));
         } else {
@@ -48,7 +62,6 @@ function HomePage({ navigation }) {
           }
         }
       }
-      console.log(filter.length);
       setFilterData(filter);
       setSearchText(text);
     } else {
@@ -57,6 +70,7 @@ function HomePage({ navigation }) {
     }
   }
 
+  if (!allTags || !allData) return <></>;
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, maxHeight: 30, flexDirection: "row" }}>
@@ -76,27 +90,29 @@ function HomePage({ navigation }) {
           />
         </View>
       </View>
+
       <View style={{ flex: 10, minHeight: 200 }}>
         <ScrollView style={{ flex: 1 }}>
-          {/*<View*/}
-          {/*  style={{ flex: 1, alignItems: "center", justifyContent: "center" }}*/}
-          {/*>*/}
-          {/*  {filterData.map((item) => (*/}
-          {/*    <View*/}
-          {/*      style={{*/}
-          {/*        flex: 1,*/}
-          {/*        maxHeight: 200,*/}
-          {/*        minWidth: 400,*/}
-          {/*        overflow: "hidden",*/}
-          {/*      }}*/}
-          {/*      onTouchEnd={() => {*/}
-          {/*        navigation.navigate("Detail", { diary: item });*/}
-          {/*      }}*/}
-          {/*    >*/}
-          {/*<DiaryCard diary={item} />*/}
-          {/*    </View>*/}
-          {/*  ))}*/}
-          {/*</View>*/}
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            {filterData.map((item, index) => (
+              <View
+                style={{
+                  flex: 1,
+                  maxHeight: 200,
+                  minWidth: 400,
+                  overflow: "hidden",
+                }}
+                onTouchEnd={() => {
+                  navigation.navigate("Detail", { diary: item });
+                }}
+                key={index}
+              >
+                <DiaryCard diary={item} />
+              </View>
+            ))}
+          </View>
         </ScrollView>
       </View>
     </View>

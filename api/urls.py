@@ -14,6 +14,8 @@ urlpatterns = [
     path('user/friends', UserFriends.as_view(), name='user-friends'),
     path('user/self', UserSelf.as_view(), name='user-self'),
 
+    path('search/friends',SearchFriends.as_view(),name='search-friends'),
+
     path('plans', PlanList.as_view(), name='plan-list'),
     # path('plan/<int:pk>', PlanDetail.as_view(), name='plan-detail'),
     path('plan/add', PlanAdd.as_view(), name='plan-add'),
@@ -26,8 +28,8 @@ urlpatterns = [
     path('diary/add', DiaryAdd.as_view(), name='diary-add'),
     path('diary/image/add', DiaryImageDetail.as_view(), name='diary-image-add'),
 
-    path('comments', CommentList.as_view(), name='comment-list'),
-    path('comment/<int:pk>', CommentDetail.as_view(), name='comment-detail'),
+    # path('comments', CommentList.as_view(), name='comment-list'),
+    # path('comment/<int:pk>', CommentDetail.as_view(), name='comment-detail'),
     path('comment/add', CommentAdd.as_view(), name='comment-add'),
 
     path('posts', PostList.as_view(), name='post-list'),

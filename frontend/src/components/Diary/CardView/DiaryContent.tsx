@@ -1,13 +1,14 @@
 import { FlatList, Text, View } from "react-native";
 import { DetailImg, DiaryImg } from "./DiaryImg";
 import React from "react";
+import { IImage } from "../../../interface";
 
-interface DiaryContent {
+interface IDiaryContent {
   content: string;
-  images: string[];
+  images: IImage[];
 }
 
-export const DiaryContent = ({ content, images }: DiaryContent) => {
+export const DiaryContent = ({ content, images }: IDiaryContent) => {
   return (
     <View
       id="content"
@@ -35,13 +36,12 @@ export const DiaryContent = ({ content, images }: DiaryContent) => {
           {content}
         </Text>
       </View>
-      <DiaryImg img={images[0]} />
+      {images.length > 0 && <DiaryImg path={images[0].path} />}
     </View>
   );
 };
 
-export const DetailedContent = ({ content, images }: DiaryContent) => {
-  console.log(images[0]);
+export const DetailedContent = ({ content, images }: IDiaryContent) => {
   return (
     <View
       style={{
@@ -61,15 +61,17 @@ export const DetailedContent = ({ content, images }: DiaryContent) => {
       <View
         style={{
           flex: 4,
-          // borderWidth: 2,
-          // borderColor: "black",
         }}
       >
         <FlatList
-          columnWrapperStyle={{ maxHeight: 130 }}
+          columnWrapperStyle={{
+            maxHeight: 130,
+            borderColor: "black",
+            borderWidth: 3,
+          }}
           data={images}
           numColumns={2}
-          renderItem={({ item }) => <DetailImg img={item} />}
+          renderItem={({ item }) => <DetailImg path={item.path} />}
         />
       </View>
     </View>

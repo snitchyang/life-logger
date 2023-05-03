@@ -1,11 +1,11 @@
 import React from "react";
 import { Image } from "react-native";
 
-interface DiaryImg {
-  img: string;
+interface Props {
+  path: string;
 }
 
-export const DiaryImg = ({ img }: DiaryImg) => {
+export const DiaryImg = ({ path }: Props) => {
   return (
     <Image
       style={{
@@ -17,22 +17,21 @@ export const DiaryImg = ({ img }: DiaryImg) => {
         // width: 100,
         // height: 100,
       }}
-      source={require("../../../assets/diaryImage/testPic.jpg")}
+      source={{ uri: path }}
       alt="picture"
     />
   );
 };
 
-export const DetailImg = ({ img }: DiaryImg) => {
+export const DetailImg = ({ path }: Props) => {
   return (
     <Image
       style={{
         flex: 1,
         width: 100,
         height: 130,
-        // marginHorizontal: 10,
       }}
-      source={require("../../../assets/diaryImage/testPic.jpg")}
+      source={{ uri: path }}
       alt="picture"
     />
   );
