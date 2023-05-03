@@ -51,8 +51,7 @@ class UserSelf(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request: Request):
-        token = request.headers.get('Authorization').split()[-1]
-        user: User = Token.objects.get(key=token).user
+        user: User = get_user(request)
         if user is not None:
             return Response(UserSerializer(user, context={'request': request}).data, status=200)
         return Response(status=401)
@@ -308,9 +307,9 @@ class UserRegistrationView(APIView):
         gender = request.data.get('gender')
         avatar = request.data.get('avatar')
         school = request.data.get('school')
-        phoneNumber = request.data.get('phoneNumber')
+        phone_number = request.data.get('phone_number')
         User.objects.create_user(username=username, password=password
-                                 , email=email, gender=gender, avatar=avatar, school=school, phoneNumber=phoneNumber
+                                 , email=email, gender=gender, avatar=avatar, school=school, phone_number=phone_number
                                  )
 
         return Response({'message': 'User registered successfully.'})
