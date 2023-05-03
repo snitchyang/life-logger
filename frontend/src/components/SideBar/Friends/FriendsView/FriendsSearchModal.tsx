@@ -7,33 +7,28 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { users } from "../../../../data/data";
-import { IUser } from "../../../../interface";
-import { Avatar } from "@rneui/base";
+import { IFriend, IUser } from "../../../../interface";
+import { Avatar, Button } from "@rneui/base";
 import { Ionicons } from "@expo/vector-icons";
+import { get_friends, search_friends } from "../../../../service/FriendService";
 
-export const SearchFriends = ({ me, isVisible, setVisible }) => {
+export const FriendsSearchModal = ({ me, isVisible, setVisible }) => {
   const [inputText, setInputText] = useState("");
-  const [filter, setFilter] = useState(users);
-  const [allUsers] = useState(users);
+  const [filter, setFilter] = useState<IFriend[]>([]);
+  const [following, setFollowing] = useState<IFriend[]>([]);
+
+  useEffect(() => {
+    get_friends().then((res) => setFollowing(res.following));
+  }, []);
 
   function search(text) {
     console.log(text);
     if (text) {
-      let newFilter: IUser[] = [];
-      for (const usr of users) {
-        if (
-          usr.id.toString().indexOf(text) > -1 ||
-          usr.username.indexOf(text) > -1 ||
-          usr.school.indexOf(text) > -1
-        )
-          newFilter.push(usr);
-      }
-      setFilter(newFilter);
-      setInputText(text);
+      search_friends(text).then((res) => setFilter(res));
     } else {
-      setFilter(allUsers);
+      setFilter([]);
       setInputText(text);
     }
   }
@@ -64,12 +59,15 @@ export const SearchFriends = ({ me, isVisible, setVisible }) => {
           style={searchFriendsStyleSheet.inputItem}
           placeholder={"> id, name or school"}
           value={inputText}
-          onChangeText={(item) => search(item)}
+          // onChangeText={(item) => search(item)}
         />
+        <Button onPress={(inputText) => search(inputText)}>{"Search"}</Button>
         <FlatList
           style={searchFriendsStyleSheet.listItem}
           data={filter}
-          renderItem={({ item }) => <SearchFriendsList me={me} friend={item} />}
+          renderItem={({ item }) => (
+            <SearchFriendsList me={me} friend={item} friends={following} />
+          )}
         />
       </View>
     </Modal>
@@ -78,12 +76,14 @@ export const SearchFriends = ({ me, isVisible, setVisible }) => {
 
 interface SearchFriendsList {
   me: number;
-  friend: IUser;
+  friend: IFriend;
+  friends: IFriend[];
 }
 
-const SearchFriendsList = ({ me, friend }: SearchFriendsList) => {
+const SearchFriendsList = ({ me, friend, friends }: SearchFriendsList) => {
   function isFriend() {
-    return friend.friends.includes(me);
+    if (friends.includes(friend)) return true;
+    return false;
   }
 
   return (

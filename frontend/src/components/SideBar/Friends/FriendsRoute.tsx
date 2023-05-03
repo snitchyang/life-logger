@@ -1,56 +1,62 @@
 import { Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
-import { IUser } from "../../../interface";
+import React, { useState, useEffect } from "react";
+import { IFriend, IUser } from "../../../interface";
 import { FriendsList } from "./FriendsView/FriendsList";
 import { friendsViewStyleSheet } from "./FriendsStyleSheet";
 import { Ionicons } from "@expo/vector-icons";
-import { SearchFriends } from "./FriendsView/SearchFriends";
+import { FriendsSearchModal } from "./FriendsView/FriendsSearchModal";
 import { users } from "../../../data/data";
+import { get_friends } from "../../../service/FriendService";
+import { Tab } from "@rneui/themed";
 
 export const FriendsRoute = ({ route }) => {
   const { user } = route.params;
+  const [index, setIndex] = useState<number>(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [following, setFollowing] = useState<IFriend[]>([]);
+  const [followMe, setFollowMe] = useState<IFriend[]>([]);
 
-  function getFriends(friendsList: number[]) {
-    let f: IUser[] = [];
-    let user: IUser;
-    for (const friendsListElement of friendsList) {
-      for (const usr of users) {
-        if (usr.id === friendsListElement) {
-          f.push(usr);
-        }
-      }
-    }
-    return f;
-  }
+  useEffect(() => {
+    get_friends().then((res) => {
+      setFollowing(res.following);
+      setFollowMe(res.follow_me);
+    });
+  }, []);
 
   return (
     <View style={friendsViewStyleSheet.wrapper}>
-      <SearchFriends
+      <Tab value={index} onChange={setIndex} dense>
+        <Tab.Item>{"Following"}</Tab.Item>
+        <Tab.Item>{"Follow Me"}</Tab.Item>
+      </Tab>
+      <FriendsSearchModal
         me={user.id}
         isVisible={isVisible}
         setVisible={setIsVisible}
       />
-      <View style={friendsViewStyleSheet.titleContainer}>
-        <Text style={friendsViewStyleSheet.titleText}>{"Friends"}</Text>
-      </View>
-      <TouchableOpacity
-        style={friendsViewStyleSheet.addButtonContainer}
-        onPress={() => {
-          setIsVisible(true);
-        }}
-      >
-        <Ionicons
-          size={24}
-          style={{ paddingLeft: 110 }}
-          name="add-circle-outline"
-        ></Ionicons>
-        <Text style={friendsViewStyleSheet.addButtonText}>
-          {"Add new friends"}
-        </Text>
-      </TouchableOpacity>
-      <View style={friendsViewStyleSheet.friendsListContainer}>
-        <FriendsList friends={getFriends(user.friends)} />
+
+      <View>
+        <View style={friendsViewStyleSheet.titleContainer}>
+          <Text style={friendsViewStyleSheet.titleText}>{"Friends"}</Text>
+        </View>
+        <TouchableOpacity
+          style={friendsViewStyleSheet.addButtonContainer}
+          onPress={() => {
+            setIsVisible(true);
+          }}
+        >
+          <Ionicons
+            size={24}
+            style={{ paddingLeft: 110 }}
+            name="add-circle-outline"
+          ></Ionicons>
+          <Text style={friendsViewStyleSheet.addButtonText}>
+            {"Add new friends"}
+          </Text>
+        </TouchableOpacity>
+        <View style={friendsViewStyleSheet.friendsListContainer}>
+          <FriendsList friends={index === 0 ? following : followMe} />
+        </View>
       </View>
     </View>
   );

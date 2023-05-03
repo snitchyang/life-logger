@@ -8,6 +8,16 @@ export interface IUser {
   phoneNumber: number;
   gender: number;
 }
+export interface IFriend {
+  id: number;
+  username: string;
+  avatar: string;
+}
+
+export interface ResponseFriends {
+  following: IFriend[];
+  follow_me: IFriend[];
+}
 
 export interface IImage {
   path: string;

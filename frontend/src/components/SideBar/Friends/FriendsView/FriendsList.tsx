@@ -1,4 +1,4 @@
-import { IUser } from "../../../../interface";
+import { IFriend, IUser } from "../../../../interface";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { Avatar } from "@rneui/base";
 import { Ionicons } from "@expo/vector-icons";
@@ -7,11 +7,11 @@ import React, { useEffect, useState } from "react";
 import { get_friends } from "../../../../service/FriendService";
 
 interface Props2 {
-  friends: IUser[];
+  friends: IFriend[];
 }
 
 interface Props {
-  item: IUser;
+  item: IFriend;
 }
 
 const RenderList = ({ item }: Props) => {
@@ -31,15 +31,9 @@ const RenderList = ({ item }: Props) => {
 };
 
 export const FriendsList = ({ friends }: Props2) => {
-  const [allFriends, setAllFriends] = useState<IUser[]>([]);
-
-  useEffect(() => {
-    get_friends().then((res) => setAllFriends(res));
-  });
-
   return (
     <FlatList
-      data={allFriends}
+      data={friends}
       renderItem={({ item }) => <RenderList item={item} />}
     />
   );
