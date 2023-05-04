@@ -1,8 +1,8 @@
 import { IComment } from "../../interface";
 import { FlatList, View } from "react-native";
-import { Divider } from "@rneui/base";
 import { Comment } from "./Comment";
 import React, { useEffect, useState } from "react";
+import { Divider } from "@rneui/themed";
 
 interface CommentsList {
   comments: IComment[];

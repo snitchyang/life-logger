@@ -8,6 +8,7 @@ export interface IUser {
   phoneNumber: number;
   gender: number;
 }
+
 export interface IFriend {
   id: number;
   username: string;
@@ -61,7 +62,7 @@ export interface IPost {
   date: Date;
   location: string;
   content: string;
-  image: IImage[];
+  images: IImage[];
   user: IUser;
   likes: number;
   comments: IComment[];

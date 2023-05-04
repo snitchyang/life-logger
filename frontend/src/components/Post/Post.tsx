@@ -18,16 +18,21 @@ export const Post = ({ post }: Props): JSX.Element => {
       <View style={{ marginTop: 5 }}>
         <Text>{post.content}</Text>
       </View>
-      <FlatList
-        data={post.image}
-        renderItem={({ item, index }) => (
-          <Image
-            style={{ width: 100, height: 100 }}
-            source={{ uri: item.path }}
-            key={index}
-          />
-        )}
-      />
+      <View style={{ width: "100%" }}>
+        <FlatList
+          data={post.images}
+          style={{ display: "flex", flexDirection: "row" }}
+          renderItem={({ item, index }) => (
+            <View style={{ padding: 2 }}>
+              <Image
+                style={{ width: 100, height: 100 }}
+                source={{ uri: item.path }}
+                key={index}
+              />
+            </View>
+          )}
+        />
+      </View>
       <PostActionSection post={post} />
     </Card>
   );

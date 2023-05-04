@@ -64,7 +64,7 @@ export const posts: IPost[] = [
     link: "link",
     location: "location",
     content: "content",
-    image: "image",
+    images: "image",
     user: users[0],
     likes: 5,
     comments: [],

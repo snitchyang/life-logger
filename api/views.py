@@ -4,6 +4,7 @@ import json
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.hashers import make_password
+from django.core.paginator import Paginator
 from django.urls import reverse
 from rest_framework import generics, permissions
 from rest_framework.authtoken.models import Token
@@ -254,12 +255,13 @@ class PostList(APIView):
         friends = [friendship.friend for friendship in Friendship.objects.filter(user=user).all()]
         friends += [user]
         queryset = Post.objects.filter(user__in=friends).order_by('-date')
-        # paginator = Paginator(queryset, 10)
-        # page = paginator.page(request.query_params['page'])
-        posts = PostSerializer(queryset, many=True, context={'request': request}).data
+        page_size = int(len(queryset) / 6) + 1
+        paginator = Paginator(queryset, 6)
+        page = paginator.page(request.query_params['page'])
+        posts = PostSerializer(page, many=True, context={'request': request}).data
         for post in posts:
             post['liked'] = post['liker'].count(user.id) > 0
-        return Response(posts, status=200)
+        return Response({'data': posts, 'max': page_size}, status=200)
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
