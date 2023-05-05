@@ -2,6 +2,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { userInfoStyleSheet } from "../../../../screens/Profiles/UserInfoStyleSheet";
 import { Avatar } from "@rneui/base";
 import { Ionicons } from "@expo/vector-icons";
+import React from "react";
 
 export const AvatarInfo = ({ avaUri }) => {
   return (

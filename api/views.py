@@ -48,7 +48,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class UserSelf(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request: Request):
         user: User = get_user(request)
@@ -56,7 +56,7 @@ class UserSelf(APIView):
             return Response(UserSerializer(user, context={'request': request}).data, status=200)
         return Response(status=401)
 
-    def put(self, request: Request):
+    def post(self, request: Request):
         user = get_user(request)
         data = request.data
         username = data['username']
@@ -71,8 +71,13 @@ class UserSelf(APIView):
         if phone_number != user.phone_number and len(User.objects.filter(phone_number=phone_number)) > 0:
             return Response({'message': 'phone_number'}, status=400)
         user.phone_number = phone_number
+        gender = data['gender']
+        print(gender)
+        avatar = data['avatar']
         biography = data['biography']
         school = data['school']
+        user.gender = gender
+        user.avatar = avatar # TODO
         user.biography = biography
         user.school = school
         user.save()
@@ -236,7 +241,7 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class CommentAdd(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def post(self, request: Request):
         user = get_user(request)

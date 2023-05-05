@@ -2,32 +2,55 @@ import React, { useState } from "react";
 import { Modal, Text, TextInput, View } from "react-native";
 import { changeInfoStyleSheet } from "../../../../screens/Profiles/UserInfoStyleSheet";
 import { Button } from "@rneui/base";
+import { userinfo_enumerate } from "../../../../data/data";
+import { IUser } from "../../../../interface";
+import { update_userinfo } from "../../../../service/UserService";
 
-export const ChangeTextInfo = ({ usr, setUser, kind, visible, setVisible }) => {
-  const [inputText, setInputText] = useState("");
+interface Props {
+  usr: IUser;
+  setUser: any;
+  kind: number;
+  visible: boolean;
+  setVisible: any;
+}
+
+export const ChangeTextInfo = ({
+  usr,
+  setUser,
+  kind,
+  visible,
+  setVisible,
+}: Props) => {
+  const [inputText, setInputText] = useState<string>("");
 
   function changeInfo(text) {
     if (text) {
-      let newUser = usr;
-      if (kind === 1) {
-        newUser.name = text;
+      let newUser: IUser = usr;
+      if (kind === userinfo_enumerate.changeName) {
+        newUser.username = text;
         setUser(newUser);
-      } else if (kind === 3) {
+      } else if (kind === userinfo_enumerate.changeSchool) {
         newUser.school = text;
         setUser(newUser);
+      } else if (kind === userinfo_enumerate.changeBio) {
+        newUser.biography = text;
       }
     }
   }
 
-  let title = undefined;
-  let placeHolder = undefined;
-  if (kind === 1) {
+  let title = "";
+  let placeHolder = "";
+  if (kind === userinfo_enumerate.changeName) {
     title = "Change Name:";
     placeHolder = "> Input new name...";
-  } else if (kind === 3) {
+  } else if (kind === userinfo_enumerate.changeSchool) {
     title = "Change School:";
     placeHolder = "> Input new school...";
+  } else if (kind === userinfo_enumerate.changeBio) {
+    title = "Change Biography:";
+    placeHolder = "> Input new biography...";
   }
+
   return (
     <Modal
       animationType="slide"
@@ -42,65 +65,39 @@ export const ChangeTextInfo = ({ usr, setUser, kind, visible, setVisible }) => {
           <Text style={changeInfoStyleSheet.titleText}>{title}</Text>
         </View>
         <View style={changeInfoStyleSheet.titleContainer}>
-          <InputText
-            placeHolder={placeHolder}
-            inputText={inputText}
-            setInputText={setInputText}
+          <TextInput
+            style={changeInfoStyleSheet.inputContainer}
+            placeholder={placeHolder}
+            value={inputText}
+            onChangeText={(text) => {
+              setInputText(text);
+              changeInfo(text);
+            }}
           />
         </View>
         <View style={changeInfoStyleSheet.buttonWrapper}>
           <View style={changeInfoStyleSheet.buttonContainer}>
-            <SubmitButton
-              inputText={inputText}
-              changeInfo={changeInfo}
-              setVisible={setVisible}
-              setInputText={setInputText}
+            <Button
+              title={"submit"}
+              onPress={() => {
+                update_userinfo(usr).then(() => {
+                  setInputText("");
+                  setVisible(false);
+                });
+              }}
             />
           </View>
           <View style={changeInfoStyleSheet.buttonContainer}>
-            <CancelButton setVisible={setVisible} setInputText={setInputText} />
+            <Button
+              title={"cancel"}
+              onPress={() => {
+                setInputText("");
+                setVisible(false);
+              }}
+            />
           </View>
         </View>
       </View>
     </Modal>
-  );
-};
-
-const SubmitButton = ({ inputText, changeInfo, setVisible, setInputText }) => {
-  return (
-    <Button
-      title={"submit"}
-      onPress={() => {
-        console.log("submit");
-        setVisible(false);
-        setInputText("");
-        changeInfo(inputText);
-      }}
-    />
-  );
-};
-
-const CancelButton = ({ setVisible, setInputText }) => {
-  return (
-    <Button
-      title={"cancel"}
-      onPress={() => {
-        setVisible(false);
-        setInputText("");
-      }}
-    />
-  );
-};
-
-const InputText = ({ placeHolder, inputText, setInputText }) => {
-  return (
-    <TextInput
-      style={changeInfoStyleSheet.inputContainer}
-      placeholder={placeHolder}
-      value={inputText}
-      onChangeText={(text) => {
-        setInputText(text);
-      }}
-    ></TextInput>
   );
 };

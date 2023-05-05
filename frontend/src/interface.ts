@@ -3,10 +3,11 @@ export interface IUser {
   username: string;
   password: string;
   biography: string;
+  email: string;
   avatar: string;
   school: string;
   phoneNumber: number;
-  gender: number;
+  gender: string;
 }
 
 export interface IFriend {

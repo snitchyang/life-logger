@@ -1,16 +1,44 @@
 import React from "react";
 import { ChangeTextInfo } from "./ChangeTextInfo";
+import { IUser } from "../../../../interface";
+import { userinfo_enumerate } from "../../../../data/data";
+import { ChangeImageInfo } from "./ChangeImageInfo";
 
-export const ChangeInfo = ({ usr, setUser, kind, visible, setVisible }) => {
-  console.log("modal");
-  console.log(kind);
+interface Props {
+  usr: IUser;
+  setUser: any;
+  kind: number;
+  visible: boolean;
+  setVisible: any;
+}
 
-  if (kind === 1 || kind === 3) {
+export const ChangeInfo = ({
+  usr,
+  setUser,
+  kind,
+  visible,
+  setVisible,
+}: Props) => {
+  if (
+    kind === userinfo_enumerate.changeSchool ||
+    kind === userinfo_enumerate.changeBio ||
+    kind === userinfo_enumerate.changeName
+  ) {
     return (
       <ChangeTextInfo
         usr={usr}
         setUser={setUser}
         kind={kind}
+        visible={visible}
+        setVisible={setVisible}
+      />
+    );
+  } else if (kind === userinfo_enumerate.changeProfile) {
+    return (
+      <ChangeImageInfo
+        usr={usr}
+        setUser={setUser}
+        uri={usr.avatar}
         visible={visible}
         setVisible={setVisible}
       />

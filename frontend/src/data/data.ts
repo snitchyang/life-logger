@@ -1,13 +1,29 @@
-import { IDiary, IPost, ITag, IUser } from "../interface";
+import { IDiary, IImage, IPost, ITag, IUser } from "../interface";
 
 export const curUserID = 1;
+
+export const userinfo_enumerate = {
+  changeProfile: 0,
+  changeName: 1,
+  changeGender: 2,
+  changeBio: 3,
+  changeSchool: 4,
+};
+
+export const gender_enumerate = {
+  male: 0,
+  female: 1,
+  unknown: 2,
+};
+
+export const gender_text: string[] = ["male", "female", "unknown"];
 
 export const users: IUser[] = [
   {
     id: 1,
     username: "Alice",
-    profile: "I'm Alice",
-    profilePicture: "https://randomuser.me/api/portraits/lego/2.jpg",
+    biography: "I'm Alice",
+    avatar: "https://randomuser.me/api/portraits/lego/2.jpg",
     school: "Fudan University",
     phoneNumber: 123,
     gender: 1,
@@ -45,8 +61,8 @@ export const users: IUser[] = [
   {
     id: 4,
     username: "Meggie",
-    profile: "I'm Meggie",
-    profilePicture: "https://randomuser.me/api/portraits/lego/2.jpg",
+    biography: "I'm Meggie",
+    avatar: "https://randomuser.me/api/portraits/lego/2.jpg",
     school: "ZJU",
     phoneNumber: 54741523,
     gender: 1,
@@ -57,20 +73,20 @@ export const users: IUser[] = [
   },
 ];
 
-export const posts: IPost[] = [
-  {
-    id: 1,
-    date: new Date(),
-    link: "link",
-    location: "location",
-    content: "content",
-    images: "image",
-    user: users[0],
-    likes: 5,
-    comments: [],
-    liker: [users[0], users[1]],
-  },
-];
+// export const posts: IPost[] = [
+//   {
+//     id: 1,
+//     date: new Date(),
+//     link: "link",
+//     location: "location",
+//     content: "content",
+//     image: "image",
+//     user: users[0],
+//     likes: 5,
+//     comments: [],
+//     liker: [users[0], users[1]],
+//   },
+// ];
 
 export const tags: ITag[] = [
   {
@@ -96,13 +112,22 @@ export const tags: ITag[] = [
   },
 ];
 
+export const images: IImage[] = [
+  {
+    path: "diary/pic1",
+  },
+  {
+    path: "diary/pic2",
+  },
+];
+
 export const diaries: IDiary[] = [
   {
     id: 1,
     date: new Date(),
     title: "I want to sleep",
     content: "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
-    image: ["testPic", "testPic2"],
+    images: [images[0]],
     tag: [tags[0], tags[2]],
   },
   {
@@ -110,7 +135,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to study",
     content: "zzz",
-    image: ["testPic", "testPic2"],
+    images: [images[0]],
     tag: [tags[1]],
   },
   {
@@ -118,7 +143,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to eat",
     content: "eat eat eat",
-    image: ["testPic", "testPic2"],
+    images: [images[0]],
     tag: [tags[2]],
   },
   {
@@ -126,7 +151,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to play",
     content: "play play play",
-    image: ["testPic3"],
+    images: [images[0]],
     tag: [tags[3]],
   },
   {
@@ -134,7 +159,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to run",
     content: "sleep sleep sleep",
-    image: ["testPic2"],
+    images: [images[0]],
     tag: [tags[4], tags[0]],
   },
   {
@@ -142,7 +167,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to run",
     content: "sleep sleep sleep",
-    image: ["testPic2"],
+    images: [images[0]],
     tag: [tags[4], tags[0]],
   },
   {
@@ -150,7 +175,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to run",
     content: "sleep sleep sleep",
-    image: ["testPic2"],
+    images: [images[0]],
     tag: [tags[4], tags[0]],
   },
   {
@@ -158,7 +183,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to run",
     content: "sleep sleep sleep",
-    image: ["testPic2"],
+    images: [images[0]],
     tag: [tags[4], tags[0]],
   },
   {
@@ -166,7 +191,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to run",
     content: "sleep sleep sleep",
-    image: ["testPic2"],
+    images: [images[0]],
     tag: [tags[4], tags[0]],
   },
   {
@@ -174,7 +199,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to run",
     content: "sleep sleep sleep",
-    image: ["testPic2"],
+    images: [images[0]],
     tag: [tags[4], tags[0]],
   },
   {
@@ -182,7 +207,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to play",
     content: "play play play",
-    image: ["testPic3"],
+    images: [images[0]],
     tag: [tags[3]],
   },
   {
@@ -190,7 +215,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to play",
     content: "play play play",
-    image: ["testPic3"],
+    images: [images[0]],
     tag: [tags[3]],
   },
   {
@@ -198,7 +223,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to play",
     content: "play play play",
-    image: ["testPic3"],
+    images: [images[0]],
     tag: [tags[3]],
   },
   {
@@ -206,7 +231,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to play",
     content: "play play play",
-    image: ["testPic3"],
+    images: [images[0]],
     tag: [tags[3]],
   },
   {
@@ -214,7 +239,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to play",
     content: "play play play",
-    image: ["testPic3"],
+    images: [images[0]],
     tag: [tags[3]],
   },
   {
@@ -222,7 +247,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to eat",
     content: "eat eat eat",
-    image: ["testPic", "testPic2"],
+    images: [images[0]],
     tag: [tags[2]],
   },
   {
@@ -230,7 +255,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to eat",
     content: "eat eat eat",
-    image: ["testPic", "testPic2"],
+    images: [images[0]],
     tag: [tags[2]],
   },
   {
@@ -238,7 +263,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to eat",
     content: "eat eat eat",
-    image: ["testPic", "testPic2"],
+    images: [images[0]],
     tag: [tags[2]],
   },
   {
@@ -246,7 +271,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to eat",
     content: "eat eat eat",
-    image: ["testPic", "testPic2"],
+    images: [images[0]],
     tag: [tags[2]],
   },
   {
@@ -254,7 +279,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "I want to eat",
     content: "eat eat eat",
-    image: ["testPic", "testPic2"],
+    images: [images[0]],
     tag: [tags[2]],
   },
   {
@@ -262,7 +287,7 @@ export const diaries: IDiary[] = [
     date: new Date(),
     title: "yanjs nb",
     content: "yes yes",
-    image: [],
+    images: [images[0]],
     tag: [tags[1]],
   },
 ];
