@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body style="background: rgba(255,255,255,0.62) ">
+<div style="margin: 1%">
+    <canvas id="chart-tag"></canvas>
+</div>
+<script>
+    new Chart(document.getElementById('chart-tag'), {
+        type: 'pie',
+        data: {
+            labels: {{ label|safe }},
+            datasets: [{
+                label: '日记中的tag',
+                backgroundColor: [
+                    'rgb(255, 99, 132, 0.4)',
+                    'rgb(54, 162, 235, 0.4)',
+                    'rgb(255, 205, 86, 0.4)',
+                    'rgb(200,86,86, 0.4)',
+                    'rgb(241,111,61, 0.4)',
+                    'rgb(25,246,6, 0.4)',
+                    'rgb(143,99,225, 0.4)',
+                    'rgb(86,255,204, 0.4)',
+                    'rgb(52,0,255, 0.4)',
+                    'rgb(194,185,167, 0.4)',
+                    'rgb(199,7,239, 0.4)',
+                    'rgb(96,197,69, 0.4)',
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)',
+                    'rgb(200,86,86)',
+                    'rgb(241,111,61)',
+                    'rgb(25,246,6)',
+                    'rgb(143,99,225)',
+                    'rgb(86,255,204)',
+                    'rgb(52,0,255)',
+                    'rgb(194,185,167)',
+                    'rgb(199,7,239)',
+                    'rgb(96,197,69)',
+                ],
+                data: {{ data }},
+                borderWidth: 1,
+            }]
+        },
+        options: {}
+    });
+</script>
+</body>
+</html>

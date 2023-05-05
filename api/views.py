@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.hashers import make_password
 from django.core.paginator import Paginator
+from django.shortcuts import render
 from django.urls import reverse
 from rest_framework import generics, permissions
 from rest_framework.authtoken.models import Token
@@ -370,3 +371,31 @@ class ForgotPasswordView(APIView):
             return Response({'message': 'Password reset email sent.'})
         else:
             return Response({'errors': form.errors}, status=400)
+
+
+class statistic(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request: Request):
+        user = User.objects.get(id=1)
+        diaries = Diary.objects.filter(user=user)
+        tags = {}
+        for diary in diaries:
+            for tag in diary.tag.all():
+                if tag.content not in tags:
+                    tags[tag.content] = 1
+                else:
+                    tags[tag.content] += 1
+        label = []
+        data = []
+        for item in sorted(tags.items(), key=lambda kv: kv[1], reverse=True):
+            label.append(item[0])
+            data.append(item[1])
+        return render(request, 'statistic.html', {'data': data, 'label': label})
+
+
+class smap(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request: Request):
+        return render(request, 'test.html')

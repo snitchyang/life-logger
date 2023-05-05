@@ -44,4 +44,6 @@ urlpatterns = [
     path('register', UserRegistrationView.as_view(), name='user-registration'),
     path('forget', ForgotPasswordView.as_view(), name='forgot-password'),
 
+    path('statistic', statistic.as_view(), name='statistic'),
+    path('map', smap.as_view(), name='smap')
 ]
