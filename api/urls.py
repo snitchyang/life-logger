@@ -14,7 +14,7 @@ urlpatterns = [
     path('user/friends', UserFriends.as_view(), name='user-friends'),
     path('user/self', UserSelf.as_view(), name='user-self'),
 
-    path('friends/search',SearchFriends.as_view(),name='search-friends'),
+    path('friends/search', SearchUser.as_view(), name='search-friends'),
 
     path('plans', PlanList.as_view(), name='plan-list'),
     # path('plan/<int:pk>', PlanDetail.as_view(), name='plan-detail'),

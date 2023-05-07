@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import datetime
+import json
 import os.path
 from pathlib import Path
 
@@ -95,13 +96,13 @@ WSGI_APPLICATION = 'lifelogger.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lifelogger',  # 数据库名，先前创建的
-        'USER': 'root',  # 用户名，可以自己创建用户
-        'PASSWORD': 'meg20030129',  # 密码
-        'HOST': 'localhost',  # mysql服务所在的主机ip
-        'PORT': '3306',  # mysql服务端口
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "lifelogger",
+        "USER": 'yanjs',
+        "PASSWORD": "yjs135790",
+        "HOST": "localhost",
+        "PORT": "3306"
     }
 }
 
