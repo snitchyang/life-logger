@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ITag } from "../../../interface";
 import { DiaryTags } from "./DiaryTags";
+import { getTimeDistance } from "../../../service/TimeService";
 
 interface IDiaryHeader {
   tags: ITag[];
@@ -17,9 +18,7 @@ export const DiaryHeader = ({ tags, date }: IDiaryHeader) => {
         ))}
       </View>
       <View style={diaryStyleSheet.dateWrapper}>
-        <Text style={diaryStyleSheet.dateText}>
-          {new Date().getTime() - new Date(date).getTime()}
-        </Text>
+        <Text style={diaryStyleSheet.dateText}>{getTimeDistance(date)}</Text>
       </View>
     </View>
   );
@@ -77,7 +76,7 @@ const diaryStyleSheet = StyleSheet.create({
     textAlign: "right",
   },
   dateText: {
-    fontSize: 7,
+    fontSize: 8,
     color: "grey",
   },
   contentWrapper: {
