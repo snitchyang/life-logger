@@ -5,6 +5,7 @@
 __generated__
 
 ### Django template
+api/migrations/
 *.log
 *.pot
 *.pyc

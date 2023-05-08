@@ -43,6 +43,7 @@ export interface IDiary {
   title: string;
   content: string;
   images: IImage[];
+  duration: Date;
   tag: ITag[];
 }
 
