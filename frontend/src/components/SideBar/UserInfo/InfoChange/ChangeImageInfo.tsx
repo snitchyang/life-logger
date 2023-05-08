@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Image, Modal, Platform, TouchableOpacity, View } from "react-native";
 import { request_album_permission } from "../../../../service/GrantedService";
-import { Text } from "@rneui/base";
-import ImagePicker from "react-native-image-picker";
+import { Button, Text } from "@rneui/base";
 import { Ionicons } from "@expo/vector-icons";
-import { IFriend } from "../../../../interface";
+import { IUser } from "../../../../interface";
 import { update_userinfo } from "../../../../service/UserService";
+import { Camera } from "expo-camera";
+import * as ImagePicker from "expo-image-picker";
 
 interface Props {
-  usr: IFriend;
+  usr: IUser;
   setUser: any;
   uri: string;
   visible: boolean;
@@ -22,65 +23,62 @@ export const ChangeImageInfo = ({
   visible,
   setVisible,
 }: Props) => {
-  const [granted, setGranted] = useState<boolean>(false);
-  const [avatar, setAvatar] = useState<string>(uri);
+  const [cameraPermission, setCameraPermission] = useState<boolean>(false);
+  const [galleryPermission, setGalleryPermission] = useState<boolean>(false);
+
+  const [camera, setCamera] = useState(null);
+  const [image, setImage] = useState<string>(usr.avatar);
+
+  const permissionFunc = async () => {
+    let cameraPermission, imagePermission;
+    if (!cameraPermission) {
+      cameraPermission = await Camera.requestCameraPermissionsAsync();
+      setCameraPermission(cameraPermission.status === "granted");
+      // if (cameraPermission.status !== "granted")
+      //   console.info("no camera permission");
+    }
+    if (!galleryPermission) {
+      imagePermission = await ImagePicker.getMediaLibraryPermissionsAsync();
+      setGalleryPermission(imagePermission.status === "granted");
+      // if (imagePermission.status !== "granted") console.info("no permission");
+    }
+  };
+
   useEffect(() => {
-    if (Platform.OS === "android") {
-      request_album_permission(setGranted).catch((err) => console.error(err));
+    if (Platform.OS === "android" && !galleryPermission) {
+      permissionFunc().catch((err) => console.error(err));
     }
   }, []);
 
-  const options: object = {
-    title: "选择图片",
-    cancelButtonTitle: "取消",
-    takePhotoButtonTitle: "拍照",
-    chooseFromLibraryButtonTitle: "相册",
-    cameraType: "back",
-    mediaType: "photo",
-    videoQuality: "high",
-    durationLimit: 10,
-    maxWidth: 720,
-    maxHeight: 1280,
-    aspectX: 2,
-    aspectY: 1,
-    quality: 1,
-    angle: 0,
-    allowsEditing: false,
-    noData: false,
-    storageOptions: {
-      skipBackup: true,
-      path: "PickLocalImg", // 存储本地地址
-    },
-  };
-
   const handleAddPicCheck = async () => {
-    ImagePicker.showImagePicker(options, async (res) => {
-      if (res.didCancel) {
-        console.log("User cancelled photo picker");
-      } else if (res.error) {
-        // 用户选择不授权时，提醒以下信息
-        console.log("ImagePicker Error: ", res.error);
-      } else {
-        let source; //保存选中的图片
-        if (Platform.OS === "android") {
-          source = res.uri;
-        } else {
-          source = res.uri.replace("file://", "");
+    await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+      base64: true,
+    }).then((result) => {
+      if (!result.canceled) {
+        console.log("pick image");
+        try {
+          // result.assets[0].base64
+          setImage(result.assets[0].uri);
+          let newUsr = usr;
+          newUsr.avatar = image;
+          // setUser(newUsr);
+          update_userinfo(usr, result.assets[0].base64).catch((err) =>
+            console.error(err)
+          );
+        } catch (e) {
+          console.error(e);
         }
-        let newUsr: IFriend = usr;
-        newUsr.avatar = res.fileName; // TODO:file name or source?
-        setUser(newUsr);
-        await update_userinfo(newUsr).catch((err) => console.log(err));
-      }
+      } else console.log("cancel");
     });
   };
-
-  if (Platform.OS === "android" && !granted)
-    return <Text>{"需要访问相册权限"}</Text>;
   return (
     <Modal
       animationType="slide"
-      transparent={true}
+      transparent={false}
       visible={visible}
       onRequestClose={() => {
         setVisible(false);
@@ -88,17 +86,18 @@ export const ChangeImageInfo = ({
     >
       <View>
         <Text>{"添加图片"}</Text>
-        <View>
+        <View id={"avatar-upload"}>
           {/* 显示上传后的照片 */}
-          <Image source={{ uri: avatar }} />
+          <Image source={{ uri: image }} />
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => handleAddPicCheck()}
           >
             {/* 点击此图，调用上传图片，一般此图是个➕号 的样子*/}
-            <Ionicons name="add-outline"></Ionicons>
+            <Ionicons name="add-outline" size={30}></Ionicons>
           </TouchableOpacity>
         </View>
+        {/*<Button onPress={setVisible(false)}>{"取消"}</Button>*/}
       </View>
     </Modal>
   );

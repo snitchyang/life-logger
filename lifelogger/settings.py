@@ -99,8 +99,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "lifelogger",
-        "USER": 'yanjs',
-        "PASSWORD": "yjs135790",
+        "USER": 'root',
+        "PASSWORD": "meg20030129",
         "HOST": "localhost",
         "PORT": "3306"
     }
@@ -158,3 +158,4 @@ APPEND_SLASH = False
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 8
