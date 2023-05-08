@@ -1,4 +1,4 @@
-export interface IUser {
+export interface IFriend {
   id: number;
   username: string;
   password: string;
@@ -43,6 +43,7 @@ export interface IDiary {
   title: string;
   content: string;
   images: IImage[];
+  duration: Date;
   tag: ITag[];
 }
 
@@ -52,7 +53,7 @@ export interface IMessage {
 
 export interface IComment {
   id: number;
-  user: IUser;
+  user: IFriend;
   date: Date;
   content: string;
 }
@@ -64,7 +65,7 @@ export interface IPost {
   location: string;
   content: string;
   images: IImage[];
-  user: IUser;
+  user: IFriend;
   likes: number;
   comments: IComment[];
   liker: number[];

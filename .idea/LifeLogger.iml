@@ -18,6 +18,11 @@
       <excludeFolder url="file://$MODULE_DIR$/.expo" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/inspectionProfiles" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/jsLinters" />
+      <excludeFolder url="file://$MODULE_DIR$/frontend/.expo" />
+      <excludeFolder url="file://$MODULE_DIR$/log" />
+      <excludeFolder url="file://$MODULE_DIR$/media" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10 (life-logger) (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

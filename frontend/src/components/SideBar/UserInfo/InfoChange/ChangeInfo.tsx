@@ -1,11 +1,11 @@
 import React from "react";
 import { ChangeTextInfo } from "./ChangeTextInfo";
-import { IUser } from "../../../../interface";
+import { IFriend } from "../../../../interface";
 import { userinfo_enumerate } from "../../../../data/data";
 import { ChangeImageInfo } from "./ChangeImageInfo";
 
 interface Props {
-  usr: IUser;
+  usr: IFriend;
   setUser: any;
   kind: number;
   visible: boolean;

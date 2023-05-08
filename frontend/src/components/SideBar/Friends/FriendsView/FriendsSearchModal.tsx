@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState, useEffect } from "react";
-import { IFriend, IUser } from "../../../../interface";
+import React, { useEffect, useState } from "react";
+import { IFriend } from "../../../../interface";
 import { get_friends, search_friends } from "../../../../service/FriendService";
 import { SearchFriendsListItem } from "./SearchListItem";
 
@@ -67,7 +67,10 @@ export const FriendsSearchModal = ({ me, isVisible, setVisible }: Props) => {
           onChangeText={(text) => setInputText(text)}
           // onChangeText={(item) => search(item)}
         />
-        <Button onPress={(inputText) => search(inputText)} title={"Search"}></Button>
+        <Button
+          onPress={(inputText) => search(inputText)}
+          title={"Search"}
+        ></Button>
         <FlatList
           style={searchFriendsStyleSheet.listItem}
           data={filter}

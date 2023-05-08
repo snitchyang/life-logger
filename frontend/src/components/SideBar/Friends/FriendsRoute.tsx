@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity, View } from "react-native";
-import React, { useState, useEffect } from "react";
-import { IFriend, IUser } from "../../../interface";
+import React, { useEffect, useState } from "react";
+import { IFriend } from "../../../interface";
 import { FriendsList } from "./FriendsView/FriendsList";
 import { friendsViewStyleSheet } from "./FriendsStyleSheet";
 import { Ionicons } from "@expo/vector-icons";

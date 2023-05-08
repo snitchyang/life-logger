@@ -1,14 +1,10 @@
-import { IFriend, IUser } from "../../../../interface";
+import { IFriend } from "../../../../interface";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { Avatar } from "@rneui/base";
 import { Ionicons } from "@expo/vector-icons";
-import { friendsStyleSheet, searchListStyleSheet } from "../FriendsStyleSheet";
-import React, { useEffect, useState } from "react";
-import {
-  delete_friends,
-  follow_friends,
-  get_friends,
-} from "../../../../service/FriendService";
+import { friendsStyleSheet } from "../FriendsStyleSheet";
+import React from "react";
+import { delete_friends } from "../../../../service/FriendService";
 
 interface Props2 {
   friends: IFriend[];

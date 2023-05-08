@@ -1,4 +1,4 @@
-import { IDiary, IImage, IPost, ITag, IUser } from "../interface";
+import { IDiary, IFriend, IImage, ITag } from "../interface";
 
 export const curUserID = 1;
 
@@ -18,7 +18,7 @@ export const gender_enumerate = {
 
 export const gender_text: string[] = ["male", "female", "unknown"];
 
-export const users: IUser[] = [
+export const users: IFriend[] = [
   {
     id: 1,
     username: "Alice",

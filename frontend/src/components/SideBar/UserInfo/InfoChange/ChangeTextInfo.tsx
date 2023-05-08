@@ -3,11 +3,11 @@ import { Modal, Text, TextInput, View } from "react-native";
 import { changeInfoStyleSheet } from "../../../../screens/Profiles/UserInfoStyleSheet";
 import { Button } from "@rneui/base";
 import { userinfo_enumerate } from "../../../../data/data";
-import { IUser } from "../../../../interface";
+import { IFriend } from "../../../../interface";
 import { update_userinfo } from "../../../../service/UserService";
 
 interface Props {
-  usr: IUser;
+  usr: IFriend;
   setUser: any;
   kind: number;
   visible: boolean;
@@ -25,7 +25,7 @@ export const ChangeTextInfo = ({
 
   function changeInfo(text) {
     if (text) {
-      let newUser: IUser = usr;
+      let newUser: IFriend = usr;
       if (kind === userinfo_enumerate.changeName) {
         newUser.username = text;
         setUser(newUser);
