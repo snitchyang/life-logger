@@ -99,8 +99,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "lifelogger",
-        "USER": 'yanjs',
-        "PASSWORD": "yjs135790",
+        "USER": 'root',
+        "PASSWORD": "yangzheng",
         "HOST": "localhost",
         "PORT": "3306"
     }
