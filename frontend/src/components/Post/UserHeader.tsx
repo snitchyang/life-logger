@@ -1,12 +1,12 @@
 import React from "react";
 import { Image, View } from "react-native";
-import { IUser } from "../../interface";
+import { IFriend } from "../../interface";
 import { Text } from "@rneui/base";
 import { getTimeDistance } from "../../service/TimeService";
 
 interface UserHeader {
   date: Date;
-  user: IUser;
+  user: IFriend;
 }
 
 export const UserHeader = ({ user, date }: UserHeader) => {

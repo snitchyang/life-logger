@@ -10,13 +10,13 @@ import { StyleSheet, View } from "react-native";
 import SettingsPage from "../screens/Settings/SettingsPage";
 import { UserInfo } from "../screens/Profiles/UserInfoRoute";
 import { FriendsRoute } from "../components/SideBar/Friends/FriendsRoute";
-import { IUser } from "../interface";
+import { IFriend } from "../interface";
 import { get_user_self } from "../service/UserService";
 
 const drawerNavigator = createDrawerNavigator();
 export default function DrawerNavigator() {
   const { t } = useTranslation();
-  const [user, setUser] = useState<IUser>(undefined);
+  const [user, setUser] = useState<IFriend>(undefined);
   useEffect(() => {
     get_user_self()
       .then((res) => {

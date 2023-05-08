@@ -4,16 +4,17 @@ import { request_album_permission } from "../../../../service/GrantedService";
 import { Text } from "@rneui/base";
 import ImagePicker from "react-native-image-picker";
 import { Ionicons } from "@expo/vector-icons";
-import { IUser } from "../../../../interface";
+import { IFriend } from "../../../../interface";
 import { update_userinfo } from "../../../../service/UserService";
 
 interface Props {
-  usr: IUser;
+  usr: IFriend;
   setUser: any;
   uri: string;
   visible: boolean;
   setVisible: any;
 }
+
 export const ChangeImageInfo = ({
   usr,
   setUser,
@@ -66,7 +67,7 @@ export const ChangeImageInfo = ({
         } else {
           source = res.uri.replace("file://", "");
         }
-        let newUsr: IUser = usr;
+        let newUsr: IFriend = usr;
         newUsr.avatar = res.fileName; // TODO:file name or source?
         setUser(newUsr);
         await update_userinfo(newUsr).catch((err) => console.log(err));
