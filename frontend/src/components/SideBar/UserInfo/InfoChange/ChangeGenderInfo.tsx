@@ -31,7 +31,7 @@ export const ChangeGenderInfo = ({ gender, usr, setUser }: Props) => {
         let newUsr = usr;
         newUsr.gender = selectedItem;
         setUser(newUsr);
-        update_userinfo(newUsr).catch((err) => console.error(err));
+        update_userinfo(newUsr, null).catch((err) => console.error(err));
       }}
     />
   );

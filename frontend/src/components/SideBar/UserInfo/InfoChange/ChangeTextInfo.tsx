@@ -80,7 +80,7 @@ export const ChangeTextInfo = ({
             <Button
               title={"submit"}
               onPress={() => {
-                update_userinfo(usr).then(() => {
+                update_userinfo(usr, null).then(() => {
                   setInputText("");
                   setVisible(false);
                 });

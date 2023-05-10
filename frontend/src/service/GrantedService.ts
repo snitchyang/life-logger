@@ -1,17 +1,19 @@
 import { PermissionsAndroid } from "react-native";
 
 export const request_album_permission = async (setGranted: any) => {
-  const result = await PermissionsAndroid.request(
-    PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-    {
-      title: "需要访问相册",
-      message: "需要访问相册",
-      buttonPositive: "",
-    }
-  );
-  if (result === PermissionsAndroid.RESULTS.GRANTED) {
-    setGranted(true);
-  } else {
-    setGranted(false);
-  }
+  // try {
+  //   const granted = await PermissionsAndroid.request(
+  //     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+  //     {
+  //       buttonPositive: "",
+  //       title: "获取读写照片权限",
+  //       message: "上传照片",
+  //     }
+  //   );
+  //   if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //     setGranted(true);
+  //   } else setGranted(false);
+  // } catch (e) {
+  //   console.error(e.toString());
+  // }
 };

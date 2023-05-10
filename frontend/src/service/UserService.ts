@@ -1,10 +1,18 @@
-import { IFriend } from "../interface";
+import { IFriend,IUser } from "../interface";
 import { get_request_header, post_request_header, root_path } from "./global";
 
-export const update_userinfo = async (user: IFriend) => {
+export const update_userinfo = async (user: IUser) => {
   const url = root_path + "user/self";
-  const body = JSON.stringify(user);
-  await fetch(url, post_request_header(body));
+  if (avatar_base64) {
+    const upload_url = root_path + "user/avatar";
+    let upload_data = new FormData();
+    upload_data.append("avatar_base64", avatar_base64);
+    await fetch(upload_url, post_request_header(upload_data)).then(() => {
+      fetch(url, post_request_header(JSON.stringify(user)));
+    });
+  } else {
+    await fetch(url, post_request_header(JSON.stringify(user)));
+  }
 };
 
 export const get_user_self = async (): Promise<IFriend> => {
