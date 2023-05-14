@@ -1,11 +1,10 @@
 import { Text, TouchableOpacity, View } from "react-native";
-import React, { useState, useEffect } from "react";
-import { IFriend, IUser } from "../../../interface";
+import React, { useEffect, useState } from "react";
+import { IFriend } from "../../../interface";
 import { FriendsList } from "./FriendsView/FriendsList";
 import { friendsViewStyleSheet } from "./FriendsStyleSheet";
 import { Ionicons } from "@expo/vector-icons";
 import { FriendsSearchModal } from "./FriendsView/FriendsSearchModal";
-import { users } from "../../../data/data";
 import { get_friends } from "../../../service/FriendService";
 import { Tab } from "@rneui/themed";
 
@@ -40,6 +39,7 @@ export const FriendsRoute = ({ route }) => {
           <Text style={friendsViewStyleSheet.titleText}>{"Friends"}</Text>
         </View>
         <TouchableOpacity
+          id={"add-friend-button"}
           style={friendsViewStyleSheet.addButtonContainer}
           onPress={() => {
             setIsVisible(true);
@@ -54,7 +54,10 @@ export const FriendsRoute = ({ route }) => {
             {"Add new friends"}
           </Text>
         </TouchableOpacity>
-        <View style={friendsViewStyleSheet.friendsListContainer}>
+        <View
+          id={"friend-list"}
+          style={friendsViewStyleSheet.friendsListContainer}
+        >
           <FriendsList friends={index === 0 ? following : followMe} />
         </View>
       </View>

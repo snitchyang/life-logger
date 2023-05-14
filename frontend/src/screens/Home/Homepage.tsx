@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { ScrollView, TextInput, View } from "react-native";
+import { FlatList, TextInput, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { IDiary, ITag } from "../../interface";
@@ -92,14 +92,16 @@ function HomePage({ navigation }) {
       </View>
 
       <View style={{ flex: 10, minHeight: 200 }}>
-        <ScrollView style={{ flex: 1 }}>
-          <View
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-          >
-            {filterData.map((item, index) => (
+        {/*<ScrollView style={{ flex: 1 }}>*/}
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <FlatList
+            data={filterData}
+            renderItem={({ item, index }) => (
               <View
                 style={{
-                  flex: 1,
+                  // flex: 1,
                   maxHeight: 200,
                   minWidth: 400,
                   overflow: "hidden",
@@ -107,13 +109,13 @@ function HomePage({ navigation }) {
                 onTouchEnd={() => {
                   navigation.navigate("Detail", { diary: item });
                 }}
-                key={index}
               >
-                <DiaryCard diary={item} />
+                <DiaryCard diary={item} key={index} />
               </View>
-            ))}
-          </View>
-        </ScrollView>
+            )}
+          />
+        </View>
+        {/*</ScrollView>*/}
       </View>
     </View>
   );

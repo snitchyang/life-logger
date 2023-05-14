@@ -31,7 +31,9 @@ export const GetPost = async (post_id: number): Promise<IPost> => {
     .then((res) => res.json())
     .catch((err) => console.error(err));
 };
-export const GetPostList = async (page: number): Promise<IPost[]> => {
+export const GetPostList = async (
+  page: number
+): Promise<{ data: IPost[]; max: number }> => {
   return await fetch(
     `${root_path}posts?page=${page.toString()}`,
     get_request_header()

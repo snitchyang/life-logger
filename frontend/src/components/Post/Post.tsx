@@ -15,19 +15,24 @@ export const Post = ({ post }: Props): JSX.Element => {
       <View style={{ flexDirection: "column" }}>
         <UserHeader date={post.date} user={post.user} />
       </View>
-      <View style={{ marginTop: 5 }}>
+      <View style={{ marginTop: 5, marginLeft: 10, marginRight: 10 }}>
         <Text>{post.content}</Text>
       </View>
-      <FlatList
-        data={post.image}
-        renderItem={({ item, index }) => (
-          <Image
-            style={{ width: 100, height: 100 }}
-            source={{ uri: item.path }}
-            key={index}
-          />
-        )}
-      />
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <FlatList
+          data={post.images}
+          numColumns={3}
+          renderItem={({ item, index }) => (
+            <View style={{ padding: 5 }}>
+              <Image
+                style={{ width: 100, height: 100 }}
+                source={{ uri: item.path }}
+                key={index}
+              />
+            </View>
+          )}
+        />
+      </View>
       <PostActionSection post={post} />
     </Card>
   );

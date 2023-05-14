@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import datetime
+import json
 import os.path
 from pathlib import Path
 
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'lifelogger.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [BASE_DIR / 'api/templates']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -95,13 +96,13 @@ WSGI_APPLICATION = 'lifelogger.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lifelogger',  # 数据库名，先前创建的
-        'USER': 'yanjs',  # 用户名，可以自己创建用户
-        'PASSWORD': 'yjs135790',  # 密码
-        'HOST': 'localhost',  # mysql服务所在的主机ip
-        'PORT': '3306',  # mysql服务端口
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "lifelogger",
+        "USER": 'root',
+        "PASSWORD": "meg20030129",
+        "HOST": "localhost",
+        "PORT": "3306"
     }
 }
 
@@ -157,3 +158,4 @@ APPEND_SLASH = False
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 8

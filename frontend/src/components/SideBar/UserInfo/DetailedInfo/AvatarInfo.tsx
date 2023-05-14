@@ -2,8 +2,10 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { userInfoStyleSheet } from "../../../../screens/Profiles/UserInfoStyleSheet";
 import { Avatar } from "@rneui/base";
 import { Ionicons } from "@expo/vector-icons";
+import React from "react";
 
 export const AvatarInfo = ({ avaUri }) => {
+  console.log(`${avaUri}`);
   return (
     <>
       <View style={userInfoStyleSheet.boxTitle}>
@@ -14,7 +16,7 @@ export const AvatarInfo = ({ avaUri }) => {
           containerStyle={userInfoStyleSheet.boxInfoAvatar}
           size={32}
           rounded={true}
-          source={{ uri: avaUri }}
+          source={{ uri: `${avaUri}` }}
         />
       </View>
       <View style={userInfoStyleSheet.boxIcon}>

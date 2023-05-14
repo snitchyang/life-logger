@@ -40,11 +40,12 @@ class Tag(models.Model):
 
 
 class Diary(models.Model):
-    date = models.DateField(auto_now_add=True, verbose_name='日期')
+    date = models.DateTimeField(auto_now_add=True, verbose_name='开始时间')
     title = models.CharField(max_length=255, verbose_name='标题')
     content = models.TextField(verbose_name='内容')
     tag = models.ManyToManyField(Tag, related_name='diaries', blank=True, verbose_name='标签')
     user = models.ForeignKey(User, related_name='diaries', on_delete=models.CASCADE, verbose_name='用户')
+    duration = models.TimeField(verbose_name='持续时间')
 
     def __str__(self):
         return self.title

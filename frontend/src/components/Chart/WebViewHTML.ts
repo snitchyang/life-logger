@@ -1,5 +1,5 @@
-import { diaries, tags } from "../../data/data";
 import { IDiary, ITag } from "../../interface";
+import { diaries, tags } from "../../data/data";
 
 const chartTypes = {
   bar: "bar",

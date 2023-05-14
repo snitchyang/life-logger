@@ -13,8 +13,9 @@ urlpatterns = [
     # path('user/<int:pk>', UserDetail.as_view(), name='user-detail'),
     path('user/friends', UserFriends.as_view(), name='user-friends'),
     path('user/self', UserSelf.as_view(), name='user-self'),
+    path('user/avatar', AvatarView.as_view(), name='user-avatar'),
 
-    path('search/friends',SearchFriends.as_view(),name='search-friends'),
+    path('friends/search', SearchUser.as_view(), name='search-friends'),
 
     path('plans', PlanList.as_view(), name='plan-list'),
     # path('plan/<int:pk>', PlanDetail.as_view(), name='plan-detail'),
@@ -44,4 +45,6 @@ urlpatterns = [
     path('register', UserRegistrationView.as_view(), name='user-registration'),
     path('forget', ForgotPasswordView.as_view(), name='forgot-password'),
 
+    path('statistic', statistic.as_view(), name='statistic'),
+    path('map', smap.as_view(), name='smap')
 ]

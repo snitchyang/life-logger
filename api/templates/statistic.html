@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <style>
+
+    </style>
+</head>
+<body style="background: rgba(255,255,255,0.62) ">
+<div style="margin: 1%">
+    <canvas id="chart-tag"></canvas>
+</div>
+<script>
+
+    new Chart(document.getElementById('chart-tag'), {
+        type: 'pie',
+        data: {
+            labels: {{ label|safe }},
+            datasets: [{
+                label: '时长 / h',
+                backgroundColor: [
+                    'rgb(255, 99, 132, 0.4)',
+                    'rgb(54, 162, 235, 0.4)',
+                    'rgb(255, 205, 86, 0.4)',
+                    'rgb(200,86,86, 0.4)',
+                    'rgb(241,111,61, 0.4)',
+                    'rgb(25,246,6, 0.4)',
+                    'rgb(143,99,225, 0.4)',
+                    'rgb(86,255,204, 0.4)',
+                    'rgb(52,0,255, 0.4)',
+                    'rgb(194,185,167, 0.4)',
+                    'rgb(199,7,239, 0.4)',
+                    'rgb(96,197,69, 0.4)',
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)',
+                    'rgb(200,86,86)',
+                    'rgb(241,111,61)',
+                    'rgb(25,246,6)',
+                    'rgb(143,99,225)',
+                    'rgb(86,255,204)',
+                    'rgb(52,0,255)',
+                    'rgb(194,185,167)',
+                    'rgb(199,7,239)',
+                    'rgb(96,197,69)',
+                ],
+                data: {{ data }},
+                borderWidth: 1,
+            }]
+        },
+        options: {}
+    });
+</script>
+
+</body>
+</html>

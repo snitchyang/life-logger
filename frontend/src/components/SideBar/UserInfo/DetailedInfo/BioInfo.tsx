@@ -3,14 +3,18 @@ import { userInfoStyleSheet } from "../../../../screens/Profiles/UserInfoStyleSh
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 
-export const NameInfo = ({ name }) => {
+interface Props {
+  bio: string;
+}
+
+export const BioInfo = ({ bio }) => {
   return (
     <>
       <View style={userInfoStyleSheet.boxTitle}>
-        <Text style={userInfoStyleSheet.boxTitleText}>{"Name:"}</Text>
+        <Text style={userInfoStyleSheet.boxTitleText}>{"Bio:"}</Text>
       </View>
       <View style={userInfoStyleSheet.boxInfo}>
-        <Text style={userInfoStyleSheet.boxInfoText}>{name}</Text>
+        <Text style={userInfoStyleSheet.boxInfoText}>{bio}</Text>
       </View>
       <View style={userInfoStyleSheet.boxIcon}>
         <Ionicons name="chevron-forward-outline"></Ionicons>

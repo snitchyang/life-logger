@@ -6,6 +6,9 @@ import { SchoolInfo } from "../../components/SideBar/UserInfo/DetailedInfo/Schoo
 import React, { useState } from "react";
 import { userInfoStyleSheet } from "./UserInfoStyleSheet";
 import { ChangeInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeInfo";
+import { BioInfo } from "../../components/SideBar/UserInfo/DetailedInfo/BioInfo";
+import { IFriend } from "../../interface";
+import { userinfo_enumerate } from "../../data/data";
 
 // interface UserInfoRoute {
 //     user: IUser;
@@ -13,53 +16,63 @@ import { ChangeInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeI
 
 export const UserInfo = ({ route }) => {
   const { user } = route.params;
-  const [modalVisible, setModalVisible] = useState(true);
-  const [kind, setKind] = useState(-1);
-  const [usr, setUser] = useState(user);
+  const [visible, setVisible] = useState(true);
+  const [kind, setKind] = useState<number>(-1);
+  const [usr, setUser] = useState<IFriend>(user);
+
   return (
     <SafeAreaView style={{ flex: 1, marginTop: 25 }}>
       <ChangeInfo
         usr={usr}
         setUser={setUser}
         kind={kind}
-        visible={modalVisible}
-        setVisible={setModalVisible}
+        visible={visible}
+        setVisible={setVisible}
       />
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
         onPress={() => {
-          setKind(0);
-          setModalVisible(true);
+          setKind(userinfo_enumerate.changeProfile);
+          setVisible(true);
         }}
       >
-        <AvatarInfo avaUri={user.profilePicture} />
+        <AvatarInfo avaUri={usr.avatar} />
       </TouchableOpacity>
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
         onPress={() => {
-          setKind(1);
-          setModalVisible(!modalVisible);
+          setKind(userinfo_enumerate.changeName);
+          setVisible(true);
         }}
       >
-        <NameInfo name={user.name} />
+        <NameInfo name={usr.username} />
       </TouchableOpacity>
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
         onPress={() => {
-          setKind(2);
-          setModalVisible(!modalVisible);
+          setKind(userinfo_enumerate.changeGender);
+          setVisible(true);
         }}
       >
-        <GenderInfo gender={user.gender} />
+        <GenderInfo gender={usr.gender} usr={usr} setUser={setUser} />
       </TouchableOpacity>
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
         onPress={() => {
-          setKind(3);
-          setModalVisible(!modalVisible);
+          setKind(userinfo_enumerate.changeBio);
+          setVisible(true);
         }}
       >
-        <SchoolInfo school={user.school} />
+        <BioInfo bio={usr.biography} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={userInfoStyleSheet.boxContainer}
+        onPress={() => {
+          setKind(userinfo_enumerate.changeSchool);
+          setVisible(true);
+        }}
+      >
+        <SchoolInfo school={usr.school} />
       </TouchableOpacity>
     </SafeAreaView>
   );

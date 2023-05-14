@@ -2,6 +2,7 @@ import { IComment } from "../../interface";
 import { Text } from "@rneui/base";
 import { Image, View } from "react-native";
 import React from "react";
+import { getTimeDistance } from "../../service/TimeService";
 
 interface Comment {
   comment: IComment;
@@ -9,7 +10,7 @@ interface Comment {
 
 export const Comment = ({ comment }: Comment) => {
   return (
-    <View>
+    <View style={{ marginTop: 3 }}>
       <View style={{ flexDirection: "row" }}>
         <Image
           source={{ uri: comment.user.avatar }}
@@ -24,7 +25,7 @@ export const Comment = ({ comment }: Comment) => {
             paddingTop: 2,
           }}
         >
-          {/*{getTimeDistance(comment.date)}*/}
+          {getTimeDistance(comment.date)}
         </Text>
       </View>
       <Text>{comment.content}</Text>

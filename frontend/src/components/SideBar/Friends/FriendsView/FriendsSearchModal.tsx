@@ -1,4 +1,5 @@
 import {
+  Button,
   FlatList,
   Modal,
   StyleSheet,
@@ -7,14 +8,18 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState, useEffect } from "react";
-import { users } from "../../../../data/data";
-import { IFriend, IUser } from "../../../../interface";
-import { Avatar, Button } from "@rneui/base";
-import { Ionicons } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
+import { IFriend } from "../../../../interface";
 import { get_friends, search_friends } from "../../../../service/FriendService";
+import { SearchFriendsListItem } from "./SearchListItem";
 
-export const FriendsSearchModal = ({ me, isVisible, setVisible }) => {
+interface Props {
+  me: number;
+  isVisible: boolean;
+  setVisible: any;
+}
+
+export const FriendsSearchModal = ({ me, isVisible, setVisible }: Props) => {
   const [inputText, setInputText] = useState("");
   const [filter, setFilter] = useState<IFriend[]>([]);
   const [following, setFollowing] = useState<IFriend[]>([]);
@@ -24,7 +29,7 @@ export const FriendsSearchModal = ({ me, isVisible, setVisible }) => {
   }, []);
 
   function search(text) {
-    console.log(text);
+    // console.log(text);
     if (text) {
       search_friends(text).then((res) => setFilter(res));
     } else {
@@ -57,16 +62,20 @@ export const FriendsSearchModal = ({ me, isVisible, setVisible }) => {
         </View>
         <TextInput
           style={searchFriendsStyleSheet.inputItem}
-          placeholder={"> id, name or school"}
+          placeholder={"> input name"}
           value={inputText}
+          onChangeText={(text) => setInputText(text)}
           // onChangeText={(item) => search(item)}
         />
-        <Button onPress={(inputText) => search(inputText)}>{"Search"}</Button>
+        <Button
+          onPress={(inputText) => search(inputText)}
+          title={"Search"}
+        ></Button>
         <FlatList
           style={searchFriendsStyleSheet.listItem}
           data={filter}
           renderItem={({ item }) => (
-            <SearchFriendsList me={me} friend={item} friends={following} />
+            <SearchFriendsListItem me={me} friend={item} friends={following} />
           )}
         />
       </View>
@@ -74,48 +83,6 @@ export const FriendsSearchModal = ({ me, isVisible, setVisible }) => {
   );
 };
 
-interface SearchFriendsList {
-  me: number;
-  friend: IFriend;
-  friends: IFriend[];
-}
-
-const SearchFriendsList = ({ me, friend, friends }: SearchFriendsList) => {
-  function isFriend() {
-    if (friends.includes(friend)) return true;
-    return false;
-  }
-
-  return (
-    <View style={searchListStyleSheet.wrapper}>
-      <View style={searchListStyleSheet.avatarContainer}>
-        <Avatar
-          containerStyle={{ marginLeft: 15 }}
-          size={20}
-          rounded={true}
-          source={{ uri: friend.avatar }}
-        />
-      </View>
-      <View style={searchListStyleSheet.nameContainer}>
-        <Text style={searchListStyleSheet.nameText}>{friend.username}</Text>
-      </View>
-      <TouchableOpacity
-        onPress={() => {
-          console.log("add friend" + friend.id);
-        }}
-      >
-        {isFriend() ? (
-          <Ionicons name="close-circle-outline"></Ionicons>
-        ) : (
-          <Ionicons
-            style={searchListStyleSheet.iconItem}
-            name="add-circle-outline"
-          ></Ionicons>
-        )}
-      </TouchableOpacity>
-    </View>
-  );
-};
 const searchFriendsStyleSheet = StyleSheet.create({
   wrapper: {
     flex: 1,
@@ -151,35 +118,5 @@ const searchFriendsStyleSheet = StyleSheet.create({
   listItem: {
     width: "90%",
     marginVertical: 10,
-  },
-});
-const searchListStyleSheet = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    flexDirection: "row",
-    width: "100%",
-    marginVertical: 5,
-  },
-  avatarContainer: {
-    flex: 1,
-    marginLeft: 10,
-  },
-  nameContainer: {
-    flex: 12,
-    textAlign: "center",
-    justifyContent: "center",
-    // borderWidth: 1,
-    // borderColor: "black",
-  },
-  nameText: {
-    textAlign: "center",
-    fontSize: 12,
-  },
-  friendsText: {
-    fontSize: 10,
-    color: "grey",
-  },
-  iconItem: {
-    flex: 1,
   },
 });

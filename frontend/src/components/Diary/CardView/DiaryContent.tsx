@@ -11,23 +11,24 @@ interface IDiaryContent {
 export const DiaryContent = ({ content, images }: IDiaryContent) => {
   return (
     <View
-      id="content"
       style={{
-        flex: 6,
+        // flex: 6,
         flexDirection: "row",
-        minHeight: 100,
+        marginTop: 10,
+        marginBottom: 10,
       }}
     >
+      {images.length > 0 && <DiaryImg path={images[0].path} />}
       <View
         style={{
           flex: 4,
           overflow: "hidden",
-          marginRight: 10,
+          // marginRight: 10,
         }}
       >
         <Text
           style={{
-            marginRight: 20,
+            marginLeft: 10,
             fontSize: 12,
             color: "#000",
           }}
@@ -36,7 +37,6 @@ export const DiaryContent = ({ content, images }: IDiaryContent) => {
           {content}
         </Text>
       </View>
-      {images.length > 0 && <DiaryImg path={images[0].path} />}
     </View>
   );
 };
@@ -64,13 +64,15 @@ export const DetailedContent = ({ content, images }: IDiaryContent) => {
         }}
       >
         <FlatList
-          columnWrapperStyle={{
-            maxHeight: 130,
-            borderColor: "black",
-            borderWidth: 3,
-          }}
+          columnWrapperStyle={
+            {
+              // maxHeight: 130,
+              // borderColor: "black",
+              // borderWidth: 3,
+            }
+          }
           data={images}
-          numColumns={2}
+          numColumns={3}
           renderItem={({ item }) => <DetailImg path={item.path} />}
         />
       </View>

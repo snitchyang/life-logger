@@ -1,9 +1,14 @@
+import base64
 import datetime
 import json
+import os.path
+import uuid
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.hashers import make_password
+from django.core.paginator import Paginator
+from django.shortcuts import render
 from django.urls import reverse
 from rest_framework import generics, permissions
 from rest_framework.authtoken.models import Token
@@ -12,6 +17,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from django.core.files.base import ContentFile
 
 from lifelogger import settings
 from .serializers import *
@@ -47,7 +54,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class UserSelf(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request: Request):
         user: User = get_user(request)
@@ -55,7 +62,7 @@ class UserSelf(APIView):
             return Response(UserSerializer(user, context={'request': request}).data, status=200)
         return Response(status=401)
 
-    def put(self, request: Request):
+    def post(self, request: Request):
         user = get_user(request)
         data = request.data
         username = data['username']
@@ -70,16 +77,38 @@ class UserSelf(APIView):
         if phone_number != user.phone_number and len(User.objects.filter(phone_number=phone_number)) > 0:
             return Response({'message': 'phone_number'}, status=400)
         user.phone_number = phone_number
+        gender = data['gender']
+        # print(data)
+        # print(request.FILES)
+        # avatar = data['avatar']
         biography = data['biography']
         school = data['school']
+        user.gender = gender
+        # user.avatar = avatar
         user.biography = biography
         user.school = school
         user.save()
         return Response({'message': 'success'}, status=200)
 
 
+class AvatarView(APIView):
+    def post(self, request: Request):
+        user = get_user(request)
+        avatar_base64 = request.data['avatar_base64']
+        # user = User.objects.get(id=1)
+        uid = uuid.uuid1()
+        print(uid)
+        img_path = os.path.join(settings.MEDIA_ROOT, 'avatar\\' + str(uid) + '.jpg')
+        with open(img_path, 'wb') as out:
+            out.write(base64.b64decode(avatar_base64))
+            out.flush()
+        user.avatar = img_path
+        user.save()
+        return Response({'message': 'success'}, status=200)
+
+
 class UserFriends(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request: Request):
         user = get_user(request)
@@ -103,18 +132,18 @@ class UserFriends(APIView):
         return Response({'message': 'success'}, status=200)
 
 
-class SearchFriends(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+class SearchUser(APIView):
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def post(self, request: Request):
-        user = get_user(request)
         friend_name = request.data['friend']
-        friends: [] = User.objects.get(username__contains=friend_name)
-        return Response(friends, status=200)
+        friends: [] = User.objects.filter(username__contains=friend_name)
+        response = UserSerializer(friends, many=True).data
+        return Response(response, status=200)
 
 
 class PlanList(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request: Request):
         user = get_user(request)
@@ -148,7 +177,7 @@ class PlanAdd(APIView):
 
 
 class TagList(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request):
         response = TagSerializer(Tag.objects.all(), many=True).data
@@ -178,7 +207,7 @@ class DiaryList(APIView):
 
 
 class DiaryImageDetail(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def post(self, request: Request):
         data = request.data
@@ -247,19 +276,20 @@ class CommentAdd(APIView):
 
 
 class PostList(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request: Request):
         user = get_user(request)
         friends = [friendship.friend for friendship in Friendship.objects.filter(user=user).all()]
         friends += [user]
         queryset = Post.objects.filter(user__in=friends).order_by('-date')
-        # paginator = Paginator(queryset, 10)
-        # page = paginator.page(request.query_params['page'])
-        posts = PostSerializer(queryset, many=True, context={'request': request}).data
+        page_size = int(len(queryset) / 6) + 1
+        paginator = Paginator(queryset, 6)
+        page = paginator.page(request.query_params['page'])
+        posts = PostSerializer(page, many=True, context={'request': request}).data
         for post in posts:
             post['liked'] = post['liker'].count(user.id) > 0
-        return Response(posts, status=200)
+        return Response({'data': posts, 'max': page_size}, status=200)
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -269,7 +299,7 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class PostAdd(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def post(self, request: Request):
         data = request.data
@@ -299,7 +329,7 @@ class PostLike(APIView):
 
 
 class PostImageAdd(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def post(self, request: Request):
         data = request.data
@@ -363,3 +393,41 @@ class ForgotPasswordView(APIView):
             return Response({'message': 'Password reset email sent.'})
         else:
             return Response({'errors': form.errors}, status=400)
+
+
+class statistic(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request: Request):
+        user = User.objects.get(id=1)
+        duration_type = request.query_params['duration']
+        now_date = datetime.datetime.now()
+        if duration_type == 'week':
+            ago_date = now_date - datetime.timedelta(weeks=1)
+        elif duration_type == 'month':
+            ago_date = now_date - datetime.timedelta(days=30)
+        elif duration_type == 'year':
+            ago_date = now_date - datetime.timedelta(days=365)
+        else:
+            ago_date = datetime.datetime.min
+        diaries = Diary.objects.filter(user=user, date__lte=now_date, date__gte=ago_date)
+        tags = {}
+        for diary in diaries:
+            for tag in diary.tag.all():
+                if tag.content not in tags:
+                    tags[tag.content] = round(diary.duration.hour + diary.duration.minute / 60, 2)
+                else:
+                    tags[tag.content] += round(diary.duration.hour + diary.duration.minute / 60, 2)
+        label = []
+        data = []
+        for item in sorted(tags.items(), key=lambda kv: kv[1], reverse=True):
+            label.append(item[0])
+            data.append(item[1])
+        return render(request, 'statistic.html', {'data': data, 'label': label})
+
+
+class smap(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request: Request):
+        return render(request, 'test.html')

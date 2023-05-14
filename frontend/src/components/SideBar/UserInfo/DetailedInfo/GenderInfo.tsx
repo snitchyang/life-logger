@@ -2,18 +2,22 @@ import { Text, View } from "react-native";
 import { userInfoStyleSheet } from "../../../../screens/Profiles/UserInfoStyleSheet";
 import { Ionicons } from "@expo/vector-icons";
 import { ChangeGenderInfo } from "../InfoChange/ChangeGenderInfo";
+import React from "react";
+import { IFriend } from "../../../../interface";
 
-export const GenderInfo = ({ gender }) => {
-  let Gender: string = undefined;
-  if (gender === 0) Gender = "male";
-  else if (gender === 1) Gender = "female";
-  else Gender = "unknown";
+interface Props {
+  gender: string;
+  usr: IFriend;
+  setUser: any;
+}
+
+export const GenderInfo = ({ gender, usr, setUser }: Props) => {
   return (
     <>
       <View style={userInfoStyleSheet.boxTitle}>
         <Text style={userInfoStyleSheet.boxTitleText}>{"Gender:"}</Text>
       </View>
-      <ChangeGenderInfo Gender={Gender} />
+      <ChangeGenderInfo gender={gender} usr={usr} setUser={setUser} />
       <View style={userInfoStyleSheet.boxIcon}>
         <Ionicons name="chevron-forward-outline"></Ionicons>
       </View>
