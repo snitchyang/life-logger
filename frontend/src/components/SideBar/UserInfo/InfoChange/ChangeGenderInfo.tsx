@@ -2,12 +2,12 @@ import SelectDropdown from "react-native-select-dropdown";
 import { userInfoStyleSheet } from "../../../../screens/Profiles/UserInfoStyleSheet";
 import React from "react";
 import { gender_text } from "../../../../data/data";
-import { IFriend } from "../../../../interface";
+import { IUser } from "../../../../interface";
 import { update_userinfo } from "../../../../service/UserService";
 
 interface Props {
   gender: string;
-  usr: IFriend;
+  usr: IUser;
   setUser: any;
 }
 

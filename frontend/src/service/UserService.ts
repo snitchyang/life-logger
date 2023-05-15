@@ -1,7 +1,7 @@
-import { IFriend,IUser } from "../interface";
+import { IUser } from "../interface";
 import { get_request_header, post_request_header, root_path } from "./global";
 
-export const update_userinfo = async (user: IUser) => {
+export const update_userinfo = async (user: IUser, avatar_base64: any) => {
   const url = root_path + "user/self";
   if (avatar_base64) {
     const upload_url = root_path + "user/avatar";
@@ -15,7 +15,7 @@ export const update_userinfo = async (user: IUser) => {
   }
 };
 
-export const get_user_self = async (): Promise<IFriend> => {
+export const get_user_self = async (): Promise<IUser> => {
   const url = `${root_path}user/self`;
   return await fetch(url, get_request_header()).then((response) =>
     response.json()
