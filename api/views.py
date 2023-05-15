@@ -2,7 +2,6 @@ import base64
 import datetime
 import json
 import os.path
-import uuid
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm
@@ -17,8 +16,6 @@ from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from django.core.files.base import ContentFile
 
 from lifelogger import settings
 from .serializers import *
@@ -77,9 +74,6 @@ class UserSelf(APIView):
             return Response({'message': 'phone_number'}, status=400)
         user.phone_number = phone_number
         gender = data['gender']
-        # print(data)
-        # print(request.FILES)
-        # avatar = data['avatar']
         biography = data['biography']
         school = data['school']
         user.gender = gender
