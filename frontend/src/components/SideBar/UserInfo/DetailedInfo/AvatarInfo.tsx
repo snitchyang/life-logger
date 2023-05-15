@@ -5,7 +5,6 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 
 export const AvatarInfo = ({ avaUri }) => {
-  console.log(`${avaUri}`);
   return (
     <>
       <View style={userInfoStyleSheet.boxTitle}>

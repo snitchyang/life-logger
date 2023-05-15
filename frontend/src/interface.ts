@@ -71,3 +71,8 @@ export interface IPost {
   liker: number[];
   liked: boolean;
 }
+
+export interface IToken {
+  token: string;
+  error: string;
+}

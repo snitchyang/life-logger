@@ -1,60 +1,60 @@
 import { IDiary } from "../interface";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useState } from "react";
+// export const root_path: string = "http://10.0.2.2:8000/api/";
+export const root_path: string = "http://124.221.102.250:8000/api/";
 
-export const root_path: string = "http://10.0.2.2:8000/api/";
+export const test_token: string = "5d92e2b743cd8a6666cbb40bfb2e96235d18fdc9";
 
-export const test_token: string = "3518f3f1a74627cb896612ac4634b82ef6d2848f";
-
-export const post_request_header = (body: string | FormData) => {
+export const post_request_header = async (body: string | FormData) => {
+  const token = await AsyncStorage.getItem("token");
   let request: RequestInit = {
     method: "POST",
     body: body,
     headers: {
-      Authorization: "Token " + test_token,
-      // "Content-Type": "application/json",
+      Authorization: "Token " + token,
     },
     credentials: "include",
   };
   return request;
 };
 
-export const put_request_header = (body: string) => {
+export const put_request_header = async (body: string) => {
+  const token = await AsyncStorage.getItem("token");
+  console.log(token);
   let request: RequestInit = {
     method: "PUT",
     body: body,
     headers: {
-      Authorization: "Token " + test_token,
+      Authorization: "Token " + token,
     },
     credentials: "include",
   };
   return request;
 };
-export const delete_request_header = (body: string) => {
+export const delete_request_header = async (body: string) => {
+  const token = await AsyncStorage.getItem("token");
+  console.log(token);
   let request: RequestInit = {
     method: "DELETE",
     body: body,
     headers: {
-      Authorization: "Token " + test_token,
+      Authorization: "Token " + token,
     },
     credentials: "include",
   };
   return request;
 };
 
-export const get_request_header = () => {
+export const get_request_header = async () => {
+  const token = await AsyncStorage.getItem("token");
+  console.log(token);
   let request: RequestInit = {
     method: "GET",
     headers: {
-      Authorization: "Token " + test_token,
+      Authorization: "Token " + token,
     },
     credentials: "include",
   };
   return request;
 };
-// export const empty_diary: IDiary = {
-//   id: 0,
-//   date: new Date(),
-//   title: "",
-//   content: "",
-//   images: [],
-//   tag: [],
-// };
