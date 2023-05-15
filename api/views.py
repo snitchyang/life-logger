@@ -37,8 +37,7 @@ def api_root(request):
 
 
 def get_user(request: Request) -> User:
-    token = request.headers.get('Authorization').split()[-1]
-    return Token.objects.get(key=token).user
+    return request.user
 
 
 class UserList(generics.ListCreateAPIView):
@@ -340,7 +339,7 @@ class PostImageAdd(APIView):
 
 
 class UserLoginView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request):
         username = request.data.get('username')
@@ -357,7 +356,7 @@ class UserLoginView(APIView):
 
 
 class UserRegistrationView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request):
         username = request.data.get('username')
@@ -375,7 +374,7 @@ class UserRegistrationView(APIView):
 
 
 class ForgotPasswordView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request):
         email = request.data.get('email')
