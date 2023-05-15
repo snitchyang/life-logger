@@ -4,42 +4,26 @@ import { View, Text, Image,TextInput,StyleSheet } from "react-native";
 import {Input,Button} from "@rneui/base";
 import {COLOR} from "../../constants";
 import { FontAwesome } from '@expo/vector-icons';
+import {LoginPost} from "../../service/LoginService";
 
-
-
-import {IUser} from "../../interface";
 import {LoginPage} from "../../screens/Login/LoginPage";
+import {AddComment, GetPost} from "../../service/PostService";
 const RegisterForm = ({navigation}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const handleLogin=()=>{
-        navigation.navigate("Home");
-        // fetch("http://10.0.2.2:8000/api/login", {
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     method: "POST",
-        //     credentials: "include",
-        //     body: JSON.stringify({
-        //         username: username,
-        //         password: password,
-        //     }),
-        // })
-        //     .then(
-        //         (res) => res.json()
-        //     )
-        //     .then((res) =>{
-        //         if (res.token) {
-        //             localStorage.setItem("token", res.token);
-        //             navigation.navigate("Home");
-        //         } else {
-        //             // 处理未成功获取到token的情况
-        //             Alert.alert("账号密码错误！");
-        //         }
-        //     }
-        //     );
-
-
+    const handleLogin=async ()=>{
+         navigation.navigate("Home");
+        await LoginPost(username,password)
+            .then((res) =>{
+                if (res.token) {
+                    localStorage.setItem("token", res.token);
+                    navigation.navigate("Home");
+                } else {
+                    // 处理未成功获取到token的情况
+                    Alert.alert("账号密码错误！");
+                }
+            }
+            );
     }
     const doReg=()=>{
         navigation.navigate("Register");
