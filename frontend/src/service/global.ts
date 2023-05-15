@@ -1,11 +1,9 @@
-import { IDiary } from "../interface";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useState } from "react";
-// export const root_path: string = "http://10.0.2.2:8000/api/";
+
 export const root_path: string = "http://124.221.102.250:8000/api/";
 
 export const test_token: string =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg0MTYwODUwLCJpYXQiOjE2ODQxNjA1NTAsImp0aSI6IjdlYTM3YzE4OTgxZTRlODg4N2ZjNjExNmI0ZWU3MGJmIiwidXNlcl9pZCI6MX0.SpuZwVI3E_UbodO1PIOaMrOGEm5-3tXIgNigRqlpY-o";
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1MDI5NTQ2LCJpYXQiOjE2ODQxNjU1NDYsImp0aSI6ImY2OGJkOGU0MGQ2YzRlZWRhZTQ1ZWMxMmI0MTkyZTg3IiwidXNlcl9pZCI6MX0.z1RBg7FQiweJwwxS3LBVeNjrRXXuuAHAxtwsCleuP2k";
 
 export const post_request_header = async (body: string | FormData) => {
   const token = await AsyncStorage.getItem("token");
@@ -13,6 +11,7 @@ export const post_request_header = async (body: string | FormData) => {
     method: "POST",
     body: body,
     headers: {
+      "Content-Type": "application/json",
       Authorization: "Bearer " + test_token,
     },
   };
@@ -21,7 +20,6 @@ export const post_request_header = async (body: string | FormData) => {
 
 export const put_request_header = async (body: string) => {
   const token = await AsyncStorage.getItem("token");
-  console.log(token);
   let request: RequestInit = {
     method: "PUT",
     body: body,
