@@ -15,11 +15,12 @@ const RegisterForm = ({ navigation }) => {
   const handleLogin = () => {
     // navigation.navigate("Home");
     login_user(username, password).then(async (res) => {
-      if (res.token) {
-        // console.log(res.token);
-        await AsyncStorage.setItem("token", res.token).then(
-          navigation.navigate("Home")
-        );
+      if (res.access) {
+        console.log(res.access);
+        await AsyncStorage.multiSet([
+          ["token", res.access],
+          ["refresh", res.refresh],
+        ]).then(navigation.navigate("Home"));
         // navigation.navigate("Home");
       } else {
         // 处理未成功获取到token的情况

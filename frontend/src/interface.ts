@@ -21,6 +21,7 @@ export interface IUser {
   phoneNumber: number;
   gender: string;
 }
+
 export interface IFriend {
   id: number;
   username: string;
@@ -84,6 +85,7 @@ export interface IPost {
 }
 
 export interface IToken {
-  token: string;
+  refresh: string;
+  access: string;
   error: string;
 }

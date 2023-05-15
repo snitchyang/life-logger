@@ -11,6 +11,7 @@ export const PostList = () => {
   const [postEnd, setPostEnd] = useState(false);
   useEffect(() => {
     GetPostList(page).then((res) => {
+      console.log();
       setPosts(res.data);
       setMaxPage(res.max);
     });

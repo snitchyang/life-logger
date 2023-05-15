@@ -50,12 +50,12 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class UserSelf(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request: Request):
         user: User = get_user(request)
         if user is not None:
-            return Response(UserSerializer(user, context={'request': request}).data, status=200)
+            return Response(UserSerializer(User.objects.get(id=user.id), context={'request': request}).data, status=200)
         return Response(status=401)
 
     def post(self, request: Request):
@@ -184,7 +184,7 @@ class TagList(APIView):
 
 
 class DiaryList(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request: Request):
         user = get_user(request)
@@ -269,7 +269,7 @@ class CommentAdd(APIView):
 
 
 class PostList(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request: Request):
         user = get_user(request)

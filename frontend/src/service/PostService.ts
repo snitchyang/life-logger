@@ -7,7 +7,9 @@ export const AddComment = async (
 ): Promise<IMessage> => {
   return await fetch(
     `${root_path}comment/add`,
-    post_request_header(JSON.stringify({ post: post_id, content: content }))
+    await post_request_header(
+      JSON.stringify({ post: post_id, content: content })
+    )
   )
     .then((res) => res.json())
     .catch((err) => console.error(err));
@@ -18,7 +20,7 @@ export const LikePost = async (
 ): Promise<IMessage> => {
   return await fetch(
     `${root_path}post/like`,
-    post_request_header(JSON.stringify({ post: post_id, like: like }))
+    await post_request_header(JSON.stringify({ post: post_id, like: like }))
   )
     .then((res) => res.json())
     .catch((err) => console.error(err));
@@ -26,7 +28,7 @@ export const LikePost = async (
 export const GetPost = async (post_id: number): Promise<IPost> => {
   return await fetch(
     `${root_path}post/${post_id.toString()}`,
-    get_request_header()
+    await get_request_header()
   )
     .then((res) => res.json())
     .catch((err) => console.error(err));
@@ -36,7 +38,7 @@ export const GetPostList = async (
 ): Promise<{ data: IPost[]; max: number }> => {
   return await fetch(
     `${root_path}posts?page=${page.toString()}`,
-    get_request_header()
+    await get_request_header()
   )
     .then((res) => res.json())
     .catch((err) => console.error(err));
