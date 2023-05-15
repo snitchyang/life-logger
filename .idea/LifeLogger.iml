@@ -24,7 +24,7 @@
       <excludeFolder url="file://$MODULE_DIR$/log" />
       <excludeFolder url="file://$MODULE_DIR$/media" />
     </content>
-    <orderEntry type="jdk" jdkName="Remote Python 3.8.10 (sftp://ubuntu@124.221.102.250:22/home/ubuntu/life-logger/venv/bin/python3)" jdkType="Python SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PackageRequirementsSettings">

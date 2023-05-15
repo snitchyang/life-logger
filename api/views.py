@@ -4,6 +4,7 @@ import json
 import os.path
 import uuid
 
+import rest_framework_simplejwt.tokens
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.hashers import make_password
@@ -19,6 +20,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from django.core.files.base import ContentFile
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from lifelogger import settings
 from .serializers import *
@@ -53,10 +55,11 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class UserSelf(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request: Request):
         user: User = get_user(request)
+        print(request.auth)
         if user is not None:
             return Response(UserSerializer(user, context={'request': request}).data, status=200)
         return Response(status=401)
@@ -344,13 +347,12 @@ class UserLoginView(APIView):
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
-
         user = authenticate(username=username, password=password)
         if user is not None:
             token, created = Token.objects.get_or_create(user=user)
             user.last_login = datetime.datetime.now()
             user.save()
-            return Response({'token': token.key})
+            return Response({'token': TokenObtainPairSerializer(token).data})
         else:
             return Response({'error': 'Invalid username or password.'}, status=401)
 

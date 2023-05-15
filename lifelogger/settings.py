@@ -75,21 +75,15 @@ TEMPLATES = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    'JWT_AUTH': {
-        'JWT_ALLOW_REFRESH': True,  # 允许刷新 token
-        'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),  # token 有效期为 7 天
-        'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=30),  # 刷新 token 的有效期为 30 天
-        'JWT_SECRET_KEY': 'your-secret-key',  # 密钥
-        'JWT_VERIFY': True,
-        'JWT_VERIFY_EXPIRATION': True,
-        'JWT_AUTH_HEADER_PREFIX': 'Bearer',
-    }
 }
-
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=7),  # 配置过期时间
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=15),
+}
 WSGI_APPLICATION = 'lifelogger.wsgi.application'
 
 # Database
