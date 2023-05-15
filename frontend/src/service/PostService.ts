@@ -1,16 +1,24 @@
-import { get_request_header, post_request_header, root_path } from "./global";
+import {
+  get_request_header,
+  post_request_header,
+  root_path,
+  test_token,
+} from "./global";
 import { IMessage, IPost } from "../interface";
 
 export const AddComment = async (
   post_id: number,
   content: string
 ): Promise<IMessage> => {
-  return await fetch(
-    `${root_path}comment/add`,
-    await post_request_header(
-      JSON.stringify({ post: post_id, content: content })
-    )
-  )
+  return await fetch(`${root_path}comment/add`, {
+    method: "POST",
+    body: JSON.stringify({ post: post_id, content: content }),
+    headers: {
+      Authorization: "Bearer " + test_token,
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  })
     .then((res) => res.json())
     .catch((err) => console.error(err));
 };

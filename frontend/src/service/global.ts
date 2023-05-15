@@ -1,4 +1,3 @@
-import { IDiary } from "../interface";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState } from "react";
 // export const root_path: string = "http://10.0.2.2:8000/api/";
@@ -41,7 +40,6 @@ export const post_request_header = async (body: string | FormData) => {
 
 export const put_request_header = async (body: string) => {
   const token = await AsyncStorage.getItem("token");
-  console.log(token);
   let request: RequestInit = {
     method: "PUT",
     body: body,

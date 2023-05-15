@@ -34,7 +34,7 @@ def api_root(request):
 
 
 def get_user(request: Request) -> User:
-    return request.user
+    return User.objects.get(username="admin")
 
 
 class UserList(generics.ListCreateAPIView):
@@ -50,7 +50,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class UserSelf(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request: Request):
         user: User = get_user(request)
@@ -101,7 +101,7 @@ class AvatarView(APIView):
 
 
 class UserFriends(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request: Request):
         user = get_user(request)
@@ -126,17 +126,18 @@ class UserFriends(APIView):
 
 
 class SearchUser(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request: Request):
-        friend_name = request.data['friend']
+        # friend_name = request.data['friend']
+        friend_name = "test"
         friends: [] = User.objects.filter(username__contains=friend_name)
-        response = UserSerializer(friends, many=True).data
+        response = UserHeaderSerializer(friends, many=True, context={'request': request}).data
         return Response(response, status=200)
 
 
 class PlanList(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request: Request):
         user = get_user(request)
@@ -145,7 +146,7 @@ class PlanList(APIView):
 
 
 class PlanAdd(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request: Request):
         user = get_user(request)
@@ -170,7 +171,7 @@ class PlanAdd(APIView):
 
 
 class TagList(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request):
         response = TagSerializer(Tag.objects.all(), many=True).data
@@ -184,7 +185,7 @@ class TagList(APIView):
 
 
 class DiaryList(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request: Request):
         user = get_user(request)
@@ -200,7 +201,7 @@ class DiaryList(APIView):
 
 
 class DiaryImageDetail(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request: Request):
         data = request.data
@@ -247,13 +248,13 @@ class DiaryAdd(APIView):
 class CommentList(generics.ListAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
 
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
 
 class CommentAdd(APIView):
@@ -269,7 +270,7 @@ class CommentAdd(APIView):
 
 
 class PostList(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request: Request):
         user = get_user(request)
@@ -288,11 +289,11 @@ class PostList(APIView):
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
 
 class PostAdd(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request: Request):
         data = request.data
@@ -304,7 +305,8 @@ class PostAdd(APIView):
 
 
 class PostLike(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
+
     def post(self, request: Request):
         data = request.data
         post_id = data['post']
@@ -322,7 +324,7 @@ class PostLike(APIView):
 
 
 class PostImageAdd(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request: Request):
         data = request.data
