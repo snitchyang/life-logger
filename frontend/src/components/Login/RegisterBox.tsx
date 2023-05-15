@@ -3,7 +3,8 @@ import {View, Text,  Image,Alert} from 'react-native';
 import {Input,Card,Button} from "@rneui/base";
 import {FontAwesome} from "@expo/vector-icons";
 import {Fontisto} from "@expo/vector-icons";
-
+import {IUser} from "../../interface";
+import {RegisterPost} from "../../service/LoginService";
 
 export const RegisterBox = ({navigation}) => {
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -12,28 +13,9 @@ export const RegisterBox = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [gender, setGender] = useState('');
     const [password, setPassword] = useState('');
-    const handleRegister=()=>{
-        Alert.alert("注册成功！");
-        navigation.navigate("Login");
-        fetch("http://10.0.2.2:8000/api/register", {
-            headers: {
-                "Content-Type": "application/json",
-            },
-            method: "POST",
-            credentials: "include",
-            body: JSON.stringify({
-                username:username,
-                password:password,
-                email:email,
-                gender:gender,
-                avatar:null,
-                school:null,
-                phone_number:phoneNumber
-            }),
-        })
-            .then(
-                (res) => res.json()
-            )
+    const [confirmpassword, setconfirmPassword] = useState('');
+    const handleRegister=async ()=>{
+        await RegisterPost(username,password,email,null,null,Number(phoneNumber),gender)
             .then((res) =>{
                 if (res.message) {
                     Alert.alert("注册成功！");
@@ -97,9 +79,11 @@ export const RegisterBox = ({navigation}) => {
                             align="center"/>}
                         placeholder='手机号'
                         defaultValue={phoneNumber}
+                        keyboardType="numeric"
                         onChangeText={(text) => setPhoneNumber(text)}
                         labelStyle={{backgroundColor:"0xfff"}}/>
                     <Input
+                        secureTextEntry
                         inputContainerStyle={{marginLeft:5,marginRight:10,height:30}}
                         inputStyle={{marginLeft:15,width:15,height:15}}
                         rightIconContainerStyle={{
@@ -113,10 +97,11 @@ export const RegisterBox = ({navigation}) => {
                             margin={0}
                             align="center"/>}
                         placeholder='请输入您的密码'
-                        defaultValue={username}
+                        defaultValue={password}
                         onChangeText={(text) => setPassword(text)}
                         labelStyle={{backgroundColor:"0xfff"}}/>
                     <Input
+                        secureTextEntry
                         inputContainerStyle={{marginLeft:5,marginRight:10,height:30}}
                         inputStyle={{marginLeft:15,width:15,height:15}}
                         rightIconContainerStyle={{
@@ -130,8 +115,8 @@ export const RegisterBox = ({navigation}) => {
                             margin={0}
                             align="center"/>}
                         placeholder='请确认您的密码'
-                        defaultValue={username}
-                        onChangeText={(text) => setPassword(text)}
+                        defaultValue={confirmpassword}
+                        onChangeText={(text) => setconfirmPassword(text)}
                         labelStyle={{backgroundColor:"0xfff"}}/>
                     <Input
                         inputContainerStyle={{marginLeft:5,marginRight:10,height:30}}
@@ -147,8 +132,8 @@ export const RegisterBox = ({navigation}) => {
                             margin={0}
                             align="center"/>}
                         placeholder='性别'
-                        defaultValue={username}
-                        onChangeText={(text) => setPassword(text)}
+                        defaultValue={gender}
+                        onChangeText={(text) => setGender(text)}
                         labelStyle={{backgroundColor:"0xfff"}}/>
                     <Input
                         inputContainerStyle={{marginLeft:5,marginRight:10,height:30}}

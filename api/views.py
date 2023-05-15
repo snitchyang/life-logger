@@ -2,9 +2,7 @@ import base64
 import datetime
 import json
 import os.path
-import uuid
 
-import rest_framework_simplejwt.tokens
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.hashers import make_password
@@ -18,9 +16,6 @@ from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from django.core.files.base import ContentFile
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from lifelogger import settings
 from .serializers import *
@@ -55,11 +50,10 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class UserSelf(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request: Request):
         user: User = get_user(request)
-        print(request.auth)
         if user is not None:
             return Response(UserSerializer(user, context={'request': request}).data, status=200)
         return Response(status=401)
@@ -80,9 +74,6 @@ class UserSelf(APIView):
             return Response({'message': 'phone_number'}, status=400)
         user.phone_number = phone_number
         gender = data['gender']
-        # print(data)
-        # print(request.FILES)
-        # avatar = data['avatar']
         biography = data['biography']
         school = data['school']
         user.gender = gender
@@ -347,12 +338,13 @@ class UserLoginView(APIView):
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
+
         user = authenticate(username=username, password=password)
         if user is not None:
             token, created = Token.objects.get_or_create(user=user)
             user.last_login = datetime.datetime.now()
             user.save()
-            return Response({'token': TokenObtainPairSerializer(token).data})
+            return Response({'token': token.key})
         else:
             return Response({'error': 'Invalid username or password.'}, status=401)
 
