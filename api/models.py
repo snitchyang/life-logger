@@ -6,7 +6,7 @@ from django.db import models
 
 class User(AbstractUser):
     biography = models.TextField(blank=True, verbose_name='个性签名')
-    avatar = models.ImageField(upload_to='avatar/', default='avatars/default.jpg', verbose_name='头像')
+    avatar = models.ImageField(upload_to='avatar/', default='avatar/default.jpg', verbose_name='头像')
     school = models.CharField(max_length=255, blank=True, verbose_name='学校')
     phone_number = models.CharField(max_length=20, blank=True, verbose_name='电话号码')
     gender = models.CharField(choices=[('male', 'Male'), ('female', 'Female'), ('others', 'Others')], max_length=10,

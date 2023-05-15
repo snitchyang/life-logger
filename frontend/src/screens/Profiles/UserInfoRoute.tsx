@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { userInfoStyleSheet } from "./UserInfoStyleSheet";
 import { ChangeInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeInfo";
 import { BioInfo } from "../../components/SideBar/UserInfo/DetailedInfo/BioInfo";
-import { IFriend } from "../../interface";
+import { IUser } from "../../interface";
 import { userinfo_enumerate } from "../../data/data";
 
 // interface UserInfoRoute {
@@ -18,7 +18,7 @@ export const UserInfo = ({ route }) => {
   const { user } = route.params;
   const [visible, setVisible] = useState(true);
   const [kind, setKind] = useState<number>(-1);
-  const [usr, setUser] = useState<IFriend>(user);
+  const [usr, setUser] = useState<IUser>(user);
 
   return (
     <SafeAreaView style={{ flex: 1, marginTop: 25 }}>

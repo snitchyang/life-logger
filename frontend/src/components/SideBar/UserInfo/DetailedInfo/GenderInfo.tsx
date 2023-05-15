@@ -3,11 +3,11 @@ import { userInfoStyleSheet } from "../../../../screens/Profiles/UserInfoStyleSh
 import { Ionicons } from "@expo/vector-icons";
 import { ChangeGenderInfo } from "../InfoChange/ChangeGenderInfo";
 import React from "react";
-import { IFriend } from "../../../../interface";
+import { IUser } from "../../../../interface";
 
 interface Props {
   gender: string;
-  usr: IFriend;
+  usr: IUser;
   setUser: any;
 }
 
