@@ -1,8 +1,8 @@
 import { IDiary } from "../interface";
 
-export const root_path: string = "http://10.0.2.2:8000/api/";
+export const root_path: string = "http://124.221.102.250:8000/api/";
 
-export const test_token: string = "3518f3f1a74627cb896612ac4634b82ef6d2848f";
+export const test_token: string = "2459348ef925bceb7724005daa096bdff199ee46";
 
 export const post_request_header = (body: string | FormData) => {
   let request: RequestInit = {
