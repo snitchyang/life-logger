@@ -31,7 +31,10 @@ export const FriendsSearchModal = ({ me, isVisible, setVisible }: Props) => {
   function search(text) {
     // console.log(text);
     if (text) {
-      search_friends(text).then((res) => setFilter(res));
+      search_friends(text).then((res) => {
+        console.log(res);
+        setFilter(res);
+      });
     } else {
       setFilter([]);
       setInputText(text);
@@ -67,15 +70,17 @@ export const FriendsSearchModal = ({ me, isVisible, setVisible }: Props) => {
           onChangeText={(text) => setInputText(text)}
           // onChangeText={(item) => search(item)}
         />
-        <Button
-          onPress={(inputText) => search(inputText)}
-          title={"Search"}
-        ></Button>
+        <Button onPress={() => search(inputText)} title={"Search"}></Button>
         <FlatList
           style={searchFriendsStyleSheet.listItem}
           data={filter}
           renderItem={({ item }) => (
-            <SearchFriendsListItem me={me} friend={item} friends={following} />
+            <SearchFriendsListItem
+              me={me}
+              friend={item}
+              friends={following}
+              setFriends={setFollowing}
+            />
           )}
         />
       </View>

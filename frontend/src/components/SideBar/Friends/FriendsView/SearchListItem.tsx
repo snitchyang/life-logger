@@ -3,27 +3,44 @@ import { IFriend } from "../../../../interface";
 import {
   delete_friends,
   follow_friends,
+  get_friends,
 } from "../../../../service/FriendService";
 import { Avatar } from "@rneui/base";
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import React, { useState } from "react";
+import useForceUpdate from "antd/lib/_util/hooks/useForceUpdate";
 
 interface Props {
   me: number;
   friend: IFriend;
   friends: IFriend[];
+  setFriends: any;
 }
 
-export const SearchFriendsListItem = ({ me, friend, friends }: Props) => {
+export const SearchFriendsListItem = ({
+  me,
+  friend,
+  friends,
+  setFriends,
+}: Props) => {
+  const [listFriends, setListFriends] = useState<IFriend[]>(friends);
+
   function isFriend() {
     return friends.includes(friend);
   }
+
   const addFriend = (friendID: number) => {
-    follow_friends(friendID).catch((err) => console.error(err));
+    follow_friends(friendID).then(() => {
+      console.log("ok");
+      get_friends().then((res) => setFriends(res.following));
+    });
   };
 
   const deleteFriend = (friendID: number) => {
-    delete_friends(friendID).catch((err) => console.error(err));
+    delete_friends(friendID).then(() => {
+      console.log("ok");
+      get_friends().then((res) => setFriends(res.following));
+    });
   };
 
   return (
@@ -41,7 +58,7 @@ export const SearchFriendsListItem = ({ me, friend, friends }: Props) => {
       </View>
       <TouchableOpacity
         onPress={() => {
-          if (isFriend()) addFriend(friend.id);
+          if (!isFriend()) addFriend(friend.id);
           else deleteFriend(friend.id);
         }}
       >
@@ -89,5 +106,6 @@ const searchListStyleSheet = StyleSheet.create({
   },
   iconItem: {
     flex: 1,
+    width: 20,
   },
 });

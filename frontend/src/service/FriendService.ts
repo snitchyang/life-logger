@@ -1,6 +1,7 @@
 import {
   delete_request_header,
   get_request_header,
+  getCircularReplacer,
   post_request_header,
   root_path,
 } from "./global";
@@ -20,26 +21,32 @@ export const search_friends = async (
   let json = {
     friend: friendName,
   };
-  let body = JSON.stringify(json);
+  let body = JSON.stringify({
+    friend: friendName,
+  });
   return await fetch(url, await post_request_header(body))
-    .then((response) => response.json())
+    .then((response) => {
+      return response.json();
+    })
     .catch((err) => console.error(err));
 };
 
 export const follow_friends = async (friendID: number) => {
   const url = root_path + "user/friends";
+  console.log("follow");
   let json = { friend: friendID };
   let body = JSON.stringify(json);
-  await fetch(url, await post_request_header(body)).catch((err) =>
+  return await fetch(url, await post_request_header(body)).catch((err) =>
     console.error(err)
   );
 };
 
 export const delete_friends = async (friendID: number) => {
   const url = root_path + "user/friends";
+  console.log("delete");
   let json = { friend: friendID };
   let body = JSON.stringify(json);
-  await fetch(url, await delete_request_header(body)).catch((err) =>
+  return await fetch(url, await delete_request_header(body)).catch((err) =>
     console.error(err)
   );
 };
