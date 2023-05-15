@@ -13,8 +13,8 @@ export const RegisterBox = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [gender, setGender] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmpassword, setconfirmPassword] = useState('');
     const handleRegister=async ()=>{
-        Alert.alert("注册成功！");
         await RegisterPost(username,password,email,null,null,Number(phoneNumber),gender)
             .then((res) =>{
                 if (res.message) {
@@ -83,6 +83,7 @@ export const RegisterBox = ({navigation}) => {
                         onChangeText={(text) => setPhoneNumber(text)}
                         labelStyle={{backgroundColor:"0xfff"}}/>
                     <Input
+                        secureTextEntry
                         inputContainerStyle={{marginLeft:5,marginRight:10,height:30}}
                         inputStyle={{marginLeft:15,width:15,height:15}}
                         rightIconContainerStyle={{
@@ -96,10 +97,11 @@ export const RegisterBox = ({navigation}) => {
                             margin={0}
                             align="center"/>}
                         placeholder='请输入您的密码'
-                        defaultValue={username}
+                        defaultValue={password}
                         onChangeText={(text) => setPassword(text)}
                         labelStyle={{backgroundColor:"0xfff"}}/>
                     <Input
+                        secureTextEntry
                         inputContainerStyle={{marginLeft:5,marginRight:10,height:30}}
                         inputStyle={{marginLeft:15,width:15,height:15}}
                         rightIconContainerStyle={{
@@ -113,8 +115,8 @@ export const RegisterBox = ({navigation}) => {
                             margin={0}
                             align="center"/>}
                         placeholder='请确认您的密码'
-                        defaultValue={username}
-                        onChangeText={(text) => setPassword(text)}
+                        defaultValue={confirmpassword}
+                        onChangeText={(text) => setconfirmPassword(text)}
                         labelStyle={{backgroundColor:"0xfff"}}/>
                     <Input
                         inputContainerStyle={{marginLeft:5,marginRight:10,height:30}}
@@ -130,8 +132,8 @@ export const RegisterBox = ({navigation}) => {
                             margin={0}
                             align="center"/>}
                         placeholder='性别'
-                        defaultValue={username}
-                        onChangeText={(text) => setPassword(text)}
+                        defaultValue={gender}
+                        onChangeText={(text) => setGender(text)}
                         labelStyle={{backgroundColor:"0xfff"}}/>
                     <Input
                         inputContainerStyle={{marginLeft:5,marginRight:10,height:30}}

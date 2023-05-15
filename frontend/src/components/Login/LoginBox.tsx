@@ -12,18 +12,20 @@ const RegisterForm = ({navigation}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const handleLogin=async ()=>{
-         navigation.navigate("Home");
-        await LoginPost(username,password)
-            .then((res) =>{
-                if (res.token) {
-                    localStorage.setItem("token", res.token);
-                    navigation.navigate("Home");
-                } else {
-                    // 处理未成功获取到token的情况
                     Alert.alert("账号密码错误！");
-                }
-            }
-            );
+                    // navigation.navigate("Home");
+        // await LoginPost(username,password)
+        //     .then((res) =>{
+        //         if (res.token) {
+        //             localStorage.setItem("token", res.token);
+        //             Alert.alert("登陆成功！");
+        //             navigation.navigate("Home");
+        //         } else {
+        //             // 处理未成功获取到token的情况
+        //             Alert.alert("账号密码错误！");
+        //         }
+        //     }
+        //     );
     }
     const doReg=()=>{
         navigation.navigate("Register");
