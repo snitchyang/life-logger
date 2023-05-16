@@ -75,30 +75,21 @@ TEMPLATES = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'JWT_AUTH': {
+        'JWT_ALLOW_REFRESH': True,  # 允许刷新 token
+        'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),  # token 有效期为 7 天
+        'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=30),  # 刷新 token 的有效期为 30 天
+        'JWT_SECRET_KEY': 'your-secret-key',  # 密钥
+        'JWT_VERIFY': True,
+        'JWT_VERIFY_EXPIRATION': True,
+        'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+    }
 }
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=10),
-    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=20),
-    'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': True,
 
-    'ALGORITHM': 'HS256',
-    'VERIFYING_KEY': None,
-    'AUDIENCE': None,
-    'ISSUER': None,
-
-    'AUTH_HEADER_TYPES': ('Bearer',),
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-    'TOKEN_TYPE_CLAIM': 'token_type',
-
-    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-    'SLIDING_TOKEN_LIFETIME': datetime.timedelta(days=10),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': datetime.timedelta(days=20),
-}
 WSGI_APPLICATION = 'lifelogger.wsgi.application'
 
 # Database
@@ -106,17 +97,15 @@ WSGI_APPLICATION = 'lifelogger.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "lifelogger",
+        "USER": 'root',
+        "PASSWORD": "yangzheng",
+        "HOST": "localhost",
+        "PORT": "3306"
     }
 }
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
-    }
-}
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -169,4 +158,3 @@ APPEND_SLASH = False
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 8
