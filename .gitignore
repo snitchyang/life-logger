@@ -260,3 +260,4 @@ api/migrations
 /.idea
 
 *.lock
+static

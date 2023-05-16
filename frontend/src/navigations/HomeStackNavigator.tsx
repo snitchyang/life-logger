@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DetailedPage } from "../screens/Home/DiaryDetailPage";
-import {LoginPage} from "../screens/Login/LoginPage";
+import { LoginPage } from "../screens/Login/LoginPage";
 import React from "react";
 import Homepage from "../screens/Home/Homepage";
 
