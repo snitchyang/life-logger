@@ -34,7 +34,7 @@ def api_root(request):
 
 
 def get_user(request: Request) -> User:
-    return User.objects.get(username="admin")
+    return request.user
 
 
 class UserList(generics.ListCreateAPIView):

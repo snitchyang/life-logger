@@ -19,7 +19,6 @@ export const UserInfo = ({ route }) => {
   const [visible, setVisible] = useState(true);
   const [kind, setKind] = useState<number>(-1);
   const [usr, setUser] = useState<IUser>(user);
-  console.log(user);
   return (
     <SafeAreaView style={{ flex: 1, marginTop: 25 }}>
       <ChangeInfo

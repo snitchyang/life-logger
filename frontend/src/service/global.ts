@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useState } from "react";
 // export const root_path: string = "http://10.0.2.2:8000/api/";
 export const root_path: string = "http://124.221.102.250:8000/api/";
 
@@ -66,11 +65,11 @@ export const delete_request_header = async (body: string) => {
 };
 
 export const get_request_header = async () => {
-  const token = await AsyncStorage.getItem("token");
+  const token: string = await AsyncStorage.getItem("token");
   let request: RequestInit = {
     method: "GET",
     headers: {
-      Authorization: "Bearer " + test_token,
+      Authorization: "Bearer " + token,
     },
   };
   return request;

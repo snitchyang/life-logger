@@ -8,6 +8,7 @@ import { AntDesign } from "@expo/vector-icons";
 import Modal from "react-native-modal";
 import { useTranslation } from "react-i18next";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { root_path } from "../../service/global";
 
 function PlanPage() {
   const { t } = useTranslation();
@@ -18,7 +19,7 @@ function PlanPage() {
   const [newEventDate, setNewEventDate] = useState(new Date());
   //fetch IPlan[] from backend
   useEffect(() => {
-    fetch("http://10.0.2.2:8000/api/plans", {
+    fetch(`${root_path}plans`, {
       method: "GET",
     })
       .then((res) => res.json())

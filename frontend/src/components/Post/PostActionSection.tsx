@@ -20,12 +20,10 @@ export const PostActionSection = ({ post }: PostActionSection) => {
   const [liked, setLiked] = useState(post.liked);
   const addLike = async () => {
     setLikes(likes + 1);
-    post.likes += 1;
     await LikePost(post.id, true);
   };
   const removeLike = async () => {
     setLikes(likes - 1);
-    post.likes -= 1;
     await LikePost(post.id, false);
   };
   const [showComments, setShowComments] = useState(false);
@@ -48,8 +46,8 @@ export const PostActionSection = ({ post }: PostActionSection) => {
             name={liked ? "like1" : "like2"}
             color={liked ? "rgb(255,2,2)" : "rgb(0,0,0)"}
             onPress={async () => {
-              liked ? await removeLike() : await addLike();
               setLiked(!liked);
+              liked ? await removeLike() : await addLike();
             }}
             size={20}
           />

@@ -1,7 +1,6 @@
 import {
   delete_request_header,
   get_request_header,
-  getCircularReplacer,
   post_request_header,
   root_path,
 } from "./global";
@@ -18,9 +17,6 @@ export const search_friends = async (
   friendName: string
 ): Promise<IFriend[]> => {
   const url = root_path + "friends/search";
-  let json = {
-    friend: friendName,
-  };
   let body = JSON.stringify({
     friend: friendName,
   });
@@ -31,22 +27,24 @@ export const search_friends = async (
     .catch((err) => console.error(err));
 };
 
-export const follow_friends = async (friendID: number) => {
+export const follow_friends = async (
+  friendID: number
+): Promise<{ message: string }> => {
   const url = root_path + "user/friends";
-  console.log("follow");
   let json = { friend: friendID };
   let body = JSON.stringify(json);
-  return await fetch(url, await post_request_header(body)).catch((err) =>
-    console.error(err)
-  );
+  return await fetch(url, await post_request_header(body))
+    .then((res) => res.json())
+    .catch((err) => console.error(err));
 };
 
-export const delete_friends = async (friendID: number) => {
+export const delete_friends = async (
+  friendID: number
+): Promise<{ message: string }> => {
   const url = root_path + "user/friends";
-  console.log("delete");
   let json = { friend: friendID };
   let body = JSON.stringify(json);
-  return await fetch(url, await delete_request_header(body)).catch((err) =>
-    console.error(err)
-  );
+  return await fetch(url, await delete_request_header(body))
+    .then((res) => res.json())
+    .catch((err) => console.error(err));
 };
