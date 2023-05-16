@@ -2,13 +2,14 @@ import dayjs from "dayjs";
 
 export const getTimeDistance = (date: Date): string => {
   const format = dayjs(dayjs(new Date()).diff(date));
+
   if (dayjs(date).year() !== dayjs(new Date()).year()) {
     return dayjs(date).format("YYYY-MM-DD");
   }
   if (format.date() > 3) {
     return dayjs(date).format("MM-DD");
   }
-  if (format.date() > 0) {
+  if (format.date() > 1) {
     return format.date().toString() + " 天前";
   }
   if (format.hour() > 0) {

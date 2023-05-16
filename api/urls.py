@@ -41,7 +41,7 @@ urlpatterns = [
 
     path('auth/token', TokenObtainPairView.as_view(), name='token'),
     path('auth/token/refresh', TokenRefreshView.as_view(), name='refresh'),
-    path('login', UserLoginView.as_view(), name='user-login'),
+    path('login', TokenObtainPairView.as_view(), name='user-login'),
     path('register', UserRegistrationView.as_view(), name='user-registration'),
     path('forget', ForgotPasswordView.as_view(), name='forgot-password'),
 

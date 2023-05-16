@@ -2,7 +2,6 @@ import base64
 import datetime
 import json
 import os.path
-import uuid
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import PasswordResetForm
@@ -17,8 +16,6 @@ from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from django.core.files.base import ContentFile
 
 from lifelogger import settings
 from .serializers import *
@@ -37,8 +34,7 @@ def api_root(request):
 
 
 def get_user(request: Request) -> User:
-    token = request.headers.get('Authorization').split()[-1]
-    return Token.objects.get(key=token).user
+    return request.user
 
 
 class UserList(generics.ListCreateAPIView):
@@ -54,12 +50,12 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class UserSelf(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request: Request):
         user: User = get_user(request)
         if user is not None:
-            return Response(UserSerializer(user, context={'request': request}).data, status=200)
+            return Response(UserSerializer(User.objects.get(id=user.id), context={'request': request}).data, status=200)
         return Response(status=401)
 
     def post(self, request: Request):
@@ -78,9 +74,6 @@ class UserSelf(APIView):
             return Response({'message': 'phone_number'}, status=400)
         user.phone_number = phone_number
         gender = data['gender']
-        # print(data)
-        # print(request.FILES)
-        # avatar = data['avatar']
         biography = data['biography']
         school = data['school']
         user.gender = gender
@@ -108,7 +101,7 @@ class AvatarView(APIView):
 
 
 class UserFriends(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request: Request):
         user = get_user(request)
@@ -133,17 +126,18 @@ class UserFriends(APIView):
 
 
 class SearchUser(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request: Request):
-        friend_name = request.data['friend']
+        # friend_name = request.data['friend']
+        friend_name = "test"
         friends: [] = User.objects.filter(username__contains=friend_name)
-        response = UserSerializer(friends, many=True).data
+        response = UserHeaderSerializer(friends, many=True, context={'request': request}).data
         return Response(response, status=200)
 
 
 class PlanList(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request: Request):
         user = get_user(request)
@@ -152,7 +146,7 @@ class PlanList(APIView):
 
 
 class PlanAdd(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request: Request):
         user = get_user(request)
@@ -177,7 +171,7 @@ class PlanAdd(APIView):
 
 
 class TagList(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request):
         response = TagSerializer(Tag.objects.all(), many=True).data
@@ -191,7 +185,7 @@ class TagList(APIView):
 
 
 class DiaryList(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request: Request):
         user = get_user(request)
@@ -207,7 +201,7 @@ class DiaryList(APIView):
 
 
 class DiaryImageDetail(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request: Request):
         data = request.data
@@ -254,13 +248,13 @@ class DiaryAdd(APIView):
 class CommentList(generics.ListAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
 
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
 
 class CommentAdd(APIView):
@@ -276,7 +270,7 @@ class CommentAdd(APIView):
 
 
 class PostList(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request: Request):
         user = get_user(request)
@@ -295,11 +289,11 @@ class PostList(APIView):
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
 
 class PostAdd(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request: Request):
         data = request.data
@@ -311,7 +305,8 @@ class PostAdd(APIView):
 
 
 class PostLike(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
+
     def post(self, request: Request):
         data = request.data
         post_id = data['post']
@@ -329,7 +324,7 @@ class PostLike(APIView):
 
 
 class PostImageAdd(APIView):
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request: Request):
         data = request.data
@@ -340,7 +335,7 @@ class PostImageAdd(APIView):
 
 
 class UserLoginView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request):
         username = request.data.get('username')
@@ -357,7 +352,7 @@ class UserLoginView(APIView):
 
 
 class UserRegistrationView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request):
         username = request.data.get('username')
@@ -375,7 +370,7 @@ class UserRegistrationView(APIView):
 
 
 class ForgotPasswordView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request):
         email = request.data.get('email')

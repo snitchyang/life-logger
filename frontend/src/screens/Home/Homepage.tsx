@@ -85,7 +85,7 @@ function HomePage({ navigation }) {
             style={{ paddingLeft: 18 }}
             autoCorrect={false}
             onChangeText={(text) => FilterFun(text)}
-            placeholder="type here..."
+            placeholder="点击搜索"
             value={searchText}
           />
         </View>

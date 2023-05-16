@@ -32,6 +32,8 @@ export const FriendsRoute = ({ route }) => {
         me={user.id}
         isVisible={isVisible}
         setVisible={setIsVisible}
+        following={following}
+        setFollowing={setFollowing}
       />
 
       <View>
@@ -58,7 +60,10 @@ export const FriendsRoute = ({ route }) => {
           id={"friend-list"}
           style={friendsViewStyleSheet.friendsListContainer}
         >
-          <FriendsList friends={index === 0 ? following : followMe} />
+          <FriendsList
+            friends={index === 0 ? following : followMe}
+            setFollowing={setFollowing}
+          />
         </View>
       </View>
     </View>

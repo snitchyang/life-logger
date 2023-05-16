@@ -1,3 +1,8 @@
+# 单元测试
+
+## 单元测试代码
+
+```python
 import datetime
 
 from django.contrib.auth.hashers import make_password
@@ -49,3 +54,19 @@ class PostModelTest(TestCase):
         self.post.save()
         self.post.refresh_from_db()
         self.assertFalse(self.post.comments.contains(comment))
+
+```
+
+## 单元测试报告
+
+```
+Found 6 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+
+----------------------------------------------------------------------
+Ran 6 tests in 4.454s
+
+OK
+Destroying test database for alias 'default'...
+```

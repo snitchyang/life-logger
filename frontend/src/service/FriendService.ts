@@ -8,7 +8,7 @@ import { IFriend, ResponseFriends } from "../interface";
 
 export const get_friends = async (): Promise<ResponseFriends> => {
   const url = root_path + "user/friends";
-  return await fetch(url, get_request_header())
+  return await fetch(url, await get_request_header())
     .then((response) => response.json())
     .catch((err) => console.error(err));
 };
@@ -17,29 +17,34 @@ export const search_friends = async (
   friendName: string
 ): Promise<IFriend[]> => {
   const url = root_path + "friends/search";
-  let json = {
+  let body = JSON.stringify({
     friend: friendName,
-  };
-  let body = JSON.stringify(json);
-  return await fetch(url, post_request_header(body))
-    .then((response) => response.json())
+  });
+  return await fetch(url, await post_request_header(body))
+    .then((response) => {
+      return response.json();
+    })
     .catch((err) => console.error(err));
 };
 
-export const follow_friends = async (friendID: number) => {
+export const follow_friends = async (
+  friendID: number
+): Promise<{ message: string }> => {
   const url = root_path + "user/friends";
   let json = { friend: friendID };
   let body = JSON.stringify(json);
-  await fetch(url, post_request_header(body)).catch((err) =>
-    console.error(err)
-  );
+  return await fetch(url, await post_request_header(body))
+    .then((res) => res.json())
+    .catch((err) => console.error(err));
 };
 
-export const delete_friends = async (friendID: number) => {
+export const delete_friends = async (
+  friendID: number
+): Promise<{ message: string }> => {
   const url = root_path + "user/friends";
   let json = { friend: friendID };
   let body = JSON.stringify(json);
-  await fetch(url, delete_request_header(body)).catch((err) =>
-    console.error(err)
-  );
+  return await fetch(url, await delete_request_header(body))
+    .then((res) => res.json())
+    .catch((err) => console.error(err));
 };

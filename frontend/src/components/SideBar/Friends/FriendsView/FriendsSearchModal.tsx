@@ -8,21 +8,35 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { IFriend } from "../../../../interface";
-import { get_friends, search_friends } from "../../../../service/FriendService";
-import { SearchFriendsListItem } from "./SearchListItem";
+import {
+  delete_friends,
+  follow_friends,
+  get_friends,
+  search_friends,
+} from "../../../../service/FriendService";
+import { Avatar } from "@rneui/base";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   me: number;
   isVisible: boolean;
   setVisible: any;
+  following: IFriend[];
+  setFollowing: Dispatch<SetStateAction<IFriend[]>>;
 }
 
-export const FriendsSearchModal = ({ me, isVisible, setVisible }: Props) => {
+export const FriendsSearchModal = ({
+  me,
+  isVisible,
+  setVisible,
+  following,
+  setFollowing,
+}: Props) => {
   const [inputText, setInputText] = useState("");
   const [filter, setFilter] = useState<IFriend[]>([]);
-  const [following, setFollowing] = useState<IFriend[]>([]);
+  // const [following, setFollowing] = useState<IFriend[]>([]);
 
   useEffect(() => {
     get_friends().then((res) => setFollowing(res.following));
@@ -31,13 +45,40 @@ export const FriendsSearchModal = ({ me, isVisible, setVisible }: Props) => {
   function search(text) {
     // console.log(text);
     if (text) {
-      search_friends(text).then((res) => setFilter(res));
+      search_friends(text).then((res) => {
+        setFilter(res);
+      });
     } else {
       setFilter([]);
       setInputText(text);
     }
   }
 
+  function isFriend(friend: IFriend) {
+    return following.includes(friend);
+  }
+
+  const addFriend = async (friendID: number) => {
+    await follow_friends(friendID)
+      .then((res) => get_friends())
+      .then((res) => {
+        setFollowing(res.following);
+      });
+  };
+
+  const deleteFriend = async (friendID: number) => {
+    let new_following = [];
+    following.forEach((value) => {
+      if (value.id !== friendID) new_following.push(value);
+    });
+    console.log(new_following);
+    setFollowing(following);
+    await delete_friends(friendID)
+      .then((res) => get_friends())
+      .then((res) => {
+        setFollowing(res.following);
+      });
+  };
   return (
     <Modal
       animationType="slide"
@@ -67,15 +108,44 @@ export const FriendsSearchModal = ({ me, isVisible, setVisible }: Props) => {
           onChangeText={(text) => setInputText(text)}
           // onChangeText={(item) => search(item)}
         />
-        <Button
-          onPress={(inputText) => search(inputText)}
-          title={"Search"}
-        ></Button>
+        <Button onPress={() => search(inputText)} title={"Search"}></Button>
         <FlatList
           style={searchFriendsStyleSheet.listItem}
           data={filter}
           renderItem={({ item }) => (
-            <SearchFriendsListItem me={me} friend={item} friends={following} />
+            <View style={searchListStyleSheet.wrapper}>
+              <View style={searchListStyleSheet.avatarContainer}>
+                <Avatar
+                  containerStyle={{ marginLeft: 15 }}
+                  size={20}
+                  rounded={true}
+                  source={{ uri: item.avatar }}
+                />
+              </View>
+              <View style={searchListStyleSheet.nameContainer}>
+                <Text style={searchListStyleSheet.nameText}>
+                  {item.username}
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={async () => {
+                  if (!isFriend(item)) await addFriend(item.id);
+                  else await deleteFriend(item.id);
+                }}
+              >
+                {isFriend(item) ? (
+                  <Ionicons
+                    style={searchListStyleSheet.iconItem}
+                    name="close-circle-outline"
+                  ></Ionicons>
+                ) : (
+                  <Ionicons
+                    style={searchListStyleSheet.iconItem}
+                    name="add-circle-outline"
+                  ></Ionicons>
+                )}
+              </TouchableOpacity>
+            </View>
           )}
         />
       </View>
@@ -118,5 +188,36 @@ const searchFriendsStyleSheet = StyleSheet.create({
   listItem: {
     width: "90%",
     marginVertical: 10,
+  },
+});
+const searchListStyleSheet = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    flexDirection: "row",
+    width: "100%",
+    marginVertical: 5,
+  },
+  avatarContainer: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  nameContainer: {
+    flex: 12,
+    textAlign: "center",
+    justifyContent: "center",
+    // borderWidth: 1,
+    // borderColor: "black",
+  },
+  nameText: {
+    textAlign: "center",
+    fontSize: 12,
+  },
+  friendsText: {
+    fontSize: 10,
+    color: "grey",
+  },
+  iconItem: {
+    flex: 1,
+    width: 20,
   },
 });
