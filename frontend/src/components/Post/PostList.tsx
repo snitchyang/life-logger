@@ -36,10 +36,10 @@ export const PostList = () => {
       refreshControl={
         <RefreshControl
           refreshing={refreshing}
-          onRefresh={() => {
+          onRefresh={async () => {
             setRefreshing(true);
-            GetPostList(1).then((res) => {
-              setPosts(res.data);
+            await GetPostList(1).then(async (res) => {
+              await setPosts(res.data);
               setMaxPage(res.max);
               setPage(1);
               setPostEnd(false);
@@ -49,7 +49,7 @@ export const PostList = () => {
         />
       }
       initialNumToRender={6}
-      style={{ width: "98%" }}
+      style={{ width: "100%" }}
       keyExtractor={(item) => item.id.toString()}
     />
   );

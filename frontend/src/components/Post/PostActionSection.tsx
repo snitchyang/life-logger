@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { IPost } from "../../interface";
 import {
   AntDesign,
@@ -7,7 +7,7 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import { CommentsList } from "../Comment/CommentsList";
-import { Input } from "@rneui/base";
+import { Button, Input } from "@rneui/base";
 import { AddComment, GetPost, LikePost } from "../../service/PostService";
 
 interface PostActionSection {
@@ -40,77 +40,81 @@ export const PostActionSection = ({ post }: PostActionSection) => {
   };
   return (
     <View style={{ flexDirection: "column" }}>
-      <View style={{ flexDirection: "row", paddingTop: 5 }}>
-        <View style={{ paddingTop: 2 }}>
-          <AntDesign
-            name={liked ? "like1" : "like2"}
-            color={liked ? "rgb(255,2,2)" : "rgb(0,0,0)"}
-            onPress={async () => {
-              setLiked(!liked);
-              liked ? await removeLike() : await addLike();
-            }}
-            size={20}
-          />
-        </View>
-        <View style={{ paddingLeft: 12, paddingTop: 1 }}>
-          <Text style={{ fontSize: 15 }}>{likes}</Text>
-        </View>
-        <View style={{ paddingLeft: 20, paddingTop: 3 }}>
-          <MaterialCommunityIcons
-            name={addComment ? "comment-off-outline" : "comment-outline"}
-            size={20}
-            onPress={() => {
-              setAddComment(!addComment);
-            }}
-          ></MaterialCommunityIcons>
-        </View>
-        <View style={{ paddingLeft: 15, paddingTop: 1 }}>
-          <Text style={{ fontSize: 15 }}>{comments.length}</Text>
-        </View>
-        <View style={{ paddingLeft: 20 }}>
-          <MaterialIcons
-            name={showComments ? "expand-less" : "expand-more"}
-            size={25}
-            onPress={() => {
-              setShowComments(!showComments);
-            }}
-          />
-        </View>
+      <View
+        style={{
+          flexDirection: "row",
+          paddingTop: 5,
+          alignItems: "center",
+        }}
+      >
+        <AntDesign
+          name={liked ? "like1" : "like2"}
+          color={liked ? "rgb(255,2,2)" : "rgb(0,0,0)"}
+          onPress={async () => {
+            setLiked(!liked);
+            liked ? await removeLike() : await addLike();
+          }}
+          size={20}
+          style={{ margin: "auto" }}
+        />
+        <Text style={{ fontSize: 15, paddingLeft: 10, margin: "auto" }}>
+          {likes}
+        </Text>
+        <MaterialCommunityIcons
+          name={addComment ? "comment-off-outline" : "comment-outline"}
+          size={20}
+          onPress={() => {
+            setAddComment(!addComment);
+          }}
+          style={{ paddingLeft: 20, margin: "auto" }}
+        ></MaterialCommunityIcons>
+        <Text style={{ fontSize: 15, paddingLeft: 10, margin: "auto" }}>
+          {comments.length}
+        </Text>
+        <MaterialIcons
+          name={showComments ? "expand-less" : "expand-more"}
+          size={30}
+          onPress={() => {
+            setShowComments(!showComments);
+          }}
+          style={{ paddingLeft: 20 }}
+        />
       </View>
-      <View style={{ paddingTop: 4 }}>
-        {showComments && <CommentsList comments={comments} />}
-      </View>
-      <View style={{ paddingTop: 4 }}>
-        {addComment && (
-          <View style={{ flexDirection: "row" }}>
-            <Input
-              placeholder="评论一下"
-              autoFocus={true}
-              onChange={({ nativeEvent: { text } }) => {
-                setContent(text);
-              }}
-              rightIcon={{
-                name: "plussquare",
-                color:
-                  content.length === 0
-                    ? "rgb(133,130,130)"
-                    : "rgba(17,17,231,0.71)",
-                size: 25,
-                type: "antdesign",
-                onPress: handleAddComment,
-                disabled: content.length === 0,
-              }}
-              leftIcon={{
-                name: "cancel",
-                type: "material-community",
-                size: 25,
-                color: "rgb(218,18,18)",
-                onPress: handleCancelComment,
-              }}
+
+      {showComments && (
+        <View style={styleSheet.action_box}>
+          <CommentsList comments={comments} />
+        </View>
+      )}
+
+      {addComment && (
+        <Input
+          style={{ marginTop: 4 }}
+          placeholder={"评论一下"}
+          autoFocus={true}
+          onChange={({ nativeEvent: { text } }) => {
+            setContent(text);
+          }}
+          rightIcon={
+            <Button
+              title={"发送"}
+              size={"sm"}
+              color={"success"}
+              disabled={content.length === 0}
+              onPress={handleAddComment}
             />
-          </View>
-        )}
-      </View>
+          }
+          // onBlur={() => setAddComment(false)}
+        />
+      )}
     </View>
   );
 };
+const action_color = "rgba(230,230,230,0.8)";
+const styleSheet = StyleSheet.create({
+  action_box: {
+    marginTop: 4,
+    backgroundColor: "rgba(230,230,230,0.8)",
+    padding: 5,
+  },
+});

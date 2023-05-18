@@ -52,6 +52,7 @@ class Diary(models.Model):
 
     class Meta:
         verbose_name_plural = '日记'
+        ordering = ['-date']
 
 
 class Post(models.Model):
@@ -67,6 +68,7 @@ class Post(models.Model):
 
     class Meta:
         verbose_name_plural = '帖子'
+        ordering = ['-date']
 
 
 class Comment(models.Model):
@@ -80,6 +82,7 @@ class Comment(models.Model):
 
     class Meta:
         verbose_name_plural = '评论'
+        ordering = ['date']
 
 
 class Friendship(models.Model):

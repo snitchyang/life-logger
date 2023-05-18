@@ -1,7 +1,17 @@
 import dayjs from "dayjs";
 
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+dayjs.extend(timezone);
+dayjs.extend(utc);
+const tz = "Asia/Shanghai";
 export const getTimeDistance = (date: Date): string => {
-  const format = dayjs(dayjs(new Date()).diff(date));
+  const now = new Date();
+  const format = dayjs(
+    dayjs(
+      new Date().setHours(now.getHours() + now.getTimezoneOffset() / 60)
+    ).diff(date)
+  );
 
   if (dayjs(date).year() !== dayjs(new Date()).year()) {
     return dayjs(date).format("YYYY-MM-DD");

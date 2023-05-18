@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { View } from "react-native";
 import WebView from "react-native-webview";
 import { root_path } from "../../service/global";
@@ -7,11 +7,17 @@ import { Tab } from "@rneui/base";
 function DataPage() {
   const [duration, setDuration] = useState("week");
   const [index, setIndex] = useState(1);
+  const [refreshing, setRefreshing] = useState(true);
+  const webViewRef = useRef<WebView>();
   return (
     <View style={{ flex: 1 }}>
       <Tab value={index}>
         <Tab.Item
           onPressOut={() => {
+            if (index === 0) {
+              webViewRef.current.reload();
+              return;
+            }
             setDuration("week");
             setIndex(0);
           }}
@@ -21,6 +27,10 @@ function DataPage() {
         </Tab.Item>
         <Tab.Item
           onPressOut={() => {
+            if (index === 1) {
+              webViewRef.current.reload();
+              return;
+            }
             setDuration("month");
             setIndex(1);
           }}
@@ -30,6 +40,10 @@ function DataPage() {
         </Tab.Item>
         <Tab.Item
           onPressOut={() => {
+            if (index === 2) {
+              webViewRef.current.reload();
+              return;
+            }
             setDuration("year");
             setIndex(2);
           }}
@@ -38,6 +52,7 @@ function DataPage() {
           {"一年"}
         </Tab.Item>
       </Tab>
+
       <WebView
         originWhitelist={["*"]}
         geolocationEnabled={true}
@@ -45,6 +60,7 @@ function DataPage() {
         cacheEnabled={true}
         domStorageEnabled={true}
         source={{ uri: `${root_path}statistic?duration=${duration}` }}
+        ref={webViewRef}
       ></WebView>
     </View>
   );

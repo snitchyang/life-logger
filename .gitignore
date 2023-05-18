@@ -257,6 +257,6 @@ api/migrations
 *.sh
 *.ini
 
-/.idea
-*.lock
+.idea
+frontend/yarn.lock
 static

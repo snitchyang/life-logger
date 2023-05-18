@@ -35,7 +35,7 @@ class PlanAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('post', 'user', 'date')
+    list_display = ('content', 'post', 'user', 'date',)
     list_filter = ('user',)
     search_fields = ('content',)
 

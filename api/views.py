@@ -33,6 +33,17 @@ def api_root(request):
     })
 
 
+class Test(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request: Request):
+        users = Post.objects.values('user_id')
+        data = User.objects.filter(id__in=users)
+        print(data)
+        # data = UserSerializer(users, many=True).data
+        return Response(True)
+
+
 def get_user(request: Request) -> User:
     return request.user
 
@@ -46,6 +57,7 @@ class UserList(generics.ListCreateAPIView):
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
@@ -61,36 +73,42 @@ class UserSelf(APIView):
     def post(self, request: Request):
         user = get_user(request)
         data = request.data
-        username = data['username']
-        if username != user.username and len(User.objects.filter(username=username)) > 0:
-            return Response({'message': 'username'}, status=400)
-        user.username = username
-        email = data['email']
-        if email != user.email and len(User.objects.filter(email=email)) > 0:
-            return Response({'message': 'email'}, status=400)
-        user.email = email
-        phone_number = data['phone_number']
-        if phone_number != user.phone_number and len(User.objects.filter(phone_number=phone_number)) > 0:
-            return Response({'message': 'phone_number'}, status=400)
-        user.phone_number = phone_number
-        gender = data['gender']
-        biography = data['biography']
-        school = data['school']
-        user.gender = gender
-        # user.avatar = avatar
-        user.biography = biography
-        user.school = school
+        username = data.get('username')
+        if username is not None:
+            if username != user.username and User.objects.filter(username=username):
+                return Response({'message': 'invalid username.', 'success': False})
+            user.username = username
+        email = data.get('email')
+        if email is not None:
+            if email != user.email and User.objects.filter(email=email):
+                return Response({'message': 'invalid email.', 'success': False})
+            user.email = email
+        phone_number = data.get('phone_number')
+        if phone_number is not None:
+            if phone_number != user.phone_number and User.objects.filter(phone_number=phone_number):
+                return Response({'message': 'invalid phone_number.', 'success': False})
+            user.phone_number = phone_number
+        gender = data.get('gender')
+        if gender is not None:
+            user.gender = gender
+        biography = data.get('biography')
+        if biography is not None:
+            user.biography = biography
+        school = data.get('school')
+        if school is not None:
+            user.school = school
         user.save()
-        return Response({'message': 'success'}, status=200)
+        return Response({'message': 'success', 'success': True}, status=200)
 
 
 class AvatarView(APIView):
     def post(self, request: Request):
         user = get_user(request)
-        avatar_base64 = request.data['avatar_base64']
+        avatar_base64 = request.data.get('avatar_base64')
+        if avatar_base64 is None:
+            return Response({'message': 'lack data', 'success': False}, status=200)
         # user = User.objects.get(id=1)
         uid = uuid.uuid1()
-        print(uid)
         img_path = os.path.join(settings.MEDIA_ROOT, 'avatar\\' + str(uid) + '.jpg')
         with open(img_path, 'wb') as out:
             out.write(base64.b64decode(avatar_base64))
@@ -105,34 +123,42 @@ class UserFriends(APIView):
 
     def get(self, request: Request):
         user = get_user(request)
-        following = [UserHeaderSerializer(friendship.friend, context={'request': request}).data for friendship in
-                     Friendship.objects.filter(user=user).all()]
-        follow_me = [UserHeaderSerializer(friendship.user, context={'request': request}).data for friendship in
-                     Friendship.objects.filter(friend=user).all()]
+        following = UserHeaderSerializer(
+            User.objects.filter(id__in=Friendship.objects.filter(user=user).values('friend_id')),
+            context={'request': request}, many=True).data
+
+        follow_me = UserHeaderSerializer(
+            User.objects.filter(id__in=Friendship.objects.filter(friend=user).values('user_id')),
+            context={'request': request}, many=True).data
+
         return Response({'following': following, 'follow_me': follow_me}, status=200)
 
     def post(self, request: Request):
         user = get_user(request)
-        friend_id = request.data['friend']
-        Friendship.objects.update_or_create(friend_id=friend_id, user=user)
-        return Response({'message': 'success'}, status=200)
+        friend_id = request.data.get('friend')
+        Friendship.objects.create(friend_id=friend_id, user=user)
+        return Response({'message': 'success', 'success': True}, status=200)
 
     def delete(self, request: Request):
         user = get_user(request)
-        friend_id = request.data['friend']
-        friendship = Friendship.objects.get(friend_id=friend_id, user=user)
-        friendship.delete()
-        return Response({'message': 'success'}, status=200)
+        friend_id = request.data.get('friend')
+        try:
+            friendship = Friendship.objects.get(friend_id=friend_id, user=user)
+            friendship.delete()
+        except:
+            return Response({'message': 'fail', 'success': False})
+        return Response({'message': 'success', 'success': True}, status=200)
 
 
 class SearchUser(APIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request: Request):
-        # friend_name = request.data['friend']
-        friend_name = "test"
-        friends: [] = User.objects.filter(username__contains=friend_name)
-        response = UserHeaderSerializer(friends, many=True, context={'request': request}).data
+        user = get_user(request)
+        friend_name = request.data.get('friend')
+        friends = Friendship.objects.filter(user=user).values('friend_id')
+        search_result: [] = User.objects.filter(username__contains=friend_name).exclude(id__in=friends)
+        response = UserHeaderSerializer(search_result, many=True, context={'request': request}).data
         return Response(response, status=200)
 
 
@@ -151,17 +177,17 @@ class PlanAdd(APIView):
     def post(self, request: Request):
         user = get_user(request)
         data = request.data
-        due = data['due']
-        content = data['content']
+        due = data.get('due')
+        content = data.get('content')
         Plan.objects.update_or_create(content=content, user=user, due=due, finished=False)
         return Response({'message': 'success'}, status=200)
 
     def put(self, request: Request):
         data = request.data
-        id = data['id']
-        due = data['due']
-        content = data['content']
-        finished = data['finished']
+        id = data.get('id')
+        due = data.get('due')
+        content = data.get('content')
+        finished = data.get('finished')
         plan: Plan = Plan.objects.get(id=id)
         plan.due = due
         plan.content = content
@@ -205,8 +231,8 @@ class DiaryImageDetail(APIView):
 
     def post(self, request: Request):
         data = request.data
-        diary_id = data['diary']
-        image = data['image']
+        diary_id = data.get('diary')
+        image = data.get('image')
         DiaryImage.objects.update_or_create(post_id=diary_id, path=image)
         return Response({'message': 'success'}, status=200)
 
@@ -217,9 +243,9 @@ class DiaryAdd(APIView):
     def post(self, request: Request):
         user = get_user(request)
         data = request.data
-        title = data['title']
-        content = data['content']
-        tag_ids = request.data['tags']
+        title = data.get('title')
+        content = data.get('content')
+        tag_ids = request.data.get('tags')
         tag_ids = json.loads(tag_ids)
         diary = Diary.objects.create(title=title, content=content, user=user)
         diary.tag.clear()
@@ -230,10 +256,10 @@ class DiaryAdd(APIView):
 
     def put(self, request: Request):
         data = request.data
-        id = data['id']
-        title = data['title']
-        content = data['content']
-        tag_ids = request.data['tags']
+        id = data.get('id')
+        title = data.get('title')
+        content = data.get('content')
+        tag_ids = request.data.get('tags')
         tag_ids = json.loads(tag_ids)
         diary = Diary.objects.get(id=id)
         diary.title = title
@@ -263,20 +289,21 @@ class CommentAdd(APIView):
     def post(self, request: Request):
         user = get_user(request)
         data = request.data
-        content = data['content']
-        post_id = data['post']
+        content = data.get('content')
+        post_id = data.get('post')
         Comment.objects.create(post_id=post_id, content=content, user=user)
         return Response({'message': 'success'}, status=200)
 
 
 class PostList(APIView):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request: Request):
         user = get_user(request)
         friends = [friendship.friend for friendship in Friendship.objects.filter(user=user).all()]
         friends += [user]
-        queryset = Post.objects.filter(user__in=friends).order_by('-date')
+        queryset = Post.objects.filter(user__in=friends)
+
         page_size = int(len(queryset) / 6) + 1
         paginator = Paginator(queryset, 6)
         page = paginator.page(request.query_params['page'])
@@ -297,8 +324,8 @@ class PostAdd(APIView):
 
     def post(self, request: Request):
         data = request.data
-        location = data['location']
-        content = data['content']
+        location = data.get('location')
+        content = data.get('content')
         user = get_user(request)
         post: Post = Post.objects.create(location=location, content=content, user=user)
         return Response({'post': post.id}, status=200)
@@ -309,8 +336,8 @@ class PostLike(APIView):
 
     def post(self, request: Request):
         data = request.data
-        post_id = data['post']
-        like = data['like']
+        post_id = data.get('post')
+        like = data.get('like')
         user = get_user(request)
         post: Post = Post.objects.get(id=post_id)
         if like is True:
@@ -328,8 +355,8 @@ class PostImageAdd(APIView):
 
     def post(self, request: Request):
         data = request.data
-        post_id = data['post']
-        image = data['image']
+        post_id = data.get('post')
+        image = data.get('image')
         PostImage.objects.create(post_id=post_id, path=image)
         return Response({'message': 'success'}, status=200)
 
@@ -359,14 +386,21 @@ class UserRegistrationView(APIView):
         password = make_password(request.data.get('password'))
         email = request.data.get('email')
         gender = request.data.get('gender')
-        avatar = request.data.get('avatar')
-        school = request.data.get('school')
+        # avatar = request.data.get('avatar')
+        # school = request.data.get('school')
         phone_number = request.data.get('phone_number')
+        if not all([username, password, email, gender, phone_number]):
+            return Response({'message': 'lack params.', 'success': False})
+        if User.objects.filter(username=username):
+            return Response({'message': 'invalid username.', 'success': False})
+        if User.objects.filter(email=email):
+            return Response({'message': 'invalid email.', 'success': False})
+        if User.objects.filter(phone_number=phone_number):
+            return Response({'message': 'invalid email.', 'success': False})
         User.objects.create_user(username=username, password=password
-                                 , email=email, gender=gender, avatar=avatar, school=school, phone_number=phone_number
+                                 , email=email, gender=gender, phone_number=phone_number
                                  )
-
-        return Response({'message': 'User registered successfully.'})
+        return Response({'message': 'User registered successfully.', 'success': True})
 
 
 class ForgotPasswordView(APIView):
@@ -390,7 +424,7 @@ class ForgotPasswordView(APIView):
             return Response({'errors': form.errors}, status=400)
 
 
-class statistic(APIView):
+class Statistic(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request: Request):
@@ -421,7 +455,7 @@ class statistic(APIView):
         return render(request, 'statistic.html', {'data': data, 'label': label})
 
 
-class smap(APIView):
+class Smap(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request: Request):
