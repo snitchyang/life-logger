@@ -13,7 +13,7 @@ export default function MainNavigator() {
         headerShown: false,
       }}
     >
-      <mainNavigator.Screen name="Login" component={LoginPage} />
+      {/*<mainNavigator.Screen name="Login" component={LoginPage} />*/}
       <mainNavigator.Screen name="Home" component={DrawerNavigator} />
       <mainNavigator.Screen name="Register" component={RegisterPage} />
     </mainNavigator.Navigator>

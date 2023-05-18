@@ -21,6 +21,11 @@ export const friendsStyleSheet = StyleSheet.create({
     // borderWidth: 1,
     // borderColor: "black",
   },
+  nameContainerFollowMe: {
+    flex: 4,
+    alignItems: "center",
+    marginRight: 30,
+  },
   nameText: {
     fontSize: 15,
     textAlign: "center",
@@ -36,14 +41,19 @@ export const friendsStyleSheet = StyleSheet.create({
 export const friendsViewStyleSheet = StyleSheet.create({
   wrapper: {
     flex: 1,
+    // backgroundColor: "#adadad",
   },
   titleContainer: {
+    marginTop: 25,
     paddingVertical: 20,
   },
   titleText: {
     fontSize: 30,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  tabContainer: {
+    marginBottom: 20,
   },
   addButtonContainer: {
     width: "100%",
@@ -130,5 +140,59 @@ export const searchListStyleSheet = StyleSheet.create({
   },
   iconItem: {
     flex: 1,
+  },
+});
+
+export const FriendsModalStyleSheet = StyleSheet.create({
+  wrapper: { flexDirection: "row" },
+  titleContainer: {
+    flexDirection: "column",
+    alignContent: "center",
+    alignItems: "center",
+    marginTop: 50,
+  },
+  titleText: {
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  cancelContainer: {
+    fontSize: 10,
+    alignItems: "flex-end",
+    alignContent: "flex-end",
+    // borderWidth: 3,
+    marginRight: 30,
+  },
+  cancelText: {
+    fontSize: 15,
+    color: "#3f90a8",
+  },
+  inputFormContainer: {
+    minHeight: 30,
+    borderWidth: 0.5,
+    borderColor: "#cbcbcb",
+    borderRadius: 5,
+    margin: 15,
+    paddingLeft: 10,
+    alignItems: "flex-start",
+    alignContent: "flex-start",
+    flexDirection: "row",
+  },
+  inputForm: {
+    // borderWidth: 3,
+    flex: 9,
+    minHeight: 30,
+  },
+  clearInputContainer: {
+    flex: 1,
+    minHeight: 30,
+    alignContent: "center",
+    alignItems: "center",
+    paddingVertical: 2,
+    // borderWidth: 3,
+  },
+  clearInputIcon: {
+    marginTop: 4,
+    // borderWidth: 3,
+    // borderColor: "red",
   },
 });

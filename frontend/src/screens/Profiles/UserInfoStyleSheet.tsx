@@ -43,36 +43,3 @@ export const userInfoStyleSheet = StyleSheet.create({
     marginLeft: 20,
   },
 });
-
-export const changeInfoStyleSheet = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    backgroundColor: "#FFF",
-    alignItems: "center",
-  },
-  titleContainer: {
-    width: "100%",
-    marginTop: 20,
-  },
-  titleText: {
-    textAlign: "center",
-    fontSize: 20,
-  },
-  inputContainer: {
-    minWidth: 40,
-    width: "100%",
-    // marginVertical: 20,
-    paddingLeft: 30,
-    borderWidth: 0.5,
-    borderColor: "#dcdcdc",
-  },
-  buttonWrapper: {
-    width: "100%",
-    flexDirection: "row",
-    marginTop: 20,
-  },
-  buttonContainer: {
-    flex: 1,
-    backgroundColor: "#dedede",
-  },
-});

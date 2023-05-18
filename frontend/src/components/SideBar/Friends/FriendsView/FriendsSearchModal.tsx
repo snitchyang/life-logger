@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   FlatList,
   Modal,
@@ -8,7 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { IFriend } from "../../../../interface";
 import {
   delete_friends,
@@ -18,6 +26,10 @@ import {
 } from "../../../../service/FriendService";
 import { Avatar } from "@rneui/base";
 import { Ionicons } from "@expo/vector-icons";
+import { FriendsModalStyleSheet } from "../FriendsStyleSheet";
+import useDebounce from "antd/es/form/hooks/useDebounce";
+import { debounce } from "../../../../service/Utils";
+import { place_holder_color } from "../../../../css/cssParams";
 
 interface Props {
   me: number;
@@ -36,49 +48,59 @@ export const FriendsSearchModal = ({
 }: Props) => {
   const [inputText, setInputText] = useState("");
   const [filter, setFilter] = useState<IFriend[]>([]);
-  // const [following, setFollowing] = useState<IFriend[]>([]);
 
   useEffect(() => {
     get_friends().then((res) => setFollowing(res.following));
   }, []);
 
-  function search(text) {
-    // console.log(text);
-    if (text) {
+  const inputDebounce = useRef(
+    debounce((text) => {
       search_friends(text).then((res) => {
+        setFilter(res);
+      });
+    }, 300)
+  );
+  const onTextChange = (text: string) => {
+    const inputValue = text;
+    setInputText(inputValue);
+    inputDebounce.current(inputValue);
+  };
+
+  const search = async (text) => {
+    if (text) {
+      await search_friends(text).then((res) => {
         setFilter(res);
       });
     } else {
       setFilter([]);
       setInputText(text);
     }
-  }
+  };
 
   function isFriend(friend: IFriend) {
     return following.includes(friend);
   }
 
   const addFriend = async (friendID: number) => {
-    await follow_friends(friendID)
-      .then((res) => get_friends())
-      .then((res) => {
-        setFollowing(res.following);
-      });
+    await follow_friends(friendID).then((res) => {
+      get_friends()
+        .then((res) => {
+          setFollowing(res.following);
+        })
+        .then(() => {
+          setVisible(false);
+        });
+    });
   };
 
   const deleteFriend = async (friendID: number) => {
-    let new_following = [];
-    following.forEach((value) => {
-      if (value.id !== friendID) new_following.push(value);
-    });
-    console.log(new_following);
-    setFollowing(following);
     await delete_friends(friendID)
       .then((res) => get_friends())
       .then((res) => {
         setFollowing(res.following);
       });
   };
+
   return (
     <Modal
       animationType="slide"
@@ -88,27 +110,44 @@ export const FriendsSearchModal = ({
       }}
     >
       <View style={searchFriendsStyleSheet.wrapper}>
-        <View style={searchFriendsStyleSheet.titleContainer}>
-          <Text style={searchFriendsStyleSheet.titleText}>
+        <View style={FriendsModalStyleSheet.titleContainer}>
+          <Text style={FriendsModalStyleSheet.titleText}>
             {"Search for Friends"}
           </Text>
+        </View>
+        <View>
           <TouchableOpacity
-            style={searchFriendsStyleSheet.cancelContainer}
+            style={FriendsModalStyleSheet.cancelContainer}
             onPress={() => {
               setVisible(false);
             }}
           >
-            <Text style={searchFriendsStyleSheet.cancelText}>{"Cancel"}</Text>
+            <Text style={FriendsModalStyleSheet.cancelText}>{"Cancel"}</Text>
           </TouchableOpacity>
         </View>
-        <TextInput
-          style={searchFriendsStyleSheet.inputItem}
-          placeholder={"> input name"}
-          value={inputText}
-          onChangeText={(text) => setInputText(text)}
-          // onChangeText={(item) => search(item)}
-        />
-        <Button onPress={() => search(inputText)} title={"Search"}></Button>
+        <View style={FriendsModalStyleSheet.inputFormContainer}>
+          <TextInput
+            style={FriendsModalStyleSheet.inputForm}
+            placeholder={"> search new friends by name"}
+            value={inputText}
+            onChangeText={(text) => onTextChange(text)}
+          />
+          <TouchableOpacity
+            style={FriendsModalStyleSheet.clearInputContainer}
+            onPress={() => {
+              setInputText("");
+              setFilter([]);
+            }}
+          >
+            <Ionicons
+              size={15}
+              style={FriendsModalStyleSheet.clearInputIcon}
+              name="close-circle-outline"
+            ></Ionicons>
+          </TouchableOpacity>
+        </View>
+        {/*<Button onPress={() => search(inputText)} title={"Search"}></Button>*/}
+
         <FlatList
           style={searchFriendsStyleSheet.listItem}
           data={filter}

@@ -40,7 +40,7 @@ export const follow_friends = async (
 
 export const delete_friends = async (
   friendID: number
-): Promise<{ message: string }> => {
+): Promise<{ message: string; success: boolean }> => {
   const url = root_path + "user/friends";
   let json = { friend: friendID };
   let body = JSON.stringify(json);

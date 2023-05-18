@@ -24,7 +24,7 @@ export const RegisterBox = ({ navigation }) => {
       Number(phoneNumber),
       gender
     ).then((res) => {
-      if (res.message) {
+      if (res.success) {
         Alert.alert("注册成功！");
         navigation.navigate("Login");
       } else {
