@@ -9,6 +9,11 @@ import { FriendsModalStyleSheet } from "../../Friends/FriendsStyleSheet";
 import { Icon } from "@ant-design/react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { place_holder_color } from "../../../../css/cssParams";
+import {
+  ButtonStyle,
+  InputFormStyle,
+  RowCenterStyle,
+} from "../../../../css/GlobalStyleSheet";
 
 interface Props {
   usr: IUser;
@@ -72,8 +77,15 @@ export const ChangeTextInfo = ({
           <Text style={ChangeInfoStyleSheet.titleText}>{title}</Text>
         </View>
         <View style={ChangeInfoStyleSheet.titleContainer}>
-          <View style={ChangeInfoStyleSheet.inputFormContainer}>
+          <View
+            style={{
+              minHeight: 80,
+              marginBottom: 30,
+              ...InputFormStyle.inputFormContainer,
+            }}
+          >
             <TextInput
+              style={InputFormStyle.inputForm}
               multiline={true}
               placeholder={placeHolder}
               value={inputText}
@@ -87,14 +99,14 @@ export const ChangeTextInfo = ({
         <View style={ChangeInfoStyleSheet.buttonContainer}>
           <View style={ChangeInfoStyleSheet.buttonView}>
             <Pressable
-              style={ChangeInfoStyleSheet.button}
+              style={ButtonStyle.button}
               onPress={() => {
                 setInputText("");
                 setVisible(false);
               }}
             >
-              <View style={{ flexDirection: "row" }}>
-                <Text style={ChangeInfoStyleSheet.text}>{"保存"}</Text>
+              <View style={RowCenterStyle.rowCenter}>
+                <Text style={ButtonStyle.text}>{"保存"}</Text>
                 <Ionicons
                   style={{ marginLeft: 5 }}
                   size={15}
@@ -112,7 +124,7 @@ export const ChangeTextInfo = ({
                 setVisible(false);
               }}
             >
-              <View style={{ flexDirection: "row" }}>
+              <View style={RowCenterStyle.rowCenter}>
                 <Text style={ChangeInfoStyleSheet.text}>{"取消"}</Text>
                 <Ionicons
                   style={{ marginLeft: 5 }}

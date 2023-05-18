@@ -258,6 +258,5 @@ api/migrations
 *.ini
 
 /.idea
-
 *.lock
 static
