@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
-import { FlatList, TextInput, View } from "react-native";
+import { ActivityIndicator, FlatList, TextInput, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { IDiary, ITag } from "../../interface";
 import { DiaryCard } from "../../components/Diary/CardView/DiaryCard";
 import { get_diary, get_tags } from "../../service/DiaryService";
+import { InputFormStyle } from "../../css/GlobalStyleSheet";
 
 function HomePage({ navigation }) {
   const { t, i18n } = useTranslation();
@@ -70,7 +71,20 @@ function HomePage({ navigation }) {
     }
   }
 
-  if (!allTags || !allData) return <></>;
+  if (!allTags || !allData)
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          flexDirection: "row",
+          padding: 10,
+        }}
+      >
+        <ActivityIndicator />
+      </View>
+    );
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, maxHeight: 30, flexDirection: "row" }}>
@@ -79,20 +93,19 @@ function HomePage({ navigation }) {
           size={20}
           style={{ marginLeft: 10, marginTop: 6 }}
         ></Ionicons>
-        <View style={{ flex: 1, maxHeight: 30 }}>
+        <View style={InputFormStyle.inputFormContainer}>
           <TextInput
             id="searchInput"
-            style={{ paddingLeft: 18 }}
+            style={InputFormStyle.inputForm}
             autoCorrect={false}
             onChangeText={(text) => FilterFun(text)}
-            placeholder="点击搜索"
+            placeholder={"点击搜索"}
             value={searchText}
           />
         </View>
       </View>
 
       <View style={{ flex: 10, minHeight: 200 }}>
-        {/*<ScrollView style={{ flex: 1 }}>*/}
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >

@@ -1,8 +1,9 @@
 import React from "react";
-import { Image, View } from "react-native";
+import { View } from "react-native";
 import { IFriend } from "../../interface";
 import { Text } from "@rneui/base";
 import { getTimeDistance } from "../../service/TimeService";
+import { OpenImage } from "../Image/OpenImage";
 
 interface UserHeader {
   date: Date;
@@ -12,17 +13,18 @@ interface UserHeader {
 export const UserHeader = ({ user, date }: UserHeader) => {
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
-      <Image
-        source={{ uri: user.avatar }}
-        style={{ width: 30, height: 30, borderRadius: 3, margin: "auto" }}
-        alt={""}
+      <OpenImage
+        url={user.avatar}
+        style={{ width: 35, height: 35, borderRadius: 3, margin: "auto" }}
       />
-      <Text style={{ fontSize: 20, margin: "auto", marginLeft: 10 }}>
-        {user.username}
-      </Text>
-      <Text style={{ fontSize: 15, margin: "auto", marginLeft: 10 }}>
-        {getTimeDistance(date)}
-      </Text>
+      <View>
+        <Text style={{ fontSize: 20, margin: "auto", marginLeft: 10 }}>
+          {user.username}
+        </Text>
+        <Text style={{ fontSize: 15, margin: "auto", marginLeft: 10 }}>
+          {getTimeDistance(date)}
+        </Text>
+      </View>
     </View>
   );
 };

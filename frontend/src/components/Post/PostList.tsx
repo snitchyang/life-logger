@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IPost } from "../../interface";
 import { Post } from "./Post";
-import { FlatList, RefreshControl } from "react-native";
+import { ActivityIndicator, FlatList, RefreshControl } from "react-native";
 import { GetPostList } from "../../service/PostService";
 
 export const PostList = () => {
@@ -16,13 +16,14 @@ export const PostList = () => {
     });
   }, []);
   const [refreshing, setRefreshing] = useState(false);
+  if (posts.length === 0) return <ActivityIndicator />;
   return (
     <FlatList
       data={posts}
       renderItem={({ item }) => {
         return <Post post={item} key={item.id} />;
       }}
-      onEndReached={async () => {
+      onEndReached={async ({ distanceFromEnd }) => {
         if (postEnd) return;
         if (page + 1 > maxPage) {
           setPostEnd(true);

@@ -4,10 +4,11 @@ import {
   Image,
   Modal,
   TouchableOpacity,
+  View,
 } from "react-native";
 import { IPost } from "../../interface";
 import React, { useState } from "react";
-import { Card, Text } from "@rneui/base";
+import { Text } from "@rneui/base";
 import { UserHeader } from "./UserHeader";
 import { PostActionSection } from "./PostActionSection";
 import ImageViewer from "react-native-image-zoom-viewer";
@@ -20,54 +21,66 @@ interface Props {
 const width = Dimensions.get("window").width;
 
 export const Post = ({ post }: Props): JSX.Element => {
-  const [images, setImages] = useState<IImageInfo[]>(
-    post.images.map((item) => {
-      return { url: item.path, freeHeight: true, freeWidth: true };
-    })
-  );
+  const images: IImageInfo[] = post.images.map((item) => {
+    return { url: item.path, freeHeight: true, freeWidth: true };
+  });
+  const [addComment, setAddComment] = useState(false);
   const [openImage, setOpenImage] = useState(false);
   const [openImageIndex, setOpenImageIndex] = useState(0);
   return (
-    <Card containerStyle={{ borderWidth: 1, borderRadius: 15 }}>
-      <UserHeader date={post.date} user={post.user} />
-      <Text
+    <View style={{}}>
+      <View
         style={{
-          fontSize: 14,
-          marginTop: 5,
-          marginRight: 10,
+          backgroundColor: "rgba(255,255,255,0.91)",
+          padding: 10,
         }}
       >
-        {post.content}
-      </Text>
-      <FlatList
-        data={post.images}
-        numColumns={3}
-        style={{ marginTop: 2 }}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            style={{ padding: 2 }}
-            onPress={() => {
-              setOpenImageIndex(index);
-              setOpenImage(true);
-            }}
-          >
-            <Image
-              style={{ width: width * 0.26, height: width * 0.26 }}
-              source={{ uri: item.path }}
-              key={index}
-            />
-          </TouchableOpacity>
-        )}
-      />
-      <PostActionSection post={post} />
-      <Modal visible={openImage}>
-        <ImageViewer
-          imageUrls={images}
-          index={openImageIndex}
-          onClick={() => setOpenImage(false)}
-          menuContext={{ saveToLocal: "保存", cancel: "取消" }}
-        ></ImageViewer>
-      </Modal>
-    </Card>
+        <UserHeader date={post.date} user={post.user} />
+        <Text
+          style={{
+            fontSize: 18,
+            marginTop: 5,
+            marginRight: 10,
+          }}
+          onPress={() => setAddComment(!addComment)}
+        >
+          {post.content}
+        </Text>
+        <FlatList
+          data={post.images}
+          numColumns={3}
+          style={{ marginTop: 2 }}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity
+              style={{ marginLeft: "0.5%", marginRight: "0.5%" }}
+              onPress={() => {
+                setOpenImageIndex(index);
+                setOpenImage(true);
+              }}
+            >
+              <Image
+                style={{ width: width * 0.3, height: width * 0.3 }}
+                source={{ uri: item.path }}
+                key={index}
+              />
+            </TouchableOpacity>
+          )}
+        />
+        <PostActionSection
+          post={post}
+          addComment={addComment}
+          setAddComment={setAddComment}
+        />
+        <Modal visible={openImage}>
+          <ImageViewer
+            imageUrls={images}
+            index={openImageIndex}
+            onClick={() => setOpenImage(false)}
+            menuContext={{ saveToLocal: "保存", cancel: "取消" }}
+          ></ImageViewer>
+        </Modal>
+      </View>
+      <View style={{ height: 10 }} />
+    </View>
   );
 };

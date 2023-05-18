@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { IPost } from "../../interface";
 import {
@@ -12,9 +12,15 @@ import { AddComment, GetPost, LikePost } from "../../service/PostService";
 
 interface PostActionSection {
   post: IPost;
+  addComment: boolean;
+  setAddComment: Dispatch<SetStateAction<boolean>>;
 }
 
-export const PostActionSection = ({ post }: PostActionSection) => {
+export const PostActionSection = ({
+  post,
+  addComment,
+  setAddComment,
+}: PostActionSection) => {
   const [likes, setLikes] = useState(post.likes);
   const [comments, setComments] = useState(post.comments);
   const [liked, setLiked] = useState(post.liked);
@@ -27,16 +33,12 @@ export const PostActionSection = ({ post }: PostActionSection) => {
     await LikePost(post.id, false);
   };
   const [showComments, setShowComments] = useState(false);
-  const [addComment, setAddComment] = useState(false);
   const [content, setContent] = useState("");
   const handleAddComment = async () => {
     setAddComment(false);
     await AddComment(post.id, content)
       .then(() => GetPost(post.id))
       .then((res) => setComments(res.comments));
-  };
-  const handleCancelComment = async () => {
-    setAddComment(false);
   };
   return (
     <View style={{ flexDirection: "column" }}>
@@ -57,7 +59,7 @@ export const PostActionSection = ({ post }: PostActionSection) => {
           size={20}
           style={{ margin: "auto" }}
         />
-        <Text style={{ fontSize: 15, paddingLeft: 10, margin: "auto" }}>
+        <Text style={{ fontSize: 15, marginLeft: 6, margin: "auto" }}>
           {likes}
         </Text>
         <MaterialCommunityIcons
@@ -68,7 +70,7 @@ export const PostActionSection = ({ post }: PostActionSection) => {
           }}
           style={{ paddingLeft: 20, margin: "auto" }}
         ></MaterialCommunityIcons>
-        <Text style={{ fontSize: 15, paddingLeft: 10, margin: "auto" }}>
+        <Text style={{ fontSize: 15, marginLeft: 6, margin: "auto" }}>
           {comments.length}
         </Text>
         <MaterialIcons
@@ -82,30 +84,32 @@ export const PostActionSection = ({ post }: PostActionSection) => {
       </View>
 
       {showComments && (
-        <View style={styleSheet.action_box}>
-          <CommentsList comments={comments} />
-        </View>
+        // <View style={styleSheet.action_box}>
+        <CommentsList comments={comments} />
+        // </View>
       )}
 
       {addComment && (
-        <Input
-          style={{ marginTop: 4 }}
-          placeholder={"评论一下"}
-          autoFocus={true}
-          onChange={({ nativeEvent: { text } }) => {
-            setContent(text);
-          }}
-          rightIcon={
-            <Button
-              title={"发送"}
-              size={"sm"}
-              color={"success"}
-              disabled={content.length === 0}
-              onPress={handleAddComment}
-            />
-          }
-          // onBlur={() => setAddComment(false)}
-        />
+        <View>
+          <Input
+            style={{ marginTop: 4 }}
+            placeholder={"评论一下"}
+            autoFocus={true}
+            onChange={({ nativeEvent: { text } }) => {
+              setContent(text);
+            }}
+            rightIcon={
+              <Button
+                title={"发送"}
+                size={"sm"}
+                color={"primary"}
+                disabled={content.length === 0}
+                onPress={handleAddComment}
+              />
+            }
+            // onBlur={() => setAddComment(false)}
+          />
+        </View>
       )}
     </View>
   );

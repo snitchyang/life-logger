@@ -4,11 +4,18 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from .views import *
+from .views.auth import *
+from .views.comment import *
+from .views.diary import *
+from .views.plan import *
+from .views.post import *
+from .views.root import *
+from .views.statistic import *
+from .views.tag import *
+from .views.user import *
 
 urlpatterns = [
     path('', api_root, name='api-root'),
-
     # path('users', UserList.as_view(), name='user-list'),
     # path('user/<int:pk>', UserDetail.as_view(), name='user-detail'),
     path('user/friends', UserFriends.as_view(), name='user-friends'),
@@ -48,5 +55,4 @@ urlpatterns = [
     path('statistic', Statistic.as_view(), name='statistic'),
     path('map', Smap.as_view(), name='smap'),
 
-    path('test', Test.as_view(), name='test')
 ]

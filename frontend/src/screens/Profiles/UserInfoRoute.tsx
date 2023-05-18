@@ -8,11 +8,17 @@ import { userInfoStyleSheet } from "./UserInfoStyleSheet";
 import { ChangeInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeInfo";
 import { BioInfo } from "../../components/SideBar/UserInfo/DetailedInfo/BioInfo";
 import { IUser } from "../../interface";
-import { userinfo_enumerate } from "../../data/data";
 
 // interface UserInfoRoute {
 //     user: IUser;
 // }
+export const userinfo_enumerate = {
+  changeProfile: 0,
+  changeName: 1,
+  changeGender: 2,
+  changeBio: 3,
+  changeSchool: 4,
+};
 
 export const UserInfo = ({ route }) => {
   const { user } = route.params;
