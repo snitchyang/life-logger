@@ -1,20 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {
-  Image,
-  Modal,
-  Platform,
-  Pressable,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { request_album_permission } from "../../../../service/GrantedService";
-import { Avatar, Button, Text } from "@rneui/base";
-import { Ionicons } from "@expo/vector-icons";
+import { Image, Platform, TouchableOpacity, View } from "react-native";
+import { Avatar, Text } from "@rneui/themed";
 import { IUser } from "../../../../interface";
 import {
   get_user_self,
   update_userAvatar,
-  update_userinfo,
 } from "../../../../service/UserService";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";

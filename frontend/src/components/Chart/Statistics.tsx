@@ -1,4 +1,4 @@
-import { Tab } from "@rneui/base";
+import { Tab } from "@rneui/themed";
 import React, { Dispatch, useEffect, useState } from "react";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { Alert, View } from "react-native";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Alert, Image, StyleSheet, Text, View } from "react-native";
-import { Button, Input } from "@rneui/base";
+import { Button, Input } from "@rneui/themed";
 import { COLOR } from "../../constants";
 import { FontAwesome } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";

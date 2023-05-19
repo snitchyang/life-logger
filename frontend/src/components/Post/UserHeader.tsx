@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { IFriend } from "../../interface";
-import { Text } from "@rneui/base";
+import { Text } from "@rneui/themed";
 import { getTimeDistance } from "../../service/TimeService";
 import { OpenImage } from "../Image/OpenImage";
 

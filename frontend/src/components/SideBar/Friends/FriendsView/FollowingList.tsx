@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Avatar } from "@rneui/base";
+import { Avatar } from "@rneui/themed";
 import { Ionicons } from "@expo/vector-icons";
 import { friendsStyleSheet } from "../FriendsStyleSheet";
 import React, { Dispatch, SetStateAction, useState } from "react";

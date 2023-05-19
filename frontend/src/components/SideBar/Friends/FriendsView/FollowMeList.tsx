@@ -2,7 +2,7 @@ import { IFriend } from "../../../../interface";
 import { FlatList, Text, View } from "react-native";
 import React from "react";
 import { friendsStyleSheet } from "../FriendsStyleSheet";
-import { Avatar } from "@rneui/base";
+import { Avatar } from "@rneui/themed";
 
 interface Props {
   followMe: IFriend[];

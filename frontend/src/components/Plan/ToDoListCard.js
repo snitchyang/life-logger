@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { CheckBox } from "@rneui/base";
+import { CheckBox } from "@rneui/themed";
 import { COLOR } from "../../constants";
 
 const ToDoListCard = ({ eventName, isDone }) => {

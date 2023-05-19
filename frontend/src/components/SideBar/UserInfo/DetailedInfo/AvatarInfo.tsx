@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 import { userInfoStyleSheet } from "../../../../screens/Profiles/UserInfoStyleSheet";
-import { Avatar } from "@rneui/base";
+import { Avatar } from "@rneui/themed";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 

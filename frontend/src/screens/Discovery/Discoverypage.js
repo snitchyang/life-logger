@@ -2,7 +2,7 @@ import { TouchableOpacity, View } from "react-native";
 import * as React from "react";
 import { useState } from "react";
 import { PostList } from "../../components/Post/PostList";
-import { FAB } from "@rneui/base";
+import { FAB } from "@rneui/themed";
 import { PostAddPage } from "./PostAddPage";
 
 function DiscoveryPage() {

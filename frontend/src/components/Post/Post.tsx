@@ -1,7 +1,7 @@
 import { Dimensions, View } from "react-native";
 import { IPost } from "../../interface";
 import React, { useState } from "react";
-import { Text } from "@rneui/base";
+import { Text } from "@rneui/themed";
 import { UserHeader } from "./UserHeader";
 import { PostActionSection } from "./PostActionSection";
 import { IImageInfo } from "react-native-image-zoom-viewer/built/image-viewer.type";

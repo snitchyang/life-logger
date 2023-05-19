@@ -4,7 +4,7 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { Image, StyleSheet, Text, View } from "react-native";
-//import {Image} from "@rneui/base";
+//import {Image} from "@rneui/themed";
 import { COLOR } from "../constants";
 
 const customDrawer = (props) => {

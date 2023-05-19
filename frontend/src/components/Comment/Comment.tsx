@@ -1,9 +1,8 @@
 import { IComment } from "../../interface";
-import { Text } from "@rneui/base";
+import { Divider, Text } from "@rneui/themed";
 import { View } from "react-native";
 import React from "react";
 import { getTimeDistance } from "../../service/TimeService";
-import { Divider } from "@rneui/themed";
 import { OpenImage } from "../Image/OpenImage";
 
 interface Comment {

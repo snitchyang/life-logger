@@ -10,18 +10,6 @@ export interface IUser {
   gender: string;
 }
 
-export interface IUser {
-  id: number;
-  username: string;
-  password: string;
-  biography: string;
-  email: string;
-  avatar: string;
-  school: string;
-  phoneNumber: number;
-  gender: string;
-}
-
 export interface IFriend {
   id: number;
   username: string;

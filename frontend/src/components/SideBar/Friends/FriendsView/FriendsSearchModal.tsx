@@ -21,7 +21,7 @@ import {
   get_friends,
   search_friends,
 } from "../../../../service/FriendService";
-import { Avatar } from "@rneui/base";
+import { Avatar } from "@rneui/themed";
 import { Ionicons } from "@expo/vector-icons";
 import { FriendsModalStyleSheet } from "../FriendsStyleSheet";
 import { debounce } from "../../../../service/Utils";

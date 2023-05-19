@@ -7,7 +7,7 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import { CommentsList } from "../Comment/CommentsList";
-import { Button, Input } from "@rneui/base";
+import { Button, Input } from "@rneui/themed";
 import { AddComment, GetPost, LikePost } from "../../service/PostService";
 
 interface PostActionSection {

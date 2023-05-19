@@ -7,7 +7,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { Button, Text } from "@rneui/base";
+import { Button, Dialog, Text } from "@rneui/themed";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import { AddImageList, AddPost } from "../../service/PostService";
@@ -26,6 +26,7 @@ export const PostAddPage = ({ visible, setVisible }: Props) => {
   const [text, setText] = useState("");
   const [images, setImages] = useState<string[]>([]);
   const [cancelDialog, setCancelDialog] = useState(false);
+  const [doneDisable, setDoneDisable] = useState(text.length === 0);
   const permissionFunc = async () => {
     let cameraPermission, imagePermission;
     if (!cameraPermission) {
@@ -57,9 +58,9 @@ export const PostAddPage = ({ visible, setVisible }: Props) => {
     }).then((result) => {
       if (!result.canceled) {
         try {
-          AddImageList(result.assets.map((value) => value.base64)).then((res) =>
-            setImages(res)
-          );
+          AddImageList(result.assets.map((value) => value.base64))
+            .then((res) => setImages(res))
+            .then(() => setDoneDisable(false));
         } catch (e) {
           console.error(e);
         }
@@ -95,7 +96,6 @@ export const PostAddPage = ({ visible, setVisible }: Props) => {
       </View>
       <View
         style={{
-          borderWidth: 2,
           marginTop: 40,
           paddingTop: 10,
           paddingLeft: 20,
@@ -105,15 +105,16 @@ export const PostAddPage = ({ visible, setVisible }: Props) => {
         <TextInput
           placeholder={"这一刻的想法..."}
           value={text}
-          onChangeText={(text) => setText(text)}
+          onChangeText={(text) => {
+            setText(text);
+            if (text.length !== 0) setDoneDisable(false);
+          }}
         />
-
         <OpenImageList urls={images} />
       </View>
       <View
         style={{
           flexDirection: "row",
-          // alignItems: "center",
           justifyContent: "space-evenly",
           marginTop: 50,
         }}
@@ -121,8 +122,7 @@ export const PostAddPage = ({ visible, setVisible }: Props) => {
         <Button
           icon={{ name: "close", color: "black" }}
           color={"rgb(218,218,218)"}
-          onPress={() => setVisible(false)}
-          style={{ marginRight: 40, display: "flex" }}
+          onPress={() => setCancelDialog(true)}
         >
           <Text style={{ color: "black" }}>{"取消"}</Text>
         </Button>
@@ -130,7 +130,7 @@ export const PostAddPage = ({ visible, setVisible }: Props) => {
           icon={{ name: "done", color: "white" }}
           color={"rgb(0,0,0)"}
           onPress={() => setVisible(false)}
-          style={{ marginLeft: 40, display: "flex", borderWidth: 3 }}
+          disabled={doneDisable}
         >
           <Text
             style={{ color: "white" }}
@@ -145,6 +145,41 @@ export const PostAddPage = ({ visible, setVisible }: Props) => {
             {"发表"}
           </Text>
         </Button>
+        <Dialog
+          isVisible={cancelDialog}
+          style={{ alignItems: "center", alignContent: "center" }}
+        >
+          <View style={{ alignItems: "center" }}>
+            <Text style={{ fontSize: 16 }}>{"是否保存草稿"}</Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-around",
+              marginTop: 10,
+            }}
+          >
+            <Button
+              icon={{ name: "close" }}
+              color={"rgb(218,218,218)"}
+              onPress={() => {
+                setVisible(false);
+                setCancelDialog(false);
+                setText("");
+                setImages([]);
+              }}
+            ></Button>
+            <Button
+              icon={{ name: "done", color: "white" }}
+              color={"rgb(0,0,0)"}
+              onPress={() => {
+                setVisible(false);
+                setCancelDialog(false);
+              }}
+            ></Button>
+          </View>
+        </Dialog>
       </View>
     </Modal>
   );

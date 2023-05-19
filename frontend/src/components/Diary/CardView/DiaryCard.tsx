@@ -1,6 +1,6 @@
 import { DiaryHeader } from "./DiaryHeader";
 import { DiaryContent } from "./DiaryContent";
-import { Card } from "@rneui/base";
+import { Card } from "@rneui/themed";
 import React from "react";
 import { IDiary } from "../../../interface";
 

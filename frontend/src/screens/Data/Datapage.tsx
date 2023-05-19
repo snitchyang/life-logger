@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { View } from "react-native";
 import WebView from "react-native-webview";
 import { root_path } from "../../service/global";
-import { Tab } from "@rneui/base";
+import { Tab } from "@rneui/themed";
 
 function DataPage() {
   const [duration, setDuration] = useState("week");

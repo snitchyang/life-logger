@@ -1,11 +1,17 @@
-import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  FlatList,
+  Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import ToDoListCard from "../../components/Plan/ToDoListCard";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Button, FAB } from "@rneui/base";
+import { Button, FAB } from "@rneui/themed";
 import { COLOR } from "../../constants";
 import { AntDesign } from "@expo/vector-icons";
-import Modal from "react-native-modal";
 import { useTranslation } from "react-i18next";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { root_path } from "../../service/global";

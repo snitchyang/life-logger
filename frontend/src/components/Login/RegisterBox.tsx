@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Alert, Image, View } from "react-native";
-import { Button, Card, Input } from "@rneui/base";
+import { Button, Card, Input } from "@rneui/themed";
 import { FontAwesome, Fontisto } from "@expo/vector-icons";
 import { RegisterPost } from "../../service/LoginService";
 
