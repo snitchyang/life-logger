@@ -1,5 +1,3 @@
-import { PermissionsAndroid } from "react-native";
-
 export const request_album_permission = async (setGranted: any) => {
   // try {
   //   const granted = await PermissionsAndroid.request(

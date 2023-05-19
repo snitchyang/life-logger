@@ -1,6 +1,4 @@
 import {
-  Alert,
-  Button,
   FlatList,
   Modal,
   StyleSheet,
@@ -12,7 +10,6 @@ import {
 import React, {
   Dispatch,
   SetStateAction,
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -27,9 +24,7 @@ import {
 import { Avatar } from "@rneui/base";
 import { Ionicons } from "@expo/vector-icons";
 import { FriendsModalStyleSheet } from "../FriendsStyleSheet";
-import useDebounce from "antd/es/form/hooks/useDebounce";
 import { debounce } from "../../../../service/Utils";
-import { place_holder_color } from "../../../../css/cssParams";
 
 interface Props {
   me: number;

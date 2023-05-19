@@ -1,5 +1,5 @@
 import { IFriend } from "../../../../interface";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import React from "react";
 import { friendsStyleSheet } from "../FriendsStyleSheet";
 import { Avatar } from "@rneui/base";

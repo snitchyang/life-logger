@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, Image, Alert } from "react-native";
-import { Input, Card, Button } from "@rneui/base";
-import { FontAwesome } from "@expo/vector-icons";
-import { Fontisto } from "@expo/vector-icons";
-import { IUser } from "../../interface";
+import { Alert, Image, View } from "react-native";
+import { Button, Card, Input } from "@rneui/base";
+import { FontAwesome, Fontisto } from "@expo/vector-icons";
 import { RegisterPost } from "../../service/LoginService";
 
 export const RegisterBox = ({ navigation }) => {

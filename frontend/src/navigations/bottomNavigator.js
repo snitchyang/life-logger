@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import { COLOR } from "../constants";
 import { ActionPage, DataPage, DiscoveryPage, PlanPage } from "../screens";
 import { HomeStackScreen } from "./HomeStackNavigator";
-import { Post } from "../components/Post/Post";
 
 const bottomNavigator = createBottomTabNavigator();
 

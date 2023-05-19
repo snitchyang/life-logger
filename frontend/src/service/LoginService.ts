@@ -1,5 +1,4 @@
-import { get_request_header, post_request_header, root_path } from "./global";
-import { IMessage, IUser } from "../interface";
+import { post_request_header, root_path } from "./global";
 // export const LoginPost = async (
 //     username : string,
 //     password : string

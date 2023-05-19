@@ -1,7 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import { StyleSheet } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { COLOR } from "../../constants";
 import { Divider } from "@rneui/themed";
 import { AntDesign } from "@expo/vector-icons";

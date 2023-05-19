@@ -63,4 +63,19 @@ export const FontStyle = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+  center: {
+    alignItems: "center",
+    alignContent: "center",
+  },
+});
+
+export const TextStyle = StyleSheet.create({
+  titleContainer: {
+    alignItems: "center",
+    alignContent: "center",
+  },
+  titleText: {
+    fontSize: 30,
+    fontWeight: "bold",
+  },
 });

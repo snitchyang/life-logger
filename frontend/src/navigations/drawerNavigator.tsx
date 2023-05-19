@@ -8,7 +8,7 @@ import customDrawer from "./customDrawer";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { StyleSheet, View } from "react-native";
 import SettingsPage from "../screens/Settings/SettingsPage";
-import { UserInfo } from "../screens/Profiles/UserInfoRoute";
+import { UserInfo, UserInfoRoute } from "../screens/Profiles/UserInfoRoute";
 import { FriendsRoute } from "../components/SideBar/Friends/FriendsRoute";
 import { IUser } from "../interface";
 import { get_user_self } from "../service/UserService";
@@ -79,7 +79,8 @@ export default function DrawerNavigator() {
       />
       <drawerNavigator.Screen
         name={t("profiles")}
-        component={UserInfo}
+        // component={UserInfo}
+        component={UserInfoRoute}
         initialParams={{ user: user }}
         options={{
           drawerIcon: (focused) => {

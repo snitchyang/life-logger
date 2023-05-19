@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import { Alert, ToastAndroid } from "react-native";
-import { View, Text, Image, TextInput, StyleSheet } from "react-native";
-import { Input, Button } from "@rneui/base";
+import { Alert, Image, StyleSheet, Text, View } from "react-native";
+import { Button, Input } from "@rneui/base";
 import { COLOR } from "../../constants";
 import { FontAwesome } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { IUser } from "../../interface";
-import { LoginPage } from "../../screens/Login/LoginPage";
 import { login_user } from "../../service/UserService";
 
 const RegisterForm = ({ navigation }) => {
