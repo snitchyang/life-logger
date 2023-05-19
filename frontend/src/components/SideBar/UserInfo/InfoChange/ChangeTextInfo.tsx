@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Pressable, Text, TextInput, View } from "react-native";
-import { Button } from "@rneui/themed";
+import { Alert, Modal, Pressable, Text, TextInput, View } from "react-native";
 import { userinfo_enumerate } from "../../../../data/data";
-import { IFriend, IUser } from "../../../../interface";
+import { IUser } from "../../../../interface";
 import { update_userinfo } from "../../../../service/UserService";
 import { ChangeInfoStyleSheet } from "./ChangeInfoStyleSheet";
-import { FriendsModalStyleSheet } from "../../Friends/FriendsStyleSheet";
-import { Icon } from "@ant-design/react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { place_holder_color } from "../../../../css/cssParams";
 import {
   ButtonStyle,
   InputFormStyle,
-  RowCenterStyle,
+  LayoutStyle,
 } from "../../../../css/GlobalStyleSheet";
 
 interface Props {
@@ -33,7 +29,20 @@ export const ChangeTextInfo = ({
   const [inputText, setInputText] = useState<string>("");
   const [placeHolder, setPlaceHolder] = useState("");
   const [title, setTitle] = useState("");
-  const [inputHeight, setInputHeight] = useState(3);
+
+  useEffect(() => {
+    switch (kind) {
+      case userinfo_enumerate.changeName:
+        setInputText(usr.username);
+        break;
+      case userinfo_enumerate.changeBio:
+        setInputText(usr.biography);
+        break;
+      case userinfo_enumerate.changeSchool:
+        setInputText(usr.school);
+        break;
+    }
+  }, [kind]);
 
   useEffect(() => {
     if (kind === userinfo_enumerate.changeName) {
@@ -48,20 +57,38 @@ export const ChangeTextInfo = ({
     }
   }, [kind]);
 
-  function changeInfo(text) {
+  const changeInfo = (text: string) => {
     if (text) {
       let newUser = usr;
       if (kind === userinfo_enumerate.changeName) {
         newUser.username = text;
         setUser(newUser);
+        if (usr.username) setInputText(usr.username);
       } else if (kind === userinfo_enumerate.changeSchool) {
         newUser.school = text;
         setUser(newUser);
+        if (usr.school) setInputText(usr.school);
       } else if (kind === userinfo_enumerate.changeBio) {
         newUser.biography = text;
+        setUser(newUser);
+        if (usr.biography) setInputText(usr.biography);
       }
     }
-  }
+  };
+
+  const recoverInfo = () => {
+    switch (kind) {
+      case userinfo_enumerate.changeName:
+        setInputText(usr.username);
+        break;
+      case userinfo_enumerate.changeSchool:
+        setInputText(usr.school);
+        break;
+      case userinfo_enumerate.changeBio:
+        setInputText(usr.biography);
+        break;
+    }
+  };
 
   return (
     <Modal
@@ -91,7 +118,6 @@ export const ChangeTextInfo = ({
               value={inputText}
               onChangeText={(text) => {
                 setInputText(text);
-                changeInfo(text);
               }}
             />
           </View>
@@ -101,11 +127,18 @@ export const ChangeTextInfo = ({
             <Pressable
               style={ButtonStyle.button}
               onPress={() => {
-                setInputText("");
+                if (
+                  kind === userinfo_enumerate.changeName &&
+                  inputText === ""
+                ) {
+                  Alert.alert("用户名不能为空！");
+                  return;
+                }
                 setVisible(false);
+                update_userinfo(usr).then(() => changeInfo(inputText));
               }}
             >
-              <View style={RowCenterStyle.rowCenter}>
+              <View style={LayoutStyle.rowCenter}>
                 <Text style={ButtonStyle.text}>{"保存"}</Text>
                 <Ionicons
                   style={{ marginLeft: 5 }}
@@ -120,11 +153,12 @@ export const ChangeTextInfo = ({
             <Pressable
               style={ChangeInfoStyleSheet.button}
               onPress={() => {
-                setInputText("");
+                // setInputText("");
+                recoverInfo();
                 setVisible(false);
               }}
             >
-              <View style={RowCenterStyle.rowCenter}>
+              <View style={LayoutStyle.rowCenter}>
                 <Text style={ChangeInfoStyleSheet.text}>{"取消"}</Text>
                 <Ionicons
                   style={{ marginLeft: 5 }}

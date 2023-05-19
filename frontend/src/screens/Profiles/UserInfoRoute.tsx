@@ -8,11 +8,10 @@ import { userInfoStyleSheet } from "./UserInfoStyleSheet";
 import { ChangeInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeInfo";
 import { BioInfo } from "../../components/SideBar/UserInfo/DetailedInfo/BioInfo";
 import { IUser } from "../../interface";
+import { ChangeImageInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeImageInfo";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-// interface UserInfoRoute {
-//     user: IUser;
-// }
-export const userinfo_enumerate = {
+export const infoEnum = {
   changeProfile: 0,
   changeName: 1,
   changeGender: 2,
@@ -20,11 +19,38 @@ export const userinfo_enumerate = {
   changeSchool: 4,
 };
 
-export const UserInfo = ({ route }) => {
+const Stack = createNativeStackNavigator();
+
+export const UserInfoRoute = ({ navigation, route }) => {
+  const { user } = route.params;
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name={"UserInfo"}
+        component={UserInfoRoute}
+        // component={UserInfo}
+        initialParams={{ user: user }}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name={"ChangeImageInfo"}
+        component={ChangeImageInfo}
+        options={{
+          headerShown: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+export const UserInfo = ({ navigation, route }) => {
   const { user } = route.params;
   const [visible, setVisible] = useState(true);
   const [kind, setKind] = useState<number>(-1);
   const [usr, setUser] = useState<IUser>(user);
+
   return (
     <SafeAreaView style={{ flex: 1, marginTop: 25 }}>
       <ChangeInfo
@@ -37,8 +63,9 @@ export const UserInfo = ({ route }) => {
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
         onPress={() => {
-          setKind(userinfo_enumerate.changeProfile);
-          setVisible(true);
+          // setKind(infoEnum.changeProfile);
+          // setVisible(true);
+          navigation.push("ChangeImageInfo");
         }}
       >
         <AvatarInfo avaUri={usr.avatar} />
@@ -46,7 +73,7 @@ export const UserInfo = ({ route }) => {
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
         onPress={() => {
-          setKind(userinfo_enumerate.changeName);
+          setKind(infoEnum.changeName);
           setVisible(true);
         }}
       >
@@ -55,7 +82,7 @@ export const UserInfo = ({ route }) => {
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
         onPress={() => {
-          setKind(userinfo_enumerate.changeGender);
+          setKind(infoEnum.changeGender);
           setVisible(true);
         }}
       >
@@ -64,7 +91,7 @@ export const UserInfo = ({ route }) => {
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
         onPress={() => {
-          setKind(userinfo_enumerate.changeBio);
+          setKind(infoEnum.changeBio);
           setVisible(true);
         }}
       >
@@ -73,7 +100,7 @@ export const UserInfo = ({ route }) => {
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
         onPress={() => {
-          setKind(userinfo_enumerate.changeSchool);
+          setKind(infoEnum.changeSchool);
           setVisible(true);
         }}
       >

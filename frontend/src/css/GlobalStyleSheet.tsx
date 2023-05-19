@@ -38,10 +38,29 @@ export const InputFormStyle = StyleSheet.create({
   },
 });
 
-export const RowCenterStyle = StyleSheet.create({
+export const LayoutStyle = StyleSheet.create({
   rowCenter: {
     flexDirection: "row",
     alignItems: "center",
     alignContent: "center",
+    justifyContent: "center",
+  },
+  center: {
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center",
+  },
+});
+
+export const FontStyle = StyleSheet.create({
+  titleContainer: {
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  titleText: {
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
