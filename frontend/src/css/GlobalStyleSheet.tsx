@@ -38,10 +38,25 @@ export const InputFormStyle = StyleSheet.create({
   },
 });
 
-export const RowCenterStyle = StyleSheet.create({
+export const LayoutStyle = StyleSheet.create({
   rowCenter: {
     flexDirection: "row",
     alignItems: "center",
     alignContent: "center",
+  },
+  center: {
+    alignItems: "center",
+    alignContent: "center",
+  },
+});
+
+export const TextStyle = StyleSheet.create({
+  titleContainer: {
+    alignItems: "center",
+    alignContent: "center",
+  },
+  titleText: {
+    fontSize: 30,
+    fontWeight: "bold",
   },
 });

@@ -45,3 +45,25 @@ export const ChangeInfoStyleSheet = StyleSheet.create({
     color: "white",
   },
 });
+
+export const ChangeImageStyle = StyleSheet.create({
+  wrapper: { flex: 1 },
+  avatar: {
+    marginVertical: 50,
+  },
+  camera: {
+    flex: 1,
+    minWidth: "80%",
+    minHeight: "30%",
+  },
+  modalContainer: {
+    width: "100%",
+    position: "absolute",
+    bottom: 0,
+  },
+  modalEntry: {
+    width: "100%",
+    backgroundColor: "white",
+    minWidth: 80,
+  },
+});

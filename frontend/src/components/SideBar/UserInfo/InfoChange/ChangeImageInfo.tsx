@@ -1,51 +1,51 @@
-import React, { useEffect, useState } from "react";
-import { Image, Modal, Platform, TouchableOpacity, View } from "react-native";
-import { request_album_permission } from "../../../../service/GrantedService";
-import { Button, Text } from "@rneui/base";
-import { Ionicons } from "@expo/vector-icons";
+import React, { SetStateAction, useEffect, useState } from "react";
+import {
+  Modal,
+  Platform,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Avatar } from "@rneui/base";
 import { IUser } from "../../../../interface";
-import { update_userinfo } from "../../../../service/UserService";
-import { Camera } from "expo-camera";
+import {
+  get_user_self,
+  update_user_avatar,
+  update_userinfo,
+} from "../../../../service/UserService";
+import { AutoFocus, Camera, CameraProps, CameraType } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
+import {
+  ButtonStyle,
+  LayoutStyle,
+  TextStyle,
+} from "../../../../css/GlobalStyleSheet";
+import { ChangeImageStyle } from "./ChangeInfoStyleSheet";
+import { Ionicons } from "@expo/vector-icons";
+import { BottomModal } from "./BottomModal";
 
 interface Props {
   usr: IUser;
   setUser: any;
-  uri: string;
-  visible: boolean;
-  setVisible: any;
 }
 
-export const ChangeImageInfo = ({
-  usr,
-  setUser,
-  uri,
-  visible,
-  setVisible,
-}: Props) => {
-  const [cameraPermission, setCameraPermission] = useState<boolean>(false);
-  const [galleryPermission, setGalleryPermission] = useState<boolean>(false);
-
-  const [camera, setCamera] = useState(null);
-  const [image, setImage] = useState<string>(usr.avatar);
+export const ChangeImageInfo = ({ usr, setUser }: Props) => {
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [selectFromAlbum, setSelectFromAlbum] = useState<boolean>(false);
+  const [selectFromCamera, setSelectFromCamera] = useState<boolean>(false);
+  const [cameraPermission, requestCameraPermission] =
+    Camera.useCameraPermissions();
+  const [galleryPermission, requestGalleryPermission] =
+    ImagePicker.useCameraPermissions();
 
   const permissionFunc = async () => {
-    let cameraPermission, imagePermission;
-    if (!cameraPermission) {
-      cameraPermission = await Camera.requestCameraPermissionsAsync();
-      setCameraPermission(cameraPermission.status === "granted");
-      // if (cameraPermission.status !== "granted")
-      //   console.info("no camera permission");
-    }
-    if (!galleryPermission) {
-      imagePermission = await ImagePicker.getMediaLibraryPermissionsAsync();
-      setGalleryPermission(imagePermission.status === "granted");
-      // if (imagePermission.status !== "granted") console.info("no permission");
-    }
+    if (!galleryPermission || !(galleryPermission.status === "granted"))
+      await ImagePicker.getMediaLibraryPermissionsAsync();
   };
 
   useEffect(() => {
-    if (Platform.OS === "android" && !galleryPermission) {
+    if (Platform.OS === "android" || Platform.OS == "ios") {
       permissionFunc().catch((err) => console.error(err));
     }
   }, []);
@@ -59,46 +59,79 @@ export const ChangeImageInfo = ({
       base64: true,
     }).then((result) => {
       if (!result.canceled) {
-        console.log("pick image");
         try {
-          // result.assets[0].base64
-          setImage(result.assets[0].uri);
-          let newUsr = usr;
-          newUsr.avatar = image;
-          // setUser(newUsr);
-          update_userinfo(usr, result.assets[0].base64).catch((err) =>
-            console.error(err)
-          );
+          update_user_avatar(result.assets[0].base64)
+            .then(() => get_user_self())
+            .then((user) => {
+              setUser(user);
+              // console.log(user.avatar);
+            });
+          // .then(() => setVisible(false));
         } catch (e) {
           console.error(e);
         }
       } else console.log("cancel");
     });
   };
+
   return (
-    <Modal
-      animationType="slide"
-      transparent={false}
-      visible={visible}
-      onRequestClose={() => {
-        setVisible(false);
-      }}
-    >
-      <View>
-        <Text>{"添加图片"}</Text>
-        <View id={"avatar-upload"}>
-          {/* 显示上传后的照片 */}
-          <Image source={{ uri: image }} />
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => handleAddPicCheck()}
-          >
-            {/* 点击此图，调用上传图片，一般此图是个➕号 的样子*/}
-            <Ionicons name="add-outline" size={30}></Ionicons>
-          </TouchableOpacity>
-        </View>
-        {/*<Button onPress={setVisible(false)}>{"取消"}</Button>*/}
+    <View>
+      <BottomModal
+        visible={modalVisible}
+        setVisible={setModalVisible}
+        setSelectFromAlbum={setSelectFromAlbum}
+        setSelectFromCamera={setSelectFromCamera}
+      ></BottomModal>
+      <View
+        style={{
+          marginTop: 80,
+          ...TextStyle.titleContainer,
+          ...LayoutStyle.rowCenter,
+        }}
+      >
+        <Text
+          style={{
+            flex: 9,
+            ...TextStyle.titleText,
+          }}
+        >
+          {"头像"}
+        </Text>
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onPress={() => setModalVisible(true)}
+        >
+          <Ionicons size={15} name="ellipsis-horizontal"></Ionicons>
+        </TouchableOpacity>
       </View>
-    </Modal>
+      <View style={LayoutStyle.center}>
+        {/* 显示上传后的照片 */}
+        <View style={LayoutStyle.center}>
+          <Avatar
+            containerStyle={ChangeImageStyle.avatar}
+            size={200}
+            source={{ uri: usr.avatar }}
+          />
+          {/* 点击此图，调用上传图片，一般此图是个➕号 的样子*/}
+          {/*<Ionicons name="add-outline" size={50}></Ionicons>*/}
+        </View>
+      </View>
+      <View
+        style={{
+          minWidth: "80%",
+          ...LayoutStyle.center,
+        }}
+      >
+        <Pressable
+          style={{
+            width: "50%",
+            ...ButtonStyle.button,
+          }}
+          // onPress={() => setVisible(false)}
+        >
+          <Text style={ButtonStyle.text}>{"取消"}</Text>
+        </Pressable>
+      </View>
+    </View>
   );
 };
