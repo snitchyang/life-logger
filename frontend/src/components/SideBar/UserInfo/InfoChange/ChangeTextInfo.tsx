@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Modal, Pressable, Text, TextInput, View } from "react-native";
-import { userinfo_enumerate } from "../../../../data/data";
 import { IUser } from "../../../../interface";
 import { update_userinfo } from "../../../../service/UserService";
 import { ChangeInfoStyleSheet } from "./ChangeInfoStyleSheet";
@@ -10,6 +9,7 @@ import {
   InputFormStyle,
   LayoutStyle,
 } from "../../../../css/GlobalStyleSheet";
+import { userinfo_enumerate } from "../../../../constants/info";
 
 interface Props {
   usr: IUser;
@@ -135,7 +135,8 @@ export const ChangeTextInfo = ({
                   return;
                 }
                 setVisible(false);
-                update_userinfo(usr).then(() => changeInfo(inputText));
+                changeInfo(inputText);
+                update_userinfo(usr);
               }}
             >
               <View style={LayoutStyle.rowCenter}>

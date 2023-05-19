@@ -15,17 +15,12 @@ import {
 } from "../../../../css/GlobalStyleSheet";
 import { CameraModal } from "./CameraModal";
 
-interface Props {
-  navigation: any;
-  usr: IUser;
-  setUser: any;
-}
-
-export const ChangeImageInfo = ({ navigation, usr, setUser }: Props) => {
+export const ChangeImageInfo = ({ navigation, route }) => {
+  let { usr, setUser } = route.params;
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [selectFromAlbum, setSelectFromAlbum] = useState<boolean>(false);
-  const [cameraPermission, requestCameraPermission] =
-    Camera.useCameraPermissions();
+  // const [selectFromAlbum, setSelectFromAlbum] = useState<boolean>(false);
+  // const [cameraPermission, requestCameraPermission] =
+  Camera.useCameraPermissions();
   const [galleryPermission, requestGalleryPermission] =
     ImagePicker.useCameraPermissions();
 
@@ -35,7 +30,10 @@ export const ChangeImageInfo = ({ navigation, usr, setUser }: Props) => {
   };
 
   useEffect(() => {
-    if (Platform.OS === "android" && !galleryPermission) {
+    if (
+      (Platform.OS === "android" || Platform.OS === "ios") &&
+      !galleryPermission
+    ) {
       permissionFunc().catch((err) => console.error(err));
     }
   }, []);
@@ -59,7 +57,7 @@ export const ChangeImageInfo = ({ navigation, usr, setUser }: Props) => {
     });
   };
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <CameraModal
         visible={modalVisible}
         setVisible={setModalVisible}
@@ -89,7 +87,6 @@ export const ChangeImageInfo = ({ navigation, usr, setUser }: Props) => {
       >
         <TouchableOpacity
           style={{
-            // width: "50%",
             marginHorizontal: 10,
             ...ButtonStyle.button,
           }}
@@ -100,12 +97,14 @@ export const ChangeImageInfo = ({ navigation, usr, setUser }: Props) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={{
-            // width: "50%",
             marginHorizontal: 10,
             ...ButtonStyle.button,
           }}
           activeOpacity={0.8}
-          onPress={() => setModalVisible(true)}
+          onPress={() => {
+            console.log("paizhao");
+            setModalVisible(true);
+          }}
         >
           <Text style={ButtonStyle.text}>{"相机"}</Text>
         </TouchableOpacity>

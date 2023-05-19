@@ -34,7 +34,7 @@ export const CameraModal = ({ visible, setVisible, setUser }: Props) => {
   };
 
   useEffect(() => {
-    if (Platform.OS === "android" || Platform.OS == "ios")
+    if (Platform.OS === "android" || Platform.OS === "ios")
       permissionFunc().catch((err) => console.error(err));
   }, []);
 

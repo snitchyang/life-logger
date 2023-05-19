@@ -121,6 +121,7 @@ function HomePage({ navigation }) {
                 }}
                 onTouchEnd={() => {
                   navigation.navigate("Detail", { diary: item });
+                  // navigation.navigate("hh");
                 }}
               >
                 <DiaryCard diary={item} key={index} />

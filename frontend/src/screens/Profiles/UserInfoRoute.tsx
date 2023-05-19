@@ -5,11 +5,11 @@ import { GenderInfo } from "../../components/SideBar/UserInfo/DetailedInfo/Gende
 import { SchoolInfo } from "../../components/SideBar/UserInfo/DetailedInfo/SchoolInfo";
 import React, { useState } from "react";
 import { userInfoStyleSheet } from "./UserInfoStyleSheet";
-import { ChangeInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeInfo";
 import { BioInfo } from "../../components/SideBar/UserInfo/DetailedInfo/BioInfo";
 import { IUser } from "../../interface";
 import { ChangeImageInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeImageInfo";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { ChangeTextInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeTextInfo";
 
 export const infoEnum = {
   changeProfile: 0,
@@ -21,39 +21,40 @@ export const infoEnum = {
 
 const Stack = createNativeStackNavigator();
 
-export const UserInfoRoute = ({ navigation, route }) => {
-  const { user } = route.params;
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name={"UserInfo"}
-        component={UserInfoRoute}
-        // component={UserInfo}
-        initialParams={{ user: user }}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name={"ChangeImageInfo"}
-        component={ChangeImageInfo}
-        options={{
-          headerShown: true,
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
+// export const UserInfoRoute = ({ route, navigation }) => {
+//   const { user } = route.params;
+//   const [usr, setUser] = useState<IUser>(user);
+//   return (
+//     <Stack.Navigator initialRouteName={"UserInfo"}>
+//       <Stack.Screen
+//         name={"UserInfo"}
+//         component={UserInfo}
+//         initialParams={{ user: usr, setUser: setUser }}
+//         options={{
+//           headerShown: false,
+//         }}
+//       />
+//       <Stack.Screen
+//         name={"ChangeImageInfo"}
+//         component={ChangeImageInfo}
+//         initialParams={{ user: usr, setUser: setUser }}
+//         options={{
+//           headerShown: true,
+//         }}
+//       />
+//     </Stack.Navigator>
+//   );
+// };
 
-export const UserInfo = ({ navigation, route }) => {
+export const UserInfo = ({ route, navigation }) => {
   const { user } = route.params;
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [kind, setKind] = useState<number>(-1);
   const [usr, setUser] = useState<IUser>(user);
 
   return (
     <SafeAreaView style={{ flex: 1, marginTop: 25 }}>
-      <ChangeInfo
+      <ChangeTextInfo
         usr={usr}
         setUser={setUser}
         kind={kind}
@@ -65,7 +66,8 @@ export const UserInfo = ({ navigation, route }) => {
         onPress={() => {
           // setKind(infoEnum.changeProfile);
           // setVisible(true);
-          navigation.push("ChangeImageInfo");
+          // navigation.navigate("ChangeImageInfo");
+          console.log("haha");
         }}
       >
         <AvatarInfo avaUri={usr.avatar} />
