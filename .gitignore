@@ -260,3 +260,4 @@ api/migrations
 .idea
 frontend/yarn.lock
 static
+node_modules

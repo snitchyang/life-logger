@@ -3,10 +3,9 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { Text, View, Image } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 //import {Image} from "@rneui/base";
 import { COLOR } from "../constants";
-import { StyleSheet } from "react-native";
 
 const customDrawer = (props) => {
   return (
