@@ -3,8 +3,8 @@ import {
   Dimensions,
   Modal,
   Platform,
+  Pressable,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { Button, Text } from "@rneui/base";
@@ -12,6 +12,7 @@ import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import { AddImageList, AddPost } from "../../service/PostService";
 import { OpenImageList } from "../../components/Image/OpenImageList";
+import { MaterialIcons } from "@expo/vector-icons";
 
 interface Props {
   visible: boolean;
@@ -24,6 +25,7 @@ export const PostAddPage = ({ visible, setVisible }: Props) => {
   const [galleryPermission, setGalleryPermission] = useState<boolean>(false);
   const [text, setText] = useState("");
   const [images, setImages] = useState<string[]>([]);
+  const [cancelDialog, setCancelDialog] = useState(false);
   const permissionFunc = async () => {
     let cameraPermission, imagePermission;
     if (!cameraPermission) {
@@ -58,11 +60,6 @@ export const PostAddPage = ({ visible, setVisible }: Props) => {
           AddImageList(result.assets.map((value) => value.base64)).then((res) =>
             setImages(res)
           );
-          // result.assets.forEach(async (value) => {
-          //   await AddImage(value.base64).then((res) =>
-          //     setImages([...images, res.url])
-          //   );
-          // });
         } catch (e) {
           console.error(e);
         }
@@ -75,54 +72,31 @@ export const PostAddPage = ({ visible, setVisible }: Props) => {
       visible={visible}
       onTouchCancel={() => setVisible(false)}
     >
-      <TouchableOpacity
-        style={{
-          position: "absolute",
-          alignItems: "center",
-          justifyContent: "center",
-          left: 20,
-          top: 40,
-        }}
-      >
-        <Button
-          // icon={{ name: "close", color: "black" }}
-          color={"rgb(218,218,218)"}
-          onPress={() => setVisible(false)}
-        >
-          <Text style={{ color: "white" }}>{"取消"}</Text>
-        </Button>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          position: "absolute",
-          alignItems: "center",
-          justifyContent: "center",
-          right: 20,
-          top: 40,
-        }}
-      >
-        <Button
-          // icon={{ name: "close", color: "black" }}
-          color={"rgb(0,0,0)"}
-          onPress={() => setVisible(false)}
-        >
-          <Text style={{ color: "white" }}>{"发表"}</Text>
-        </Button>
-      </TouchableOpacity>
       <View
         style={{
-          alignItems: "center",
-          justifyContent: "center",
-          width: Dimensions.get("window").width,
-          top: 50,
+          top: 30,
         }}
       >
-        <Text style={{ fontSize: 20 }}>{"发表帖子"}</Text>
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ fontSize: 20 }}>{"发表帖子"}</Text>
+        </View>
+        <Pressable style={{ alignItems: "flex-end", marginRight: 30 }}>
+          <MaterialIcons
+            name="add-a-photo"
+            size={24}
+            color="black"
+            onPress={handleAddPicCheck}
+          />
+        </Pressable>
       </View>
       <View
         style={{
           borderWidth: 2,
-          marginTop: 70,
+          marginTop: 40,
           paddingTop: 10,
           paddingLeft: 20,
           paddingRight: 20,
@@ -133,33 +107,45 @@ export const PostAddPage = ({ visible, setVisible }: Props) => {
           value={text}
           onChangeText={(text) => setText(text)}
         />
-        <Button onPress={handleAddPicCheck}>
-          <Text>{"添加图片"}</Text>
-        </Button>
+
         <OpenImageList urls={images} />
       </View>
-      <Button onPress={() => setVisible(false)}>
-        <Text>{"cancel"}</Text>
-      </Button>
-      <Button
-        onPress={() => {
-          setText("");
-          setImages([]);
+      <View
+        style={{
+          flexDirection: "row",
+          // alignItems: "center",
+          justifyContent: "space-evenly",
+          marginTop: 50,
         }}
       >
-        <Text>{"clear"}</Text>
-      </Button>
-      <Button
-        onPress={async () => {
-          await AddPost(images, "", text).then((res) => {
-            setVisible(false);
-            setText("");
-            setImages([]);
-          });
-        }}
-      >
-        <Text>{"done"}</Text>
-      </Button>
+        <Button
+          icon={{ name: "close", color: "black" }}
+          color={"rgb(218,218,218)"}
+          onPress={() => setVisible(false)}
+          style={{ marginRight: 40, display: "flex" }}
+        >
+          <Text style={{ color: "black" }}>{"取消"}</Text>
+        </Button>
+        <Button
+          icon={{ name: "done", color: "white" }}
+          color={"rgb(0,0,0)"}
+          onPress={() => setVisible(false)}
+          style={{ marginLeft: 40, display: "flex", borderWidth: 3 }}
+        >
+          <Text
+            style={{ color: "white" }}
+            onPress={async () => {
+              await AddPost(images, "", text).then((res) => {
+                setVisible(false);
+                setText("");
+                setImages([]);
+              });
+            }}
+          >
+            {"发表"}
+          </Text>
+        </Button>
+      </View>
     </Modal>
   );
 };
