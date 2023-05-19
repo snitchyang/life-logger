@@ -6,6 +6,30 @@ import {
 } from "./global";
 import { IMessage, IPost } from "../interface";
 
+export const AddImage = async (
+  image: string
+): Promise<{ message: string; success: boolean; url: string }> => {
+  return await fetch(
+    `${root_path}post/image/add`,
+    await post_request_header(JSON.stringify({ image: image }))
+  )
+    .then((res) => res.json())
+    .catch((err) => console.error(err));
+};
+export const AddImageList = async (images: string[]): Promise<string[]> => {
+  let result: string[] = [];
+  for (const image of images) {
+    await fetch(
+      `${root_path}post/image/add`,
+      await post_request_header(JSON.stringify({ image: image }))
+    )
+      .then((res) => res.json())
+      .then((res) => result.push(res.url))
+      .catch((err) => console.error(err));
+  }
+  while (result.length !== images.length) {}
+  return result;
+};
 export const AddComment = async (
   post_id: number,
   content: string
@@ -19,6 +43,20 @@ export const AddComment = async (
     },
     credentials: "include",
   })
+    .then((res) => res.json())
+    .catch((err) => console.error(err));
+};
+export const AddPost = async (
+  image: string[],
+  location: string,
+  content: string
+) => {
+  return await fetch(
+    `${root_path}post/add`,
+    await post_request_header(
+      JSON.stringify({ content: content, location: location, image: image })
+    )
+  )
     .then((res) => res.json())
     .catch((err) => console.error(err));
 };

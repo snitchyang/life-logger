@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { IPost } from "../../interface";
 import {
   AntDesign,
@@ -49,16 +49,19 @@ export const PostActionSection = ({
           alignItems: "center",
         }}
       >
-        <AntDesign
-          name={liked ? "like1" : "like2"}
-          color={liked ? "rgb(255,2,2)" : "rgb(0,0,0)"}
-          onPress={async () => {
-            setLiked(!liked);
-            liked ? await removeLike() : await addLike();
-          }}
-          size={20}
-          style={{ margin: "auto" }}
-        />
+        <TouchableOpacity>
+          <AntDesign
+            name={liked ? "like1" : "like2"}
+            color={liked ? "rgb(255,2,2)" : "rgb(0,0,0)"}
+            onPress={async () => {
+              setLiked(!liked);
+              liked ? await removeLike() : await addLike();
+            }}
+            size={20}
+            style={{ margin: "auto" }}
+          />
+        </TouchableOpacity>
+
         <Text style={{ fontSize: 15, marginLeft: 6, margin: "auto" }}>
           {likes}
         </Text>
@@ -69,26 +72,22 @@ export const PostActionSection = ({
             setAddComment(!addComment);
           }}
           style={{ paddingLeft: 20, margin: "auto" }}
-        ></MaterialCommunityIcons>
+        />
         <Text style={{ fontSize: 15, marginLeft: 6, margin: "auto" }}>
           {comments.length}
         </Text>
-        <MaterialIcons
-          name={showComments ? "expand-less" : "expand-more"}
-          size={30}
-          onPress={() => {
-            setShowComments(!showComments);
-          }}
-          style={{ paddingLeft: 20 }}
-        />
+        <TouchableOpacity>
+          <MaterialIcons
+            name={showComments ? "expand-less" : "expand-more"}
+            size={30}
+            onPress={() => {
+              setShowComments(!showComments);
+            }}
+            style={{ paddingLeft: 20 }}
+          />
+        </TouchableOpacity>
       </View>
-
-      {showComments && (
-        // <View style={styleSheet.action_box}>
-        <CommentsList comments={comments} />
-        // </View>
-      )}
-
+      {showComments && <CommentsList comments={comments} />}
       {addComment && (
         <View>
           <Input

@@ -34,6 +34,7 @@ export const PostList = () => {
           setPosts(posts.concat(res.data));
         });
       }}
+      onEndReachedThreshold={200}
       refreshControl={
         <RefreshControl
           refreshing={refreshing}

@@ -21,7 +21,7 @@ export const OpenImage = ({ url, style }: Props) => {
       <TouchableOpacity onPress={() => setOpenImage(true)}>
         <Image source={{ uri: url }} style={style} />
       </TouchableOpacity>
-      <Modal visible={openImage}>
+      <Modal visible={openImage} animationType={"slide"}>
         <ImageViewer
           imageUrls={[{ url: url, freeWidth: true, freeHeight: true }]}
           onClick={() => setOpenImage(false)}

@@ -1,6 +1,5 @@
 import base64
 import os
-import uuid
 
 from django.core.paginator import Paginator
 from django.http import HttpRequest
@@ -9,7 +8,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.models import Friendship, Post
+from api.models import *
 from api.serializers import PostSerializer
 from lifelogger import settings
 
@@ -49,9 +48,13 @@ class PostAdd(APIView):
         data = request.data
         location = data.get('location')
         content = data.get('content')
+        image: [str] = data.get('image')
+        image = [i[i.find('/media/') + len('/media/'):] for i in image]
         user = request.user
         post: Post = Post.objects.create(location=location, content=content, user=user)
-        return Response({'post': post.id}, status=200)
+        image_objects = [PostImage(path=url, post=post) for url in image]
+        post.images.bulk_create(image_objects)
+        return Response({'post': post.id, 'message': 'success', 'success': True}, status=200)
 
 
 class PostLike(APIView):
@@ -77,15 +80,14 @@ class PostImageAdd(APIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request: HttpRequest):
-        user = request.user
         image = request.data.get('image')
         if image is None:
             return Response({'message': 'lack data', 'success': False}, status=200)
         uid = uuid.uuid1()
-        database_path = 'avatar/' + str(uid) + '.jpg'
+        database_path = 'image/post/' + str(uid) + '.jpg'
         media_path = make_image_url(settings.MEDIA_URL + database_path, request)
         img_path = os.path.join(settings.MEDIA_ROOT, database_path)
         with open(img_path, 'wb') as out:
             out.write(base64.b64decode(image))
             out.flush()
-        return Response(media_path, status=200)
+        return Response({'message': 'success', 'success': True, 'url': media_path}, status=200)
