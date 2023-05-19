@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { ITag } from "../../../interface";
+import { ITag } from "../../interface";
 import { DiaryTags } from "./DiaryTags";
-import { getTimeDistance } from "../../../service/TimeService";
+import { getTimeDistance } from "../../service/TimeService";
 
 interface IDiaryHeader {
   tags: ITag[];
@@ -40,8 +40,6 @@ const diaryStyleSheet = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     minHeight: 18,
-    // borderWidth: 2,
-    // borderColor: "black",
   },
   tagsWrapper: {
     flex: 7,

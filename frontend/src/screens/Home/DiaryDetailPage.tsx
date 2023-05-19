@@ -1,53 +1,75 @@
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
-import { DiaryHeader } from "../../components/Diary/CardView/DiaryHeader";
-import { DetailedContent } from "../../components/Diary/CardView/DiaryContent";
+import { DiaryHeader } from "../../components/Diary/DiaryHeader";
+
 import React from "react";
 import { IDiary } from "../../interface";
+import { DetailedContent } from "../../components/Diary/DetailContent";
+import { FontStyle, LayoutStyle } from "../../css/GlobalStyleSheet";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   diary: IDiary;
 }
 
-export const DiaryDetailPage = ({ diary }: Props) => {
-  let date = diary.date;
-  let title = diary.title;
-  let tags = diary.tag;
-  let content = diary.content;
-  let images = diary.images;
+export const DetailedPage = ({ route, navigation }) => {
+  const { diary } = route.params;
   return (
-    <View style={{ flex: 1, minWidth: 350 }}>
-      <View style={{ flexDirection: "row" }}>
-        <View style={{ flex: 1, justifyContent: "center" }}>
-          <Text
-            style={{
-              fontWeight: "500",
-              fontSize: 30,
-              textAlign: "center",
-            }}
-          >
-            {title}
-          </Text>
+    <View style={{ flex: 1 }}>
+      <View
+        style={{
+          marginTop: 10,
+          justifyContent: "center",
+          ...LayoutStyle.rowCenter,
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            height: "100%",
+            position: "absolute",
+            left: 5,
+            ...LayoutStyle.rowCenter,
+          }}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
+          <Ionicons name="chevron-back-outline" size={25}></Ionicons>
+          <Text>{"返回"}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            height: "100%",
+            position: "absolute",
+            right: 10,
+            ...LayoutStyle.rowCenter,
+          }}
+          onPress={() => {
+            // navigation.goBack();
+            console.log("post");
+          }}
+        >
+          <Ionicons name="share-social-outline" size={25}></Ionicons>
+        </TouchableOpacity>
+        <View
+          style={{
+            ...FontStyle.titleContainer,
+          }}
+        >
+          <Text style={FontStyle.titleText}>{diary.title}</Text>
         </View>
       </View>
       <View
         style={{
-          flex: 1,
-          maxHeight: 25,
+          height: "5%",
           marginHorizontal: 30,
-          marginTop: 20,
+          paddingTop: 5,
+          ...LayoutStyle.center,
         }}
       >
-        <DiaryHeader tags={tags} date={date} />
+        <DiaryHeader tags={diary.tag} date={diary.date} />
       </View>
-      <View style={{ flex: 9 }}>
-        <DetailedContent content={content} images={images} />
-      </View>
+      <DetailedContent content={diary.content} images={diary.images} />
     </View>
   );
 };
-
-export function DetailedPage({ route }) {
-  const { diary } = route.params;
-  return <DiaryDetailPage diary={diary} />;
-}

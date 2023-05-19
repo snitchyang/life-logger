@@ -66,7 +66,7 @@ export const ChangeImageInfo = ({
       }
     });
   };
-  const handlePhotoTaken = async (base64_photo: string) => {
+  const handlePhotoTaken = (base64_photo: string) => {
     setModalVisible(false);
     setVisible(false);
     update_userAvatar(base64_photo)
