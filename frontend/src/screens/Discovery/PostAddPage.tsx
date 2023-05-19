@@ -56,15 +56,14 @@ export const PostAddPage = ({ visible, setVisible }: Props) => {
       base64: true,
       allowsMultipleSelection: true,
     }).then((result) => {
-      if (!result.canceled) {
-        try {
-          AddImageList(result.assets.map((value) => value.base64))
-            .then((res) => setImages(res))
-            .then(() => setDoneDisable(false));
-        } catch (e) {
-          console.error(e);
-        }
-      } else console.log("cancel");
+      if (result.canceled) return;
+      try {
+        AddImageList(result.assets.map((value) => value.base64))
+          .then((res) => setImages(res))
+          .then(() => setDoneDisable(false));
+      } catch (e) {
+        console.error(e);
+      }
     });
   };
   return (

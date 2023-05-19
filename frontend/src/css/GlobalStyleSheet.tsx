@@ -43,12 +43,10 @@ export const LayoutStyle = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     alignContent: "center",
-    justifyContent: "center",
   },
   center: {
     alignItems: "center",
     alignContent: "center",
-    justifyContent: "center",
   },
 });
 

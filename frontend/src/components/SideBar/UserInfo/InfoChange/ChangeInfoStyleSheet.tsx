@@ -55,6 +55,8 @@ export const ChangeImageStyle = StyleSheet.create({
     flex: 1,
     minWidth: "80%",
     minHeight: "30%",
+    alignContent: "center",
+    alignItems: "center",
   },
   modalContainer: {
     width: "100%",

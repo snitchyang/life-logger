@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, Platform, TouchableOpacity, View } from "react-native";
+import { Image, Modal, Platform, TouchableOpacity, View } from "react-native";
 import { Avatar, Text } from "@rneui/themed";
 import { IUser } from "../../../../interface";
 import {
@@ -15,11 +15,20 @@ import {
 } from "../../../../css/GlobalStyleSheet";
 import { CameraModal } from "./CameraModal";
 
-export const ChangeImageInfo = ({ navigation, route }) => {
-  let { usr, setUser } = route.params;
+interface Props {
+  usr: IUser;
+  setUser: React.Dispatch<React.SetStateAction<IUser>>;
+  visible: boolean;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const ChangeImageInfo = ({
+  usr,
+  setUser,
+  visible,
+  setVisible,
+}: Props) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  // const [selectFromAlbum, setSelectFromAlbum] = useState<boolean>(false);
-  // const [cameraPermission, requestCameraPermission] =
   Camera.useCameraPermissions();
   const [galleryPermission, requestGalleryPermission] =
     ImagePicker.useCameraPermissions();
@@ -30,6 +39,7 @@ export const ChangeImageInfo = ({ navigation, route }) => {
   };
 
   useEffect(() => {
+    console.log("modal");
     if (
       (Platform.OS === "android" || Platform.OS === "ios") &&
       !galleryPermission
@@ -56,18 +66,33 @@ export const ChangeImageInfo = ({ navigation, route }) => {
       }
     });
   };
+  const handlePhotoTaken = async (base64_photo: string) => {
+    setModalVisible(false);
+    setVisible(false);
+    update_userAvatar(base64_photo)
+      .then(() => get_user_self())
+      .then((user) => setUser(user))
+      .catch((err) => console.error(err));
+  };
+
   return (
-    <View style={{ flex: 1 }}>
+    <Modal
+      animationType={"slide"}
+      transparent={false}
+      visible={visible}
+      onRequestClose={() => {
+        setVisible(false);
+      }}
+    >
       <CameraModal
         visible={modalVisible}
         setVisible={setModalVisible}
-        setUser={setUser}
+        handlePhotoTaken={handlePhotoTaken}
       />
       <View style={FontStyle.titleContainer}>
         <Text style={FontStyle.titleText}>{"头像详情"}</Text>
       </View>
-      <View id={"avatar-upload"}>
-        {/* 显示上传后的照片 */}
+      <View>
         <Image source={{ uri: usr.avatar }} />
         <View
           style={{
@@ -78,7 +103,6 @@ export const ChangeImageInfo = ({ navigation, route }) => {
           <Avatar size={300} source={{ uri: usr.avatar }} />
         </View>
       </View>
-      {/*<Button onPress={setVisible(false)}>{"取消"}</Button>*/}
       <View
         style={{
           minWidth: "80%",
@@ -102,7 +126,6 @@ export const ChangeImageInfo = ({ navigation, route }) => {
           }}
           activeOpacity={0.8}
           onPress={() => {
-            console.log("paizhao");
             setModalVisible(true);
           }}
         >
@@ -115,13 +138,12 @@ export const ChangeImageInfo = ({ navigation, route }) => {
             ...ButtonStyle.button,
           }}
           onPress={() => {
-            console.log("goback!");
-            navigation.goBack();
+            setVisible(false);
           }}
         >
           <Text style={ButtonStyle.text}>{"取消"}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </Modal>
   );
 };

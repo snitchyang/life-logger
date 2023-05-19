@@ -1,4 +1,4 @@
-import { SafeAreaView, TouchableOpacity } from "react-native";
+import { SafeAreaView, TouchableOpacity, View } from "react-native";
 import { AvatarInfo } from "../../components/SideBar/UserInfo/DetailedInfo/AvatarInfo";
 import { NameInfo } from "../../components/SideBar/UserInfo/DetailedInfo/NameInfo";
 import { GenderInfo } from "../../components/SideBar/UserInfo/DetailedInfo/GenderInfo";
@@ -7,9 +7,8 @@ import React, { useState } from "react";
 import { userInfoStyleSheet } from "./UserInfoStyleSheet";
 import { BioInfo } from "../../components/SideBar/UserInfo/DetailedInfo/BioInfo";
 import { IUser } from "../../interface";
-import { ChangeImageInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeImageInfo";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ChangeTextInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeTextInfo";
+import { ChangeImageInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeImageInfo";
 
 export const infoEnum = {
   changeProfile: 0,
@@ -19,41 +18,15 @@ export const infoEnum = {
   changeSchool: 4,
 };
 
-const Stack = createNativeStackNavigator();
-
-// export const UserInfoRoute = ({ route, navigation }) => {
-//   const { user } = route.params;
-//   const [usr, setUser] = useState<IUser>(user);
-//   return (
-//     <Stack.Navigator initialRouteName={"UserInfo"}>
-//       <Stack.Screen
-//         name={"UserInfo"}
-//         component={UserInfo}
-//         initialParams={{ user: usr, setUser: setUser }}
-//         options={{
-//           headerShown: false,
-//         }}
-//       />
-//       <Stack.Screen
-//         name={"ChangeImageInfo"}
-//         component={ChangeImageInfo}
-//         initialParams={{ user: usr, setUser: setUser }}
-//         options={{
-//           headerShown: true,
-//         }}
-//       />
-//     </Stack.Navigator>
-//   );
-// };
-
 export const UserInfo = ({ route, navigation }) => {
   const { user } = route.params;
   const [visible, setVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const [kind, setKind] = useState<number>(-1);
   const [usr, setUser] = useState<IUser>(user);
 
   return (
-    <SafeAreaView style={{ flex: 1, marginTop: 25 }}>
+    <View style={{ flex: 1, marginTop: 25 }}>
       <ChangeTextInfo
         usr={usr}
         setUser={setUser}
@@ -61,13 +34,17 @@ export const UserInfo = ({ route, navigation }) => {
         visible={visible}
         setVisible={setVisible}
       />
+      <ChangeImageInfo
+        usr={usr}
+        setUser={setUser}
+        visible={modalVisible}
+        setVisible={setModalVisible}
+      />
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
         onPress={() => {
-          // setKind(infoEnum.changeProfile);
-          // setVisible(true);
-          // navigation.navigate("ChangeImageInfo");
           console.log("haha");
+          setModalVisible(true);
         }}
       >
         <AvatarInfo avaUri={usr.avatar} />
@@ -108,6 +85,6 @@ export const UserInfo = ({ route, navigation }) => {
       >
         <SchoolInfo school={usr.school} />
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
