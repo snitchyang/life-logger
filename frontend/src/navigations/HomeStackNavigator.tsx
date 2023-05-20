@@ -16,7 +16,11 @@ export function HomeStackScreen() {
         component={Homepage}
         options={{ headerShown: false }}
       />
-      <HomeStack.Screen name={"Detail"} component={DetailedPage} />
+      <HomeStack.Screen
+        name={"Detail"}
+        component={DetailedPage}
+        options={{ headerShown: false }}
+      />
     </HomeStack.Navigator>
   );
 }

@@ -1,9 +1,15 @@
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, FlatList, TextInput, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { IDiary, ITag } from "../../interface";
-import { DiaryCard } from "../../components/Diary/CardView/DiaryCard";
+import { DiaryCard } from "../../components/Diary/DiaryCard";
 import { get_diary, get_tags } from "../../service/DiaryService";
 import { InputFormStyle } from "../../css/GlobalStyleSheet";
 
@@ -87,13 +93,26 @@ function HomePage({ navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, maxHeight: 30, flexDirection: "row" }}>
+      <View
+        style={{
+          flex: 1,
+          maxHeight: 30,
+          flexDirection: "row",
+          paddingBottom: 5,
+        }}
+      >
         <Ionicons
           name="search-outline"
           size={20}
           style={{ marginLeft: 10, marginTop: 6 }}
         ></Ionicons>
-        <View style={InputFormStyle.inputFormContainer}>
+        <View
+          style={{
+            marginLeft: 5,
+            marginTop: 5,
+            ...InputFormStyle.inputFormContainer,
+          }}
+        >
           <TextInput
             id="searchInput"
             style={InputFormStyle.inputForm}
@@ -104,28 +123,32 @@ function HomePage({ navigation }) {
           />
         </View>
       </View>
-
       <View style={{ flex: 10, minHeight: 200 }}>
         <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          style={{
+            flex: 1,
+            alignItems: "center",
+            alignContent: "center",
+            // justifyContent: "center"
+          }}
         >
           <FlatList
+            style={{ position: "absolute" }}
             data={filterData}
             renderItem={({ item, index }) => (
-              <View
+              <TouchableOpacity
                 style={{
-                  // flex: 1,
                   maxHeight: 200,
                   minWidth: 400,
                   overflow: "hidden",
                 }}
-                onTouchEnd={() => {
+                activeOpacity={0.8}
+                onPress={() => {
                   navigation.navigate("Detail", { diary: item });
-                  // navigation.navigate("hh");
                 }}
               >
                 <DiaryCard diary={item} key={index} />
-              </View>
+              </TouchableOpacity>
             )}
           />
         </View>
