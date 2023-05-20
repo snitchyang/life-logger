@@ -77,3 +77,18 @@ export interface IToken {
   access: string;
   error: string;
 }
+
+export type Position = {
+  longitude: number;
+  latitude: number;
+};
+
+export interface IPResponse {
+  status: boolean;
+  info?: string;
+  infocode: number;
+  province: string;
+  city: string;
+  adcode: number;
+  rectangle: [Position, Position];
+}

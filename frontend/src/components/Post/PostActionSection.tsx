@@ -45,7 +45,6 @@ export const PostActionSection = ({
       <View
         style={{
           flexDirection: "row",
-          paddingTop: 5,
           alignItems: "center",
         }}
       >
@@ -58,7 +57,7 @@ export const PostActionSection = ({
               liked ? await removeLike() : await addLike();
             }}
             size={20}
-            style={{ margin: "auto" }}
+            style={{ margin: "auto", padding: 2 }}
           />
         </TouchableOpacity>
 
@@ -71,7 +70,7 @@ export const PostActionSection = ({
           onPress={() => {
             setAddComment(!addComment);
           }}
-          style={{ paddingLeft: 20, margin: "auto" }}
+          style={{ paddingLeft: 20, margin: "auto", padding: 2 }}
         />
         <Text style={{ fontSize: 15, marginLeft: 6, margin: "auto" }}>
           {comments.length}
@@ -83,7 +82,7 @@ export const PostActionSection = ({
             onPress={() => {
               setShowComments(!showComments);
             }}
-            style={{ paddingLeft: 20 }}
+            style={{ paddingLeft: 20, padding: 2 }}
           />
         </TouchableOpacity>
       </View>
@@ -106,7 +105,6 @@ export const PostActionSection = ({
                 onPress={handleAddComment}
               />
             }
-            // onBlur={() => setAddComment(false)}
           />
         </View>
       )}

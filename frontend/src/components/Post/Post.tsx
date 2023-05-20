@@ -23,23 +23,30 @@ export const Post = ({ post }: Props): JSX.Element => {
       <View
         style={{
           backgroundColor: "rgba(255,255,255,0.91)",
-          padding: 10,
+          padding: 12,
         }}
       >
         <UserHeader date={post.date} user={post.user} />
-        <Text
-          style={{
-            fontSize: 18,
-            marginTop: 5,
-            marginRight: 10,
-          }}
-          onPress={() => setAddComment(!addComment)}
-        >
-          {post.content}
-        </Text>
+        {post.content.length > 0 && (
+          <Text
+            style={{
+              fontSize: 16,
+              marginTop: 5,
+              marginRight: 10,
+            }}
+            onPress={() => setAddComment(!addComment)}
+          >
+            {post.content}
+          </Text>
+        )}
         <View style={{ marginTop: 2 }}>
           <OpenImageList urls={post.images.map((value) => value.path)} />
         </View>
+        {post.location.length > 0 && (
+          <Text style={{ marginTop: 1, fontSize: 12, color: "grey" }}>
+            {post.location}
+          </Text>
+        )}
         <PostActionSection
           post={post}
           addComment={addComment}

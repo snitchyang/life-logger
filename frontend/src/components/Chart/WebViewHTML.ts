@@ -1,6 +1,3 @@
-import { IDiary, ITag } from "../../interface";
-import { diaries, tags } from "../../data/data";
-
 const chartTypes = {
   bar: "bar",
   bubble: "bubble",
@@ -11,23 +8,7 @@ const chartTypes = {
   radar: "radar",
 };
 const chartType = chartTypes.pie;
-const diaryList = diaries;
-const tagList: string[] = tags.map((item: ITag) => item.content);
-const getData = () => {
-  let list: number[] = [];
-  for (let i = 0; i < tagList.length; i++) {
-    list.push(0);
-  }
-  diaryList.forEach((diary: IDiary) => {
-    diary.tag.forEach((tag: ITag) => {
-      const tagIndex = tagList.indexOf(tag.content);
-      if (tagIndex >= 0 && tagIndex < list.length) list[tagIndex]++;
-    });
-  });
-  return list;
-};
-const data = getData();
-const label = tagList.map((item: string) => `\"${item}\"`);
+
 export const chartHTML = `
 <html lang="en-us">
 <head>
@@ -41,11 +22,9 @@ export const chartHTML = `
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script> 
 const data = {
-      labels: [${label}],
       datasets: [
         {
           label: "tag出现次数",
-          data: [${data}],
           backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',

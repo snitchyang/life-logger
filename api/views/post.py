@@ -1,4 +1,5 @@
 import base64
+import math
 import os
 
 from django.core.paginator import Paginator
@@ -25,8 +26,8 @@ class PostList(APIView):
         friends = [friendship.friend for friendship in Friendship.objects.filter(user=user).all()]
         friends += [user]
         queryset = Post.objects.filter(user__in=friends)
-
-        page_size = int(len(queryset) / 6) + 1
+        queryset_len = len(queryset)
+        page_size = math.ceil(queryset_len / 6)
         paginator = Paginator(queryset, 6)
         page = paginator.page(request.query_params['page'])
         posts = PostSerializer(page, many=True, context={'request': request}).data
