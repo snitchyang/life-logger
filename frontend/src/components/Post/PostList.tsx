@@ -18,7 +18,7 @@ export const PostList = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [postEnd, setPostEnd] = useState(false);
 
-  async function getNewPostList() {
+  async function getNewPostList(page) {
     await GetPostList(page).then((res) => {
       setPosts(res.data);
       setMaxPage(res.max);
@@ -26,7 +26,7 @@ export const PostList = () => {
   }
 
   useEffect(() => {
-    getNewPostList();
+    getNewPostList(page);
   }, []);
   const [refreshing, setRefreshing] = useState(false);
   const [addPost, setAddPost] = useState(false);

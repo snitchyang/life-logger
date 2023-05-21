@@ -42,7 +42,7 @@ class CommentAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('user', 'content', 'date', 'likes',)
+    list_display = ('user', 'content', 'date', 'likes', 'location')
     list_filter = ('date',)
     search_fields = ('content', 'user')
 

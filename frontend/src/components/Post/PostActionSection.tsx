@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { IPost } from "../../interface";
 import {
   AntDesign,
@@ -36,6 +36,7 @@ export const PostActionSection = ({
   const [content, setContent] = useState("");
   const handleAddComment = async () => {
     setAddComment(false);
+    setContent("");
     await AddComment(post.id, content)
       .then(() => GetPost(post.id))
       .then((res) => setComments(res.comments));
@@ -70,7 +71,7 @@ export const PostActionSection = ({
           onPress={() => {
             setAddComment(!addComment);
           }}
-          style={{ paddingLeft: 20, margin: "auto", padding: 2 }}
+          style={{ marginLeft: 20, margin: "auto", padding: 2 }}
         />
         <Text style={{ fontSize: 15, marginLeft: 6, margin: "auto" }}>
           {comments.length}
@@ -82,7 +83,7 @@ export const PostActionSection = ({
             onPress={() => {
               setShowComments(!showComments);
             }}
-            style={{ paddingLeft: 20, padding: 2 }}
+            style={{ marginLeft: "73%", padding: 2 }}
           />
         </TouchableOpacity>
       </View>
@@ -100,7 +101,7 @@ export const PostActionSection = ({
               <Button
                 title={"发送"}
                 size={"sm"}
-                color={"primary"}
+                color={"green"}
                 disabled={content.length === 0}
                 onPress={handleAddComment}
               />
@@ -111,11 +112,3 @@ export const PostActionSection = ({
     </View>
   );
 };
-const action_color = "rgba(230,230,230,0.8)";
-const styleSheet = StyleSheet.create({
-  action_box: {
-    marginTop: 4,
-    backgroundColor: "rgba(230,230,230,0.8)",
-    padding: 5,
-  },
-});

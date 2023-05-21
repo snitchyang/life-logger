@@ -29,7 +29,7 @@ export const Comment = ({ comment }: Comment) => {
           </Text>
         </View>
       </View>
-      <Text style={{ fontSize: 16, marginLeft: 28 }}>{comment.content}</Text>
+      <Text style={{ fontSize: 16, marginLeft: 26 }}>{comment.content}</Text>
       <Divider style={{ width: "90%" }} insetType={"middle"} />
     </View>
   );

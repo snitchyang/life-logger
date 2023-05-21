@@ -13,14 +13,14 @@ import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import { AddImageList, AddPost } from "../../service/PostService";
 import { OpenImageList } from "../../components/Image/OpenImageList";
-import { Entypo, MaterialIcons } from "@expo/vector-icons";
+import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { LocationPicker } from "../../components/Location/LocationPicker";
 import { IPResponse } from "../../interface";
 
 interface Props {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  getnewPostList: () => Promise<void>;
+  getnewPostList: (page: number) => Promise<void>;
 }
 
 const amap_host = "https://restapi.amap.com/v3";
@@ -67,6 +67,15 @@ export const PostAddPage = ({ visible, setVisible, getnewPostList }: Props) => {
       });
   }
 
+  async function refresh() {
+    setText("");
+    setImages([]);
+    setAddLocation(false);
+    setDoneDisable(true);
+    setLocation("添加位置");
+    await getnewPostList(1);
+  }
+
   const handleAddPicCheck = async () => {
     await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -93,42 +102,43 @@ export const PostAddPage = ({ visible, setVisible, getnewPostList }: Props) => {
       onTouchCancel={() => setVisible(false)}
     >
       <TouchableOpacity style={{ position: "absolute", top: 10, left: 20 }}>
-        <Button
-          icon={{ name: "close", color: "black" }}
-          color={"rgb(218,218,218)"}
+        <Ionicons
+          name={"chevron-back-outline"}
+          size={30}
           onPress={() => {
             if (text.length === 0 && images.length === 0) {
               setVisible(false);
-              return;
-            }
-            setCancelDialog(true);
+            } else setCancelDialog(true);
           }}
-        >
-          <Text style={{ color: "black" }}>{"取消"}</Text>
-        </Button>
+          style={{ padding: 2 }}
+          // color={"rgb(218,218,218)"}
+        ></Ionicons>
       </TouchableOpacity>
       <TouchableOpacity style={{ position: "absolute", top: 10, right: 20 }}>
         <Button
-          icon={{ name: "done", color: "white" }}
-          color={"rgb(0,0,0)"}
-          onPress={() => setVisible(false)}
+          color={"green"}
           disabled={doneDisable}
+          style={{ padding: 2 }}
+          onPress={async () => {
+            setVisible(false);
+            await AddPost(images, addLocation ? location : "", text).then(
+              async () => {
+                await refresh();
+              }
+            );
+          }}
         >
-          <Text
-            style={{ color: "white" }}
-            onPress={async () => {
-              await AddPost(images, addLocation ? location : "", text).then(
-                async () => {
-                  await getnewPostList();
-                  setVisible(false);
-                  setText("");
-                  setImages([]);
-                }
-              );
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              height: 16,
             }}
           >
-            {"发表"}
-          </Text>
+            <Text style={{ color: "white", textAlign: "center" }}>
+              {"发表"}
+            </Text>
+          </View>
         </Button>
       </TouchableOpacity>
       <View
@@ -158,8 +168,8 @@ export const PostAddPage = ({ visible, setVisible, getnewPostList }: Props) => {
         style={{
           marginTop: 80,
           paddingTop: 10,
-          paddingLeft: 20,
-          paddingRight: 20,
+          paddingLeft: 25,
+          paddingRight: 25,
         }}
       >
         <TextInput

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { View } from "react-native";
 import WebView from "react-native-webview";
-import { root_path } from "../../service/global";
+import { root_path, test_token } from "../../service/global";
 import { Tab } from "@rneui/themed";
 
 function DataPage() {
@@ -9,8 +9,15 @@ function DataPage() {
   const [index, setIndex] = useState(1);
   const [refreshing, setRefreshing] = useState(true);
   const webViewRef = useRef<WebView>();
+  const [isMap, setIsMap] = useState(true);
   return (
     <View style={{ flex: 1 }}>
+      {/*<TouchableOpacity style={{ position: "absolute", top: 20, left: 20 }}>*/}
+      {/*  <Button onPress={() => setIsMap(!isMap)}>*/}
+      {/*<Text>{"map"}</Text>*/}
+      {/*  </Button>*/}
+      {/*</TouchableOpacity>*/}
+
       <Tab value={index}>
         <Tab.Item
           onPressOut={() => {
@@ -59,7 +66,14 @@ function DataPage() {
         javaScriptEnabled={true}
         cacheEnabled={true}
         domStorageEnabled={true}
-        source={{ uri: `${root_path}statistic?duration=${duration}` }}
+        source={{
+          uri: isMap
+            ? `${root_path}map`
+            : `${root_path}statistic?duration=${duration}`,
+          headers: {
+            Authorization: "Bearer" + " " + `${test_token}`,
+          },
+        }}
         ref={webViewRef}
       ></WebView>
     </View>
