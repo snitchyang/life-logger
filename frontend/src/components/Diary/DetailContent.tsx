@@ -32,7 +32,7 @@ export const DetailedContent = ({ content, images }: Props) => {
           flex: 4,
         }}
       >
-        <OpenImageList urls={images.map((item) => item.path)} />
+        <OpenImageList image={images} />
       </View>
     </View>
   );

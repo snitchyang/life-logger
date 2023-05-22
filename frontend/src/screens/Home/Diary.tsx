@@ -12,12 +12,15 @@ import { IDiary, ITag } from "../../interface";
 import { DiaryCard } from "../../components/Diary/DiaryCard";
 import { get_diary, get_tags } from "../../service/DiaryService";
 import { InputFormStyle } from "../../css/GlobalStyleSheet";
+import { FAB } from "@rneui/themed";
+import { AddDiaryModal } from "../../components/Diary/addModal/AddDiaryModal";
 
-function HomePage({ navigation }) {
+function Diary({ navigation }) {
   const { t, i18n } = useTranslation();
   const [filterData, setFilterData] = useState<IDiary[]>([]);
   const [allTags, setAllTags] = useState<ITag[]>([]);
   const [allData, setAllData] = useState<IDiary[]>([]);
+  const [addDiary, setAddDiary] = useState(false);
 
   useEffect(() => {
     get_diary().then((res) => {
@@ -152,10 +155,26 @@ function HomePage({ navigation }) {
             )}
           />
         </View>
-        {/*</ScrollView>*/}
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            alignItems: "center",
+            justifyContent: "center",
+            right: 20,
+            top: 10,
+          }}
+        >
+          <FAB
+            icon={{ name: "add", color: "white" }}
+            color={"black"}
+            onPress={() => setAddDiary(true)}
+            size={"small"}
+          />
+        </TouchableOpacity>
       </View>
+      <AddDiaryModal visible={addDiary} setVisible={setAddDiary} />
     </View>
   );
 }
 
-export default HomePage;
+export default Diary;

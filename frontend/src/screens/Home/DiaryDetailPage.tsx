@@ -2,11 +2,12 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 import { DiaryHeader } from "../../components/Diary/DiaryHeader";
 
-import React from "react";
-import { IDiary } from "../../interface";
+import React, { useState } from "react";
+import { IDiary, IImage } from "../../interface";
 import { DetailedContent } from "../../components/Diary/DetailContent";
 import { FontStyle, LayoutStyle } from "../../css/GlobalStyleSheet";
 import { Ionicons } from "@expo/vector-icons";
+import { ShareModal } from "../../components/Diary/addModal/ShareModal";
 
 interface Props {
   diary: IDiary;
@@ -14,8 +15,14 @@ interface Props {
 
 export const DetailedPage = ({ route, navigation }) => {
   const { diary } = route.params;
+  const [shareVisible, setShareVisible] = useState(false);
   return (
     <View style={{ flex: 1 }}>
+      <ShareModal
+        visible={shareVisible}
+        setVisible={setShareVisible}
+        diary={diary}
+      />
       <View
         style={{
           marginTop: 10,
@@ -46,6 +53,7 @@ export const DetailedPage = ({ route, navigation }) => {
           }}
           onPress={() => {
             // navigation.goBack();
+            setShareVisible(true);
             console.log("post");
           }}
         >

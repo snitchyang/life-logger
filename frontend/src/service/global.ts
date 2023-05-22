@@ -37,12 +37,19 @@ export const post_request_header = async (body: string | FormData) => {
   return request;
 };
 
-export const put_request_header = async (body: string) => {
+export const put_request_header = async (body: string | FormData) => {
   const token = await AsyncStorage.getItem("token");
+  let content_type: string;
+  if (typeof body == "string") {
+    content_type = "application/json";
+  } else {
+    content_type = "multipart/form-data";
+  }
   let request: RequestInit = {
     method: "PUT",
     body: body,
     headers: {
+      "Content-Type": content_type,
       Authorization: "Bearer " + test_token,
     },
     credentials: "include",

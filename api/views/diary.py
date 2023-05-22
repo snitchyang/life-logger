@@ -1,12 +1,19 @@
 import json
-
-from rest_framework import permissions
+import uuid
+import base64
+import os
+from django.core.paginator import Paginator
+from django.http import HttpRequest
+from rest_framework import permissions, generics
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.models import Diary, DiaryImage, Tag
 from api.serializers import DiarySerializer
+from lifelogger import settings
+
+from .post import make_image_url
 
 
 class DiaryList(APIView):
@@ -22,12 +29,20 @@ class DiaryList(APIView):
 class DiaryImageDetail(APIView):
     permission_classes = [permissions.AllowAny]
 
-    def post(self, request: Request):
-        data = request.data
-        diary_id = data.get('diary')
-        image = data.get('image')
-        DiaryImage.objects.update_or_create(post_id=diary_id, path=image)
-        return Response({'message': 'success'}, status=200)
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request: HttpRequest):
+        image = request.data.get('image')
+        if image is None:
+            return Response({'message': 'lack data', 'success': False}, status=200)
+        uid = uuid.uuid1()
+        database_path = 'image/diary/' + str(uid) + '.jpg'
+        media_path = make_image_url(settings.MEDIA_URL + database_path, request)
+        img_path = os.path.join(settings.MEDIA_ROOT, database_path)
+        with open(img_path, 'wb') as out:
+            out.write(base64.b64decode(image))
+            out.flush()
+        return Response({'message': 'success', 'success': True, 'url': media_path}, status=200)
 
 
 class DiaryAdd(APIView):

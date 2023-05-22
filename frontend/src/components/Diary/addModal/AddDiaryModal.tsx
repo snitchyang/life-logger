@@ -11,30 +11,31 @@ import {
 import { Button, Dialog, Divider, Text } from "@rneui/themed";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
-import { AddImageList, AddPost } from "../../service/PostService";
-import { OpenImageList } from "../../components/Image/OpenImageList";
 import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { LocationPicker } from "../../components/Location/LocationPicker";
-import { IImage, IPResponse } from "../../interface";
+import { IDiary, IImage, IPResponse, ITag } from "../../../interface";
+import { AddImageList, AddPost } from "../../../service/PostService";
+import { OpenImageList } from "../../Image/OpenImageList";
+import { LocationPicker } from "../../Location/LocationPicker";
+import { use } from "i18next";
+import { add_diary, add_diary_image } from "../../../service/DiaryService";
+import { emtpy_diary } from "../../../constants/info";
 
 interface Props {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  getnewPostList: (page: number) => Promise<void>;
 }
 
 const amap_host = "https://restapi.amap.com/v3";
 const amap_key = "3925351c690b4a56bbbfc5adac5f39e0";
 const width = Dimensions.get("window").width;
-export const PostAddPage = ({ visible, setVisible, getnewPostList }: Props) => {
+export const AddDiaryModal = ({ visible, setVisible }: Props) => {
   const [cameraPermission, setCameraPermission] = useState<boolean>(false);
   const [galleryPermission, setGalleryPermission] = useState<boolean>(false);
-  const [text, setText] = useState("");
-  const [images, setImages] = useState<string[]>([]);
-  const [cancelDialog, setCancelDialog] = useState(false);
-  const [doneDisable, setDoneDisable] = useState(text.length === 0);
+  const [doneDisable, setDoneDisable] = useState(false);
   const [addLocation, setAddLocation] = useState(false);
   const [location, setLocation] = useState("添加位置");
+  const [cancelDialog, setCancelDialog] = useState(false);
+  const [diary, setDiary] = useState<IDiary>(emtpy_diary);
 
   const permissionFunc = async () => {
     let cameraPermission, imagePermission;
@@ -53,12 +54,6 @@ export const PostAddPage = ({ visible, setVisible, getnewPostList }: Props) => {
     }
   }, []);
 
-  const str2IImage = (urls: string[]): IImage[] => {
-    let img: IImage[] = [];
-    urls.map((item) => img.push({ path: item }));
-    return img;
-  };
-
   async function getLocationByIP() {
     if (addLocation === true) {
       setAddLocation(false);
@@ -74,15 +69,6 @@ export const PostAddPage = ({ visible, setVisible, getnewPostList }: Props) => {
       });
   }
 
-  async function refresh() {
-    setText("");
-    setImages([]);
-    setAddLocation(false);
-    setDoneDisable(true);
-    setLocation("添加位置");
-    await getnewPostList(1);
-  }
-
   const handleAddPicCheck = async () => {
     await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -91,11 +77,22 @@ export const PostAddPage = ({ visible, setVisible, getnewPostList }: Props) => {
       quality: 1,
       base64: true,
       allowsMultipleSelection: true,
-    }).then((result) => {
-      if (result.canceled) return;
+    }).then((res) => {
+      if (res.canceled) return;
       try {
-        AddImageList(result.assets.map((value) => value.base64))
-          .then((res) => setImages(res))
+        add_diary_image(res.assets.map((value) => value.base64))
+          .then((res) => {
+            let new_images: IImage[] = [];
+            res
+              ? res.map((item) => {
+                  new_images.push({ path: item });
+                })
+              : [];
+            setDiary({
+              ...diary,
+              images: [...new_images, ...diary.images],
+            });
+          })
           .then(() => setDoneDisable(false));
       } catch (e) {
         console.error(e);
@@ -113,26 +110,24 @@ export const PostAddPage = ({ visible, setVisible, getnewPostList }: Props) => {
           name={"chevron-back-outline"}
           size={30}
           onPress={() => {
-            if (text.length === 0 && images.length === 0) {
+            if (diary.content.length === 0 && diary.images.length === 0) {
               setVisible(false);
             } else setCancelDialog(true);
           }}
           style={{ padding: 2 }}
-          // color={"rgb(218,218,218)"}
         ></Ionicons>
       </TouchableOpacity>
-      <TouchableOpacity style={{ position: "absolute", top: 10, right: 20 }}>
+      <TouchableOpacity style={{ position: "absolute", top: 60, right: 20 }}>
         <Button
           color={"green"}
           disabled={doneDisable}
           style={{ padding: 2 }}
           onPress={async () => {
             setVisible(false);
-            await AddPost(images, addLocation ? location : "", text).then(
-              async () => {
-                await refresh();
-              }
-            );
+            console.log(diary);
+            await add_diary(diary).then((res) => {
+              console.log(res);
+            });
           }}
         >
           <View
@@ -162,7 +157,9 @@ export const PostAddPage = ({ visible, setVisible, getnewPostList }: Props) => {
         >
           {/*<Text style={{ fontSize: 20 }}>{"发表帖子"}</Text>*/}
         </View>
-        <Pressable style={{ alignItems: "flex-end", marginRight: 40 }}>
+        <Pressable
+          style={{ alignItems: "flex-end", marginRight: 40, marginTop: 30 }}
+        >
           <MaterialIcons
             name="add-a-photo"
             size={26}
@@ -180,15 +177,32 @@ export const PostAddPage = ({ visible, setVisible, getnewPostList }: Props) => {
         }}
       >
         <TextInput
-          placeholder={"这一刻的想法..."}
-          value={text}
+          placeholder={"标题"}
+          value={diary.title}
           onChangeText={(text) => {
-            setText(text);
+            setDiary({ ...diary, title: text });
             if (text.length !== 0) setDoneDisable(false);
           }}
           style={{ marginBottom: 20, fontSize: 16 }}
         />
-        <OpenImageList image={str2IImage(images)} />
+        <TextInput
+          placeholder={"内容"}
+          value={diary.content}
+          onChangeText={(text) => {
+            setDiary({ ...diary, content: text });
+            if (text.length !== 0) setDoneDisable(false);
+          }}
+          style={{ marginBottom: 20, fontSize: 16 }}
+        />
+        <OpenImageList
+          image={diary.images}
+          setImage={(img) => {
+            setDiary({
+              ...diary,
+              images: img,
+            });
+          }}
+        />
       </View>
       <View style={{ marginTop: 70, alignItems: "center" }}>
         <Divider style={{ width: "80%" }} insetType={"middle"} />
@@ -249,8 +263,7 @@ export const PostAddPage = ({ visible, setVisible, getnewPostList }: Props) => {
               onPress={() => {
                 setVisible(false);
                 setCancelDialog(false);
-                setText("");
-                setImages([]);
+                setDiary(emtpy_diary);
               }}
             ></Button>
             <Button

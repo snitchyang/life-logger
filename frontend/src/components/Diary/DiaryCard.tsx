@@ -9,11 +9,11 @@ interface Props {
   diary: IDiary;
 }
 
-export const DiaryCard = ({ diary }: Props): JSX.Element => {
+export const DiaryCard = ({ diary }: Props) => {
   return (
     <Card wrapperStyle={{ width: "100%", height: "100%" }}>
       <Card.Title style={{ fontSize: 13 }}> {diary.title}</Card.Title>
-      <DiaryHeader tags={diary.tag} date={diary.date} />
+      <DiaryHeader tags={diary.tags} date={diary.date} />
       <DiaryContent content={diary.content} images={diary.images} />
     </Card>
   );

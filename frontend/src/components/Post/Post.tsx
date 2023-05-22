@@ -40,7 +40,7 @@ export const Post = ({ post }: Props): JSX.Element => {
           </Text>
         )}
         <View style={{ marginTop: 2 }}>
-          <OpenImageList urls={post.images.map((value) => value.path)} />
+          <OpenImageList image={post.images} />
         </View>
         {post.location.length > 0 && (
           <Text style={{ marginTop: 1, fontSize: 12, color: "grey" }}>
