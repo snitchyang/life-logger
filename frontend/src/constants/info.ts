@@ -14,8 +14,8 @@ export const emtpy_diary: IDiary = {
   id: 0,
   title: "",
   content: "",
-  duration: new Date(),
-  date: new Date(),
+  end: new Date(new Date().setHours(23)),
+  begin: new Date(),
   images: [],
-  tags: [],
+  tag: [],
 };

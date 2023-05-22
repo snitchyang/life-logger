@@ -26,12 +26,7 @@ interface Props {
 const amap_host = "https://restapi.amap.com/v3";
 const amap_key = "3925351c690b4a56bbbfc5adac5f39e0";
 const width = Dimensions.get("window").width;
-export const ShareModal = ({
-  visible,
-  setVisible,
-  // getnewPostList,
-  diary,
-}: Props) => {
+export const ShareModal = ({ visible, setVisible, diary }: Props) => {
   const [cameraPermission, setCameraPermission] = useState<boolean>(false);
   const [galleryPermission, setGalleryPermission] = useState<boolean>(false);
   const [text, setText] = useState("");
@@ -42,8 +37,8 @@ export const ShareModal = ({
 
   useEffect(() => {
     if (diary) {
-      if (diary.content) {
-        setText(diary.content);
+      if (diary.content || diary.title) {
+        setText((diary.title ? diary.title + ": " : "") + diary.content);
         setDoneDisable(false);
       }
       if (diary.images) {
@@ -125,7 +120,10 @@ export const ShareModal = ({
       visible={visible}
       onTouchCancel={() => setVisible(false)}
     >
-      <TouchableOpacity style={{ position: "absolute", top: 60, left: 20 }}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        style={{ position: "absolute", top: 60, left: 20 }}
+      >
         <Ionicons
           name={"chevron-back-outline"}
           size={30}
@@ -136,7 +134,10 @@ export const ShareModal = ({
           // color={"rgb(218,218,218)"}
         ></Ionicons>
       </TouchableOpacity>
-      <TouchableOpacity style={{ position: "absolute", top: 60, right: 20 }}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        style={{ position: "absolute", top: 60, right: 20 }}
+      >
         <Button
           color={"green"}
           disabled={doneDisable}

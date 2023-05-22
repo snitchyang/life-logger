@@ -10,7 +10,7 @@ export const DiaryImg = ({ url }: Props) => {
     <View
       style={{
         flex: 1,
-        right: 10,
+        marginRight: "5%",
         width: 100,
         height: 100,
       }}

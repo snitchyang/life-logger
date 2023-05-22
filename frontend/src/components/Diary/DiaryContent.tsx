@@ -16,7 +16,6 @@ export const DiaryContent = ({ content, images }: Props) => {
         marginTop: 10,
         marginBottom: 10,
         paddingBottom: 10,
-        // height: "100%",
       }}
     >
       <View

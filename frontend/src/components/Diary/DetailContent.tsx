@@ -15,12 +15,13 @@ export const DetailedContent = ({ content, images }: Props) => {
       style={{
         flex: 1,
         marginHorizontal: 30,
+        marginTop: 15,
         // borderWidth: 1,
       }}
     >
       <View
         style={{
-          maxHeight: 300,
+          // maxHeight: 300,
           marginBottom: 30,
           overflow: "hidden",
         }}

@@ -24,8 +24,10 @@ export const add_diary = async (
   diary: IDiary
 ): Promise<{ message: string }> => {
   const url = `${root_path}diary/add`;
-  // diary.tags.push({ content: "上课" });
-  let body = JSON.stringify(diary);
+  let body = JSON.stringify({
+    imgs: diary.images.map((img) => img.path),
+    ...diary,
+  });
   return await fetch(url, await post_request_header(body))
     .then((response) => response.json())
     .catch((err) => console.error(err));

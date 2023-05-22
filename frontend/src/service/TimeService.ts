@@ -31,4 +31,5 @@ export const getTimeDistance = (date: Date): string => {
   if (format.second() > 0) {
     return format.second().toString() + " 秒前";
   }
+  return "刚刚";
 };

@@ -22,7 +22,8 @@ export const ButtonStyle = StyleSheet.create({
 
 export const InputFormStyle = StyleSheet.create({
   inputFormContainer: {
-    minWidth: "90%",
+    // minWidth: "90%",
+    width: "95%",
     borderWidth: 0.5,
     borderColor: "#cbcbcb",
     borderRadius: 5,

@@ -2,6 +2,8 @@ import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   FlatList,
+  RefreshControl,
+  Text,
   TextInput,
   TouchableOpacity,
   View,
@@ -9,11 +11,14 @@ import {
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { IDiary, ITag } from "../../interface";
-import { DiaryCard } from "../../components/Diary/DiaryCard";
 import { get_diary, get_tags } from "../../service/DiaryService";
-import { InputFormStyle } from "../../css/GlobalStyleSheet";
-import { FAB } from "@rneui/themed";
+import { InputFormStyle, LayoutStyle } from "../../css/GlobalStyleSheet";
+import { Divider, FAB } from "@rneui/themed";
 import { AddDiaryModal } from "../../components/Diary/addModal/AddDiaryModal";
+import { UserHeader } from "../../components/Post/UserHeader";
+import { DiaryHeader } from "../../components/Diary/DiaryHeader";
+import { DiaryContent } from "../../components/Diary/DiaryContent";
+import { GetPostList } from "../../service/PostService";
 
 function Diary({ navigation }) {
   const { t, i18n } = useTranslation();
@@ -21,12 +26,14 @@ function Diary({ navigation }) {
   const [allTags, setAllTags] = useState<ITag[]>([]);
   const [allData, setAllData] = useState<IDiary[]>([]);
   const [addDiary, setAddDiary] = useState(false);
+  const [refreshing, setRefreshing] = useState(true);
 
   useEffect(() => {
     get_diary().then((res) => {
       setAllData(res);
       setFilterData(res);
     });
+    setRefreshing(false);
   }, []);
   useEffect(() => {
     get_tags().then((res) => {
@@ -95,30 +102,40 @@ function Diary({ navigation }) {
     );
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{}}>
       <View
         style={{
-          flex: 1,
-          maxHeight: 30,
-          flexDirection: "row",
-          paddingBottom: 5,
+          // flex: 1,
+          // maxHeight: 30,
+          alignItems: "center",
+          alignContent: "center",
+          // paddingBottom: 5,
         }}
       >
-        <Ionicons
-          name="search-outline"
-          size={20}
-          style={{ marginLeft: 10, marginTop: 6 }}
-        ></Ionicons>
         <View
           style={{
             marginLeft: 5,
             marginTop: 5,
-            ...InputFormStyle.inputFormContainer,
+            width: "95%",
+            borderWidth: 0.5,
+            borderColor: "#cbcbcb",
+            borderRadius: 5,
+            flexDirection: "row",
           }}
         >
+          <Ionicons
+            name="search-outline"
+            size={20}
+            style={{ marginLeft: 10, marginTop: 6 }}
+          ></Ionicons>
           <TextInput
             id="searchInput"
-            style={InputFormStyle.inputForm}
+            style={{
+              textAlign: "auto",
+              overflow: "hidden",
+              marginLeft: 8,
+              fontSize: 16,
+            }}
             autoCorrect={false}
             onChangeText={(text) => FilterFun(text)}
             placeholder={"点击搜索"}
@@ -126,47 +143,75 @@ function Diary({ navigation }) {
           />
         </View>
       </View>
-      <View style={{ flex: 10, minHeight: 200 }}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            alignContent: "center",
-            // justifyContent: "center"
-          }}
-        >
-          <FlatList
-            style={{ position: "absolute" }}
-            data={filterData}
-            renderItem={({ item, index }) => (
-              <TouchableOpacity
+      <FlatList
+        style={{}}
+        data={filterData}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={async () => {
+              setRefreshing(true);
+              await get_diary().then(async (res) => {
+                setAllData(res);
+                setFilterData(res);
+                setRefreshing(false);
+              });
+            }}
+          />
+        }
+        renderItem={({ item, index }) => (
+          <View>
+            <View style={{ height: 10 }}></View>
+            <TouchableOpacity
+              style={{ backgroundColor: "white" }}
+              activeOpacity={0.8}
+              onPress={() => {
+                navigation.navigate("Detail", { diary: item });
+              }}
+            >
+              <View
                 style={{
-                  maxHeight: 200,
-                  minWidth: 400,
-                  overflow: "hidden",
-                }}
-                activeOpacity={0.8}
-                onPress={() => {
-                  navigation.navigate("Detail", { diary: item });
+                  marginHorizontal: "3%",
+                  marginVertical: 8,
                 }}
               >
-                <DiaryCard diary={item} key={index} />
-              </TouchableOpacity>
-            )}
-          />
-        </View>
+                <View style={{ marginVertical: 10, ...LayoutStyle.center }}>
+                  <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                    {item.title}
+                  </Text>
+                </View>
+                <Divider></Divider>
+                <DiaryHeader tags={item.tag} date={item.begin} />
+                <DiaryContent content={item.content} images={item.images} />
+              </View>
+              {/*<DiaryCard diary={item} key={index} />*/}
+            </TouchableOpacity>
+          </View>
+        )}
+      />
+      <View style={{}}>
+        <View
+          style={{
+            alignItems: "center",
+            alignContent: "center",
+            width: "100%",
+            // justifyContent: "center"
+          }}
+        ></View>
         <TouchableOpacity
           style={{
             position: "absolute",
-            alignItems: "center",
-            justifyContent: "center",
             right: 20,
-            top: 10,
+            bottom: 60,
           }}
         >
           <FAB
             icon={{ name: "add", color: "white" }}
             color={"black"}
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+            }}
             onPress={() => setAddDiary(true)}
             size={"small"}
           />

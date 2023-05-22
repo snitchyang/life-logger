@@ -11,18 +11,31 @@ interface IDiaryHeader {
 
 export const DiaryHeader = ({ tags, date }: IDiaryHeader) => {
   return (
-    <View style={diaryStyleSheet.headerWrapper}>
-      <View style={diaryStyleSheet.tagsWrapper}>
+    <View style={{ flexDirection: "row", marginTop: 10 }}>
+      <View
+        style={{
+          flex: 5,
+          justifyContent: "flex-start",
+          flexDirection: "row",
+        }}
+      >
         {tags ? (
           tags.map((element, index) => (
             <DiaryTags id={index} tag_name={element.content} key={index} />
           ))
         ) : (
-          <></>
+          <View></View>
         )}
       </View>
-      <View style={diaryStyleSheet.dateWrapper}>
-        <Text style={diaryStyleSheet.dateText}>{getTimeDistance(date)}</Text>
+      <View style={{ flex: 1, marginTop: 5 }}>
+        <Text
+          style={{
+            color: "black",
+            fontSize: 10,
+          }}
+        >
+          {getTimeDistance(date)}
+        </Text>
       </View>
     </View>
   );
@@ -74,7 +87,8 @@ const diaryStyleSheet = StyleSheet.create({
     // justifyContent: "flex-end",
     paddingHorizontal: 10,
     paddingVertical: 4,
-    minHeight: 18,
+    borderWidth: 2,
+    // minHeight: 18,
     textAlign: "right",
   },
   dateText: {

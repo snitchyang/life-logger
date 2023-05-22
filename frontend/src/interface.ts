@@ -39,12 +39,12 @@ export interface ITag {
 
 export interface IDiary {
   id: number;
-  date: Date;
+  begin: Date;
+  end: Date;
   title: string;
   content: string;
   images: IImage[];
-  duration: Date;
-  tags: ITag[];
+  tag: ITag[];
 }
 
 export interface IMessage {

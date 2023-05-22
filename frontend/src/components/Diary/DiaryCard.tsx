@@ -11,9 +11,9 @@ interface Props {
 
 export const DiaryCard = ({ diary }: Props) => {
   return (
-    <Card wrapperStyle={{ width: "100%", height: "100%" }}>
+    <Card wrapperStyle={{}}>
       <Card.Title style={{ fontSize: 13 }}> {diary.title}</Card.Title>
-      <DiaryHeader tags={diary.tags} date={diary.date} />
+      <DiaryHeader tags={diary.tag} date={diary.begin} />
       <DiaryContent content={diary.content} images={diary.images} />
     </Card>
   );
