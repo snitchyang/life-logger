@@ -1,6 +1,7 @@
 import {
   FlatList,
   Modal,
+  RefreshControl,
   StyleSheet,
   Text,
   TextInput,
@@ -9,45 +10,41 @@ import {
 import ToDoListCard from "../../components/Plan/ToDoListCard";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Button, FAB } from "@rneui/themed";
+import { Button, Divider, FAB } from "@rneui/themed";
 import { COLOR } from "../../constants";
 import { AntDesign } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { root_path } from "../../service/global";
+import { AddPlan, GetPlans } from "../../service/PlanService";
+import { IPlan } from "../../interface";
+
+// import Modal from "react-native-modal";
 
 function PlanPage() {
   const { t } = useTranslation();
   const [isAddingEvent, setIsAddingEvent] = useState(false);
   const [isDateShown, setIsDateShown] = useState(false);
-  const [eventList, setEventList] = useState([]);
+  const [eventList, setEventList] = useState<IPlan[]>([]);
   const [newEventName, setNewEventName] = useState("");
   const [newEventDate, setNewEventDate] = useState(new Date());
+  const [refreshing, setRefreshing] = useState(false);
+  const [finishedPlan, setFinishedPlan] = useState<IPlan[]>([]);
+  const [unfinishedPlan, setUnFinishedPlan] = useState<IPlan[]>([]);
+  const refreshData = async () => {
+    return await GetPlans().then((res) => {
+      let finished = [];
+      let unfinished = [];
+      res.forEach((value) =>
+        value.finished ? finished.push(value) : unfinished.push(value)
+      );
+      setFinishedPlan(finished);
+      setUnFinishedPlan(unfinished);
+    });
+  };
+
   //fetch IPlan[] from backend
   useEffect(() => {
-    fetch(`${root_path}plans`, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        //convert planList to eventList. eventList is a json data, which is a list of {date: string, eventName: string[]}
-        let newList = [];
-        for (let i = 0; i < response.length; i++) {
-          //if the date of the plan is already in the eventList, add the plan to the eventName of the eventList
-          if (newList.some((event) => event.date === response[i].date)) {
-            newList
-              .find((event) => event.date === response[i].date)
-              .eventName.push(planList[i].name);
-          } else {
-            //if the date of the plan is not in the eventList, add a new event to the eventList
-            newList.push({
-              date: response[i].date,
-              eventName: [response[i].name],
-            });
-          }
-        }
-        setEventList(newList);
-      });
+    refreshData();
   }, []);
 
   // const eventList = [
@@ -75,25 +72,57 @@ function PlanPage() {
     <View style={{ flex: 1 }}>
       <FlatList
         style={{ flex: 1 }}
-        data={eventList}
+        data={unfinishedPlan}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => refreshData()}
+          />
+        }
         renderItem={({ item }) => (
-          <View>
-            <View style={styles.dateContainer}>
-              <Text style={styles.dateText}>{item.date}</Text>
-            </View>
-            <FlatList
-              data={item.eventName}
-              renderItem={({ item }) => <ToDoListCard eventName={item} />}
-            />
-          </View>
+          <ToDoListCard
+            plan={item}
+            setRefresh={setRefreshing}
+            refreshData={refreshData}
+          />
+          // <View>
+          //   <View style={styles.dateContainer}>
+          //     <Text style={styles.dateText}>{item.date}</Text>
+          //   </View>
+          //   <FlatList
+          //     data={item.eventName}
+          //     renderItem={({ item }) => <ToDoListCard eventName={item} />}
+          //   />
+          // </View>
+        )}
+      />
+      <Divider />
+      <FlatList
+        style={{ flex: 1 }}
+        data={finishedPlan}
+        renderItem={({ item }) => (
+          <ToDoListCard
+            plan={item}
+            setRefresh={setRefreshing}
+            refreshData={refreshData}
+          />
+          // <View>
+          //   <View style={styles.dateContainer}>
+          //     <Text style={styles.dateText}>{item.date}</Text>
+          //   </View>
+          //   <FlatList
+          //     data={item.eventName}
+          //     renderItem={({ item }) => <ToDoListCard eventName={item} />}
+          //   />
+          // </View>
         )}
       />
       <FAB style={styles.addButton} color={COLOR.primary} onPress={addEvent}>
         <AntDesign name="plus" size={24} color={COLOR.white} />
       </FAB>
       <Modal
-        isVisible={isAddingEvent}
-        onBackButtonPress={() => setIsAddingEvent(false)}
+        visible={isAddingEvent}
+        // onBackButtonPress={() => setIsAddingEvent(false)}
       >
         <View style={styles.containerStyle}>
           <TextInput
@@ -105,40 +134,20 @@ function PlanPage() {
             {t("Select a date")}
           </Button>
           {isDateShown && (
-            <DateTimePicker
-              value={new Date()}
-              modal={true}
-              onChange={dateChange}
-            />
+            <DateTimePicker value={new Date()} onChange={dateChange} />
           )}
           <Button
             style={{ margin: "5%" }}
-            onPress={() => {
+            onPress={async () => {
               setIsAddingEvent(false);
-              //add the event to the eventList
-              setEventList([
-                ...eventList,
-                {
-                  date: newEventDate.toDateString(),
-                  eventName: [newEventName],
-                },
-              ]);
               //add the event to the backend
-              fetch("http://10.0.2.2:8000/api/plans", {
-                method: "POST",
-                body: JSON.stringify({
-                  name: newEventName,
-                  date: newEventDate.toDateString(),
-                  finished: false,
-                }),
-              })
-                .then((res) => res.json())
-                .then((response) => {
-                  console.log(response.data);
-                });
+              await AddPlan({ content: newEventName, due: newEventDate });
             }}
           >
-            {t("Add")}
+            <Text>{t("Add")}</Text>
+          </Button>
+          <Button onPress={() => setIsAddingEvent(false)}>
+            <Text>{"back"}</Text>
           </Button>
         </View>
       </Modal>

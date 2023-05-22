@@ -13,8 +13,8 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Diary)
 class DiaryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'content', 'date')
-    list_filter = ('tag', 'date',)
+    list_display = ('title', 'content', 'begin', 'end')
+    list_filter = ('tag', 'begin', 'end')
     search_fields = ('title', 'user')
 
 

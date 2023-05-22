@@ -40,19 +40,19 @@ class Tag(models.Model):
 
 
 class Diary(models.Model):
-    date = models.DateTimeField(auto_now_add=True, verbose_name='开始时间')
+    begin = models.DateTimeField(verbose_name='开始时间', null=True)
+    end = models.DateTimeField(verbose_name='结束时间', null=True)
     title = models.CharField(max_length=255, verbose_name='标题')
     content = models.TextField(verbose_name='内容')
     tag = models.ManyToManyField(Tag, related_name='diaries', blank=True, verbose_name='标签')
     user = models.ForeignKey(User, related_name='diaries', on_delete=models.CASCADE, verbose_name='用户')
-    duration = models.TimeField(verbose_name='持续时间')
 
     def __str__(self):
         return self.title
 
     class Meta:
         verbose_name_plural = '日记'
-        ordering = ['-date']
+        ordering = ['end']
 
 
 class Post(models.Model):

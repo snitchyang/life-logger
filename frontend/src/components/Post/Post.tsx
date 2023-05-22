@@ -19,7 +19,7 @@ export const Post = ({ post }: Props): JSX.Element => {
   });
   const [addComment, setAddComment] = useState(false);
   return (
-    <View style={{}}>
+    <View>
       <View
         style={{
           backgroundColor: "rgba(255,255,255,0.91)",

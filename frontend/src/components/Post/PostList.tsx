@@ -22,13 +22,14 @@ export const PostList = () => {
     await GetPostList(page).then((res) => {
       setPosts(res.data);
       setMaxPage(res.max);
+      setRefreshing(false);
     });
   }
 
   useEffect(() => {
     getNewPostList(page);
   }, []);
-  const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState(true);
   const [addPost, setAddPost] = useState(false);
 
   if (posts.length === 0) return <ActivityIndicator />;

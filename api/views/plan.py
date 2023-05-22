@@ -12,7 +12,7 @@ class PlanList(APIView):
 
     def get(self, request: Request):
         user = request.user
-        response = PlanSerializer(Plan.objects.filter(user=user).order_by('-due'), many=True).data
+        response = PlanSerializer(Plan.objects.filter(user=user).order_by('due'), many=True).data
         return Response(response, status=200)
 
 
@@ -33,9 +33,15 @@ class PlanAdd(APIView):
         due = data.get('due')
         content = data.get('content')
         finished = data.get('finished')
-        plan: Plan = Plan.objects.get(id=id)
-        plan.due = due
-        plan.content = content
-        plan.finished = finished
+        plans = Plan.objects.filter(id=id)
+        if len(plans) == 0:
+            return Response({'message': 'not found', 'success': False}, status=200)
+        plan = plans.first()
+        if due is not None:
+            plan.due = due
+        if content is not None:
+            plan.content = content
+        if finished is not None:
+            plan.finished = finished
         plan.save()
-        return Response({'message': 'success'}, status=200)
+        return Response({'message': 'success', 'success': True}, status=200)
