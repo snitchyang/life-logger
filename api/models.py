@@ -47,6 +47,9 @@ class Diary(models.Model):
     tag = models.ManyToManyField(Tag, related_name='diaries', blank=True, verbose_name='标签')
     user = models.ForeignKey(User, related_name='diaries', on_delete=models.CASCADE, verbose_name='用户')
 
+    def duration(self):
+        return self.end.date() - self.begin.date()
+
     def __str__(self):
         return self.title
 

@@ -26,7 +26,7 @@ class Statistic(APIView):
             ago_date = now_date - datetime.timedelta(days=365)
         else:
             ago_date = datetime.datetime.min
-        diaries = Diary.objects.filter(user=user, date__lte=now_date, date__gte=ago_date)
+        diaries = Diary.objects.filter(user=user, end__lte=now_date, end__gte=ago_date)
         tags = {}
         for diary in diaries:
             for tag in diary.tag.all():

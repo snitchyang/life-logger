@@ -19,8 +19,11 @@ class DiaryList(APIView):
 
     def get(self, request: Request):
         user = request.user
-        diaries = DiarySerializer(Diary.objects.filter(user=user).order_by('-end'), many=True,
-                                  context={'request': request}).data
+
+        diaries = DiarySerializer(
+            Diary.objects.filter(user=user).select_related('user').prefetch_related('tag').prefetch_related(
+                'images').order_by('-end'), many=True,
+            context={'request': request}).data
         return Response(diaries, status=200)
 
 
