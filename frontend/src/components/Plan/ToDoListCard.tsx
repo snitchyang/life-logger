@@ -46,9 +46,8 @@ const ToDoListCard = ({ plan, setRefresh, refreshData }: Props) => {
         checkedColor={COLOR.gray}
         onPress={async () => {
           setFinished(!finished);
-          await PutPlan({ id: plan.id, finished: !plan.finished }).then(() =>
-            refreshData()
-          );
+          await PutPlan({ id: plan.id, finished: !plan.finished });
+          await refreshData();
         }}
       />
     </View>

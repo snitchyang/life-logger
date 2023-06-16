@@ -43,3 +43,6 @@ export const login_user = async (
     .then((response) => response.json())
     .catch((err) => console.error(err));
 };
+export const logout_user = async () => {
+  return await fetch(`${root_path}logout`);
+};

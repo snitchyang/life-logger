@@ -1,8 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import WebView from "react-native-webview";
-import { root_path, test_token } from "../../service/global";
+import { root_path } from "../../service/global";
 import { Tab } from "@rneui/themed";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Loading } from "../../components/Loading/Loading";
 
 function DataPage() {
   const [duration, setDuration] = useState("week");
@@ -10,6 +12,16 @@ function DataPage() {
   const [refreshing, setRefreshing] = useState(true);
   const webViewRef = useRef<WebView>();
   const [isMap, setIsMap] = useState(true);
+  const [token, setToken] = useState("");
+  const getToken = async () => {
+    return await AsyncStorage.getItem("token");
+  };
+  useEffect(() => {
+    getToken().then((res) => setToken(res));
+  });
+  if (token.length === 0) {
+    return <Loading />;
+  }
   return (
     <View style={{ flex: 1 }}>
       {/*<TouchableOpacity style={{ position: "absolute", top: 20, left: 20 }}>*/}
@@ -71,7 +83,7 @@ function DataPage() {
             ? `${root_path}map`
             : `${root_path}statistic?duration=${duration}`,
           headers: {
-            Authorization: "Bearer" + " " + `${test_token}`,
+            Authorization: "Bearer" + " " + `${token}`,
           },
         }}
         ref={webViewRef}

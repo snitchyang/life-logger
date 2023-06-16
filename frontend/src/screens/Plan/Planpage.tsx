@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { AddPlan, GetPlans } from "../../service/PlanService";
 import { IPlan } from "../../interface";
+import { Loading } from "../../components/Loading/Loading";
 
 // import Modal from "react-native-modal";
 
@@ -24,27 +25,19 @@ function PlanPage() {
   const { t } = useTranslation();
   const [isAddingEvent, setIsAddingEvent] = useState(false);
   const [isDateShown, setIsDateShown] = useState(false);
-  const [eventList, setEventList] = useState<IPlan[]>([]);
   const [newEventName, setNewEventName] = useState("");
   const [newEventDate, setNewEventDate] = useState(new Date());
   const [refreshing, setRefreshing] = useState(false);
-  const [finishedPlan, setFinishedPlan] = useState<IPlan[]>([]);
-  const [unfinishedPlan, setUnFinishedPlan] = useState<IPlan[]>([]);
+  const [plans, setPlans] = useState<IPlan[]>([]);
+  const [loading, setLoading] = useState(true);
   const refreshData = async () => {
-    return await GetPlans().then((res) => {
-      let finished = [];
-      let unfinished = [];
-      res.forEach((value) =>
-        value.finished ? finished.push(value) : unfinished.push(value)
-      );
-      setFinishedPlan(finished);
-      setUnFinishedPlan(unfinished);
-    });
+    setPlans(await GetPlans());
   };
 
   //fetch IPlan[] from backend
   useEffect(() => {
     refreshData();
+    setLoading(false);
   }, []);
 
   // const eventList = [
@@ -68,16 +61,14 @@ function PlanPage() {
     setNewEventDate(currentDate);
     setIsDateShown(false);
   };
+  if (loading) return <Loading />;
   return (
     <View style={{ flex: 1 }}>
       <FlatList
         style={{ flex: 1 }}
-        data={unfinishedPlan}
+        data={plans}
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={() => refreshData()}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={refreshData} />
         }
         renderItem={({ item }) => (
           <ToDoListCard
@@ -97,26 +88,6 @@ function PlanPage() {
         )}
       />
       <Divider />
-      <FlatList
-        style={{ flex: 1 }}
-        data={finishedPlan}
-        renderItem={({ item }) => (
-          <ToDoListCard
-            plan={item}
-            setRefresh={setRefreshing}
-            refreshData={refreshData}
-          />
-          // <View>
-          //   <View style={styles.dateContainer}>
-          //     <Text style={styles.dateText}>{item.date}</Text>
-          //   </View>
-          //   <FlatList
-          //     data={item.eventName}
-          //     renderItem={({ item }) => <ToDoListCard eventName={item} />}
-          //   />
-          // </View>
-        )}
-      />
       <FAB style={styles.addButton} color={COLOR.primary} onPress={addEvent}>
         <AntDesign name="plus" size={24} color={COLOR.white} />
       </FAB>
@@ -166,8 +137,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   addButton: {
-    left: 125,
-    top: -40,
+    position: "absolute",
+    right: 10,
+    top: 30,
     height: 1,
     backgroundColor: COLOR.white,
   },

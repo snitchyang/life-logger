@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Alert, Image, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { Button, Input } from "@rneui/themed";
 import { COLOR } from "../../constants";
 import { FontAwesome } from "@expo/vector-icons";
@@ -7,13 +7,27 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { login_user } from "../../service/UserService";
 
 const RegisterForm = ({ navigation }) => {
+  const [finish, setFinish] = useState(false);
+  const getToken = async () => {
+    return await AsyncStorage.getItem("token");
+  };
+  useEffect(() => {
+    const autologin = async () => {
+      if (getToken()) {
+        setFinish(true);
+        navigation.navigate("Home");
+      }
+      setFinish(true);
+    };
+    autologin();
+  }, []);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const handleLogin = () => {
-    // navigation.navigate("Home");
+  const handleLogin = async () => {
     login_user(username, password).then(async (res) => {
       if (res.access) {
-        console.log(res.access);
+        // console.log(res.access);
         await AsyncStorage.multiSet([
           ["token", res.access],
           ["refresh", res.refresh],
@@ -21,7 +35,7 @@ const RegisterForm = ({ navigation }) => {
         // navigation.navigate("Home");
       } else {
         // 处理未成功获取到token的情况
-        Alert.alert(res.error);
+        setPassword("");
       }
     });
   };
@@ -29,6 +43,16 @@ const RegisterForm = ({ navigation }) => {
     navigation.navigate("Register");
   };
   const findAccount = () => {};
+  if (!finish)
+    return (
+      <Image
+        source={require("../../assets/Logo/Logo.png")}
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+      />
+    );
   return (
     <View>
       <View style={styles.loginSection}>

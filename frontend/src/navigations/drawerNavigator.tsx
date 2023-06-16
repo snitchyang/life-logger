@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+} from "@react-navigation/drawer";
 import BottomTabNavigator from "./bottomNavigator";
 import "../I18n";
 import { useTranslation } from "react-i18next";
 import { COLOR } from "../constants";
-import customDrawer from "./customDrawer";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import SettingsPage from "../screens/Settings/SettingsPage";
 import { UserInfo } from "../screens/Profiles/UserInfoRoute";
 import { FriendsRoute } from "../components/SideBar/Friends/FriendsRoute";
@@ -16,7 +19,7 @@ import { get_user_self } from "../service/UserService";
 const drawerNavigator = createDrawerNavigator();
 export default function DrawerNavigator() {
   const { t } = useTranslation();
-  const [user, setUser] = useState<IUser>(undefined);
+  const [user, setUser] = useState<IUser>();
   useEffect(() => {
     get_user_self()
       .then((res) => {
@@ -40,7 +43,43 @@ export default function DrawerNavigator() {
           marginLeft: -5,
         },
       }}
-      drawerContent={customDrawer}
+      drawerContent={(props) => {
+        return (
+          <DrawerContentScrollView {...props}>
+            <View
+              style={{
+                height: 250,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Image
+                source={{ uri: user.avatar }}
+                style={{
+                  width: 130,
+                  height: 130,
+                  borderRadius: 130 / 2,
+                  borderColor: COLOR.black,
+                  borderWidth: 1,
+                  top: -30,
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 25,
+                  fontWeight: "bold",
+                  top: -10,
+                }}
+              >
+                {user.username}
+              </Text>
+            </View>
+            <View>
+              <DrawerItemList {...props} />
+            </View>
+          </DrawerContentScrollView>
+        );
+      }}
     >
       <drawerNavigator.Screen
         name={t("home")}

@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import {
-  ActivityIndicator,
   FlatList,
   RefreshControl,
   Text,
@@ -12,13 +11,12 @@ import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { IDiary, ITag } from "../../interface";
 import { get_diary, get_tags } from "../../service/DiaryService";
-import { InputFormStyle, LayoutStyle } from "../../css/GlobalStyleSheet";
+import { LayoutStyle } from "../../css/GlobalStyleSheet";
 import { Divider, FAB } from "@rneui/themed";
 import { AddDiaryModal } from "../../components/Diary/addModal/AddDiaryModal";
-import { UserHeader } from "../../components/Post/UserHeader";
 import { DiaryHeader } from "../../components/Diary/DiaryHeader";
 import { DiaryContent } from "../../components/Diary/DiaryContent";
-import { GetPostList } from "../../service/PostService";
+import { Loading } from "../../components/Loading/Loading";
 
 function Diary({ navigation }) {
   const { t, i18n } = useTranslation();
@@ -27,6 +25,7 @@ function Diary({ navigation }) {
   const [allData, setAllData] = useState<IDiary[]>([]);
   const [addDiary, setAddDiary] = useState(false);
   const [refreshing, setRefreshing] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     get_diary().then((res) => {
@@ -34,6 +33,7 @@ function Diary({ navigation }) {
       setFilterData(res);
     });
     setRefreshing(false);
+    setLoading(false);
   }, []);
   useEffect(() => {
     get_tags().then((res) => {
@@ -87,19 +87,7 @@ function Diary({ navigation }) {
     }
   }
 
-  if (!allTags || !allData)
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          flexDirection: "row",
-          padding: 10,
-        }}
-      >
-        <ActivityIndicator />
-      </View>
-    );
+  if (loading) return <Loading />;
 
   return (
     <View style={{}}>

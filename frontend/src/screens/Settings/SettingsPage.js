@@ -10,8 +10,9 @@ import {
 import { COLOR } from "../../constants";
 import { Divider } from "@rneui/themed";
 import { AntDesign } from "@expo/vector-icons";
+import { logout_user } from "../../service/UserService";
 
-const SettingsPage = () => {
+const SettingsPage = ({ navigation }) => {
   const { t } = useTranslation();
   const settingsList = [
     t("phone number"),
@@ -45,7 +46,13 @@ const SettingsPage = () => {
         />
       </View>
       <View style={{ height: 300 }}>
-        <TouchableOpacity style={styles.logOutButtonStyle}>
+        <TouchableOpacity
+          style={styles.logOutButtonStyle}
+          onPress={async () => {
+            await logout_user();
+            navigation.navigate("Login");
+          }}
+        >
           <Text style={styles.logOutTextStyle}>{t("log out")}</Text>
         </TouchableOpacity>
       </View>

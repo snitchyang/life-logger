@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { IPost } from "../../interface";
 import { Post } from "./Post";
-import {
-  ActivityIndicator,
-  FlatList,
-  RefreshControl,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, RefreshControl, View } from "react-native";
 import { GetPostList } from "../../service/PostService";
 import { FAB } from "@rneui/themed";
 import { PostAddPage } from "../../screens/Discovery/PostAddPage";
+import { COLOR } from "../../constants";
+import { AntDesign } from "@expo/vector-icons";
+import { Loading } from "../Loading/Loading";
 
 export const PostList = () => {
   const [maxPage, setMaxPage] = useState(1);
@@ -32,7 +29,7 @@ export const PostList = () => {
   const [refreshing, setRefreshing] = useState(true);
   const [addPost, setAddPost] = useState(false);
 
-  if (posts.length === 0) return <ActivityIndicator />;
+  if (posts.length === 0) return <Loading />;
   return (
     <View>
       <FlatList
@@ -71,22 +68,20 @@ export const PostList = () => {
         style={{ width: "100%" }}
         keyExtractor={(item) => item.id.toString()}
       />
-      <TouchableOpacity
+
+      <FAB
         style={{
           position: "absolute",
-          alignItems: "center",
-          justifyContent: "center",
-          right: 20,
-          top: 10,
+          right: 10,
+          top: 30,
+          height: 1,
+          backgroundColor: "white",
         }}
+        color={"black"}
+        onPress={() => setAddPost(true)}
       >
-        <FAB
-          icon={{ name: "add", color: "white" }}
-          color={"black"}
-          onPress={() => setAddPost(true)}
-          size={"small"}
-        />
-      </TouchableOpacity>
+        <AntDesign name="plus" size={24} color={COLOR.white} />
+      </FAB>
       <PostAddPage
         visible={addPost}
         setVisible={setAddPost}

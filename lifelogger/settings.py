@@ -78,21 +78,17 @@ TEMPLATES = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    'JWT_AUTH': {
-        'JWT_ALLOW_REFRESH': True,  # 允许刷新 token
-        'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),  # token 有效期为 7 天
-        'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=30),  # 刷新 token 的有效期为 30 天
-        'JWT_SECRET_KEY': 'your-secret-key',  # 密钥
-        'JWT_VERIFY': True,
-        'JWT_VERIFY_EXPIRATION': True,
-        'JWT_AUTH_HEADER_PREFIX': 'Bearer',
-    }
 }
-
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=10),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=15),
+    'ROTATE_REFRESH_TOKENS': True,
+    'UPDATE_LAST_LOGIN': False,
+}
 WSGI_APPLICATION = 'lifelogger.wsgi.application'
 
 # Database
@@ -102,7 +98,15 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
+    #     'NAME': 'lifelogger',  # 数据库名，先前创建的
+    #     'USER': 'ubuntu',  # 用户名，可以自己创建用户
+    #     'PASSWORD': 'YJSyjs135790',  # 密码
+    #     'HOST': 'localhost',  # mysql服务所在的主机ip
+    #     'PORT': '3306',  # mysql服务端口
+    # }
 }
 
 # Password validation
@@ -161,11 +165,18 @@ CORS_ALLOW_CREDENTIALS = True
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
+        "LOCATION": "redis://127.0.0.1:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
-    }
+    },
+    # "session": {
+    #     "BACKEND": "django_redis.cache.RedisCache",
+    #     "LOCATION": "redis://127.0.0.1:6379/2",
+    #     "OPTIONS": {
+    #         "CLIENT_CLASS": "django_redis.client.DefaultClient",
+    #     }
+    # }
 }
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
@@ -174,3 +185,5 @@ INTERNAL_IPS = ['0.0.0.0', '10.181.122.135', '127.0.0.1', '58.247.22.167']
 REDIS_TIMEOUT = 24 * 60 * 60
 CUBES_REDIS_TIMEOUT = 60 * 30
 NEVER_REDIS_TIMEOUT = 365 * 24 * 60 * 60
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# SESSION_CACHE_ALIAS = "session"
