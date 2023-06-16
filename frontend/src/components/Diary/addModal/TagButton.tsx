@@ -1,5 +1,5 @@
 import { ITag } from "../../../interface";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { ButtonStyle } from "../../../css/GlobalStyleSheet";
@@ -12,6 +12,11 @@ interface Props {
 
 export const TagButton = ({ tag, tagSet, setTagSet }: Props) => {
   const [chosen, setChose] = useState(false);
+  useEffect(() => {
+    if (tagSet.has(tag)) {
+      setChose(true);
+    }
+  }, [tag]);
 
   return (
     <TouchableOpacity

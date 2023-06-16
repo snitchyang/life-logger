@@ -31,7 +31,7 @@ export const post_request_header = async (body: string | FormData) => {
     body: body,
     headers: {
       "Content-Type": content_type,
-      Authorization: "Bearer " + test_token,
+      Authorization: "Bearer " + token,
     },
   };
   return request;
@@ -50,7 +50,7 @@ export const put_request_header = async (body: string | FormData) => {
     body: body,
     headers: {
       "Content-Type": content_type,
-      Authorization: "Bearer " + test_token,
+      Authorization: "Bearer " + token,
     },
     credentials: "include",
   };
@@ -76,7 +76,7 @@ export const get_request_header = async () => {
   let request: RequestInit = {
     method: "GET",
     headers: {
-      Authorization: "Bearer " + test_token,
+      Authorization: "Bearer " + token,
     },
   };
   return request;

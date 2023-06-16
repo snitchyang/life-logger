@@ -10,6 +10,7 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { ShareModal } from "../../components/Diary/addModal/ShareModal";
 import { Divider } from "@rneui/themed";
 import { AddDiaryModal } from "../../components/Diary/addModal/AddDiaryModal";
+import { ChangeDiaryModal } from "../../components/Diary/addModal/ChangeDiaryModal";
 
 interface Props {
   diary: IDiary;
@@ -26,7 +27,7 @@ export const DetailedPage = ({ route, navigation }) => {
         setVisible={setShareVisible}
         diary={diary}
       />
-      {/*<AddDiaryModal*/}
+      {/*<ChangeDiaryModal*/}
       {/*  visible={addVisible}*/}
       {/*  setVisible={setAddVisible}*/}
       {/*  diary_proto={diary}*/}
@@ -52,19 +53,19 @@ export const DetailedPage = ({ route, navigation }) => {
           <Ionicons name="chevron-back-outline" size={25}></Ionicons>
           <Text>{"返回"}</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            height: "100%",
-            position: "absolute",
-            right: 60,
-            ...LayoutStyle.rowCenter,
-          }}
-          onPress={() => {
-            setAddVisible(true);
-          }}
-        >
-          <MaterialIcons name={"edit"} size={25} />
-        </TouchableOpacity>
+        {/*<TouchableOpacity*/}
+        {/*  style={{*/}
+        {/*    height: "100%",*/}
+        {/*    position: "absolute",*/}
+        {/*    right: 60,*/}
+        {/*    ...LayoutStyle.rowCenter,*/}
+        {/*  }}*/}
+        {/*  onPress={() => {*/}
+        {/*    setAddVisible(true);*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  <MaterialIcons name={"edit"} size={25} />*/}
+        {/*</TouchableOpacity>*/}
         <TouchableOpacity
           style={{
             height: "100%",

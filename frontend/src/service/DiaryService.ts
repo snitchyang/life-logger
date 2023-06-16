@@ -20,6 +20,19 @@ export const get_tags = async (): Promise<ITag[]> => {
     .catch((err) => console.error(err));
 };
 
+export const change_diary = async (
+  diary: IDiary
+): Promise<{ message: string }> => {
+  const url = `${root_path}diary/add`;
+  let body = JSON.stringify({
+    imgs: diary.images.map((img) => img.path),
+    ...diary,
+  });
+  return await fetch(url, await put_request_header(body))
+    .then((response) => response.json())
+    .catch((err) => console.error(err));
+};
+
 export const add_diary = async (
   diary: IDiary
 ): Promise<{ message: string }> => {
