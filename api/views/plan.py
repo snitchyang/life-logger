@@ -12,7 +12,7 @@ class PlanList(APIView):
 
     def get(self, request: Request):
         user = request.user
-        response = PlanSerializer(Plan.objects.filter(user=user).order_by('due'), many=True).data
+        response = PlanSerializer(Plan.objects.filter(user=user).select_related('user').order_by('due'), many=True).data
         return Response(response, status=200)
 
 

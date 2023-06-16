@@ -25,8 +25,9 @@ class PostList(APIView):
         user = request.user
         friends = [friendship.friend for friendship in Friendship.objects.filter(user=user).all()]
         friends += [user]
-        queryset = Post.objects.filter(user__in=friends)
-        queryset_len = len(queryset)
+        queryset = Post.objects.filter(user__in=friends).select_related('user').prefetch_related(
+            'comments').prefetch_related('liker').prefetch_related('images')
+        queryset_len = queryset.count()
         page_size = math.ceil(queryset_len / 6)
         paginator = Paginator(queryset, 6)
         page = paginator.page(request.query_params['page'])

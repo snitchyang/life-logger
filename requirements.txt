@@ -18,4 +18,6 @@ setuptools==67.7.2
 sqlparse==0.4.4
 tomli==2.0.1
 tzdata==2023.3
-wheel==0.40.0
+wheel==0.40
+locust~=2.15.1
+django-debug-toolbar~=4.1.0
