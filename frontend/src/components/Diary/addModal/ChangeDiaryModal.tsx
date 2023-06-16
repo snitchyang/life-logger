@@ -21,6 +21,7 @@ import { use } from "i18next";
 import {
   add_diary,
   add_diary_image,
+  change_diary,
   get_tags,
 } from "../../../service/DiaryService";
 import { emtpy_diary } from "../../../constants/info";
@@ -28,16 +29,23 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { ButtonStyle, LayoutStyle } from "../../../css/GlobalStyleSheet";
 import { TagButton } from "./TagButton";
+import dayjs from "dayjs";
+import { parseDateFormat } from "../../../service/Utils";
 
 interface Props {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
+  diary_proto: IDiary;
 }
 
 const amap_host = "https://restapi.amap.com/v3";
 const amap_key = "3925351c690b4a56bbbfc5adac5f39e0";
 const width = Dimensions.get("window").width;
-export const AddDiaryModal = ({ visible, setVisible }: Props) => {
+export const ChangeDiaryModal = ({
+  visible,
+  setVisible,
+  diary_proto,
+}: Props) => {
   const [cameraPermission, setCameraPermission] = useState<boolean>(false);
   const [galleryPermission, setGalleryPermission] = useState<boolean>(false);
   const [doneDisable, setDoneDisable] = useState(true);
@@ -47,6 +55,21 @@ export const AddDiaryModal = ({ visible, setVisible }: Props) => {
   const [allTags, setAllTags] = useState<ITag[]>([]);
   const [diary, setDiary] = useState<IDiary>(emtpy_diary);
   const [tagSet, setTagSet] = useState<Set<ITag>>(new Set<ITag>());
+
+  useEffect(() => {
+    if (diary_proto !== undefined) {
+      setDiary({
+        ...diary_proto,
+        // begin: parseDateFormat(Date.parse(diary_proto.begin)),
+        // end: parseDateFormat(diary_proto.end),
+      });
+      diary.tag.forEach((tag) => tagSet.add(tag));
+      console.log(diary);
+      console.log(typeof diary_proto.begin);
+    } else {
+      console.log("no prototype");
+    }
+  }, [diary_proto]);
 
   useEffect(() => {
     if (Platform.OS === "android" && !galleryPermission) {
@@ -127,7 +150,7 @@ export const AddDiaryModal = ({ visible, setVisible }: Props) => {
         activeOpacity={3}
         style={{ position: "absolute", top: 60, left: 20, padding: 3 }}
         onPress={() => {
-          if (diary.content.length === 0 && diary.images.length === 0) {
+          if (diary === diary_proto) {
             setVisible(false);
           } else setCancelDialog(true);
         }}
@@ -144,7 +167,7 @@ export const AddDiaryModal = ({ visible, setVisible }: Props) => {
             let tags: ITag[] = [];
             tagSet.forEach((tag) => tags.push(tag));
             setDiary({ ...diary, tag: tags });
-            await add_diary(diary).then((res) => {
+            await change_diary(diary).then((res) => {
               console.log(res);
             });
           }}
@@ -157,7 +180,7 @@ export const AddDiaryModal = ({ visible, setVisible }: Props) => {
             }}
           >
             <Text style={{ color: "white", textAlign: "center" }}>
-              {"记录"}
+              {"确认"}
             </Text>
           </View>
         </Button>
@@ -357,7 +380,7 @@ export const AddDiaryModal = ({ visible, setVisible }: Props) => {
           style={{ alignItems: "center", alignContent: "center" }}
         >
           <View style={{ alignItems: "center" }}>
-            <Text style={{ fontSize: 16 }}>{"是否保存草稿"}</Text>
+            <Text style={{ fontSize: 16 }}>{"放弃修改"}</Text>
           </View>
 
           <View
@@ -373,7 +396,7 @@ export const AddDiaryModal = ({ visible, setVisible }: Props) => {
               onPress={() => {
                 setVisible(false);
                 setCancelDialog(false);
-                setDiary(emtpy_diary);
+                setDiary(diary_proto);
               }}
             ></Button>
             <Button
