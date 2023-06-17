@@ -8,6 +8,7 @@ import { AddDiaryModal } from "../../components/Diary/addModal/AddDiaryModal";
 
 function ActionPage() {
   const [date, setDate] = useState(dayjs(0).hour(0));
+  const [number, setNumber] = useState(0);
   const [stop, setStop] = useState<boolean>(true);
   const [startTime, setStartTime] = useState<dayjs.Dayjs>(dayjs());
   const [timer, setTimer] = useState<NodeJS.Timer>();
@@ -56,7 +57,7 @@ function ActionPage() {
               setStartTime(t);
               setTimer(
                 setInterval(() => {
-                  setDate(dayjs(dayjs().diff(t)));
+                  setDate(dayjs(dayjs().diff(t)).hour(0));
                 }, 1000)
               );
             } else {
