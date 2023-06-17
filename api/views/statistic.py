@@ -30,10 +30,11 @@ class Statistic(APIView):
         tags = {}
         for diary in diaries:
             for tag in diary.tag.all():
+                duration = diary.end - diary.begin
                 if tag.content not in tags:
-                    tags[tag.content] = round(diary.duration.hour + diary.duration.minute / 60, 2)
+                    tags[tag.content] = round(duration.seconds / 3600, 2)
                 else:
-                    tags[tag.content] += round(diary.duration.hour + diary.duration.minute / 60, 2)
+                    tags[tag.content] += round(duration.seconds / 3600, 2)
         label = []
         data = []
         for item in sorted(tags.items(), key=lambda kv: kv[1], reverse=True):

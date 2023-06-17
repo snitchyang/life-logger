@@ -22,51 +22,68 @@
     </style>
 </head>
 <body style="background: rgba(255,255,255,0.62) ">
-<div style="margin: 1%">
+<div style="margin: 1%;align-content: center">
+    <div class="threesolid" id="none-chart" align="center"></div>
     <canvas id="chart-tag"></canvas>
 </div>
-<script>
+<style>
+    .threesolid {
+        font-size: 24px;
+        color: #fefefe;
+        text-shadow: 0px 1px 0px #c0c0c0,
+        0px 2px 0px #b0b0b0,
+        0px 3px 0px #a0a0a0,
+        0px 4px 0px #909090,
+        0px 5px 10px rgba(0, 0, 0, .9);
 
-    new Chart(document.getElementById('chart-tag'), {
-        type: 'pie',
-        data: {
-            labels: {{ label|safe }},
-            datasets: [{
-                label: '时长 / h',
-                backgroundColor: [
-                    'rgb(255, 99, 132, 0.4)',
-                    'rgb(54, 162, 235, 0.4)',
-                    'rgb(255, 205, 86, 0.4)',
-                    'rgb(200,86,86, 0.4)',
-                    'rgb(241,111,61, 0.4)',
-                    'rgb(25,246,6, 0.4)',
-                    'rgb(143,99,225, 0.4)',
-                    'rgb(86,255,204, 0.4)',
-                    'rgb(52,0,255, 0.4)',
-                    'rgb(194,185,167, 0.4)',
-                    'rgb(199,7,239, 0.4)',
-                    'rgb(96,197,69, 0.4)',
-                ],
-                borderColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)',
-                    'rgb(200,86,86)',
-                    'rgb(241,111,61)',
-                    'rgb(25,246,6)',
-                    'rgb(143,99,225)',
-                    'rgb(86,255,204)',
-                    'rgb(52,0,255)',
-                    'rgb(194,185,167)',
-                    'rgb(199,7,239)',
-                    'rgb(96,197,69)',
-                ],
-                data: {{ data }},
-                borderWidth: 1,
-            }]
-        },
-        options: {}
-    });
+    }
+</style>
+<script>
+	{% if label|length > 0 %}
+		new Chart(document.getElementById('chart-tag'), {
+			type: 'pie',
+			data: {
+				labels: {{ label|safe }},
+				datasets: [{
+					label: '时长 / h',
+					backgroundColor: [
+						'rgb(255, 99, 132, 0.4)',
+						'rgb(54, 162, 235, 0.4)',
+						'rgb(255, 205, 86, 0.4)',
+						'rgb(200,86,86, 0.4)',
+						'rgb(241,111,61, 0.4)',
+						'rgb(25,246,6, 0.4)',
+						'rgb(143,99,225, 0.4)',
+						'rgb(86,255,204, 0.4)',
+						'rgb(52,0,255, 0.4)',
+						'rgb(194,185,167, 0.4)',
+						'rgb(199,7,239, 0.4)',
+						'rgb(96,197,69, 0.4)',
+					],
+					borderColor: [
+						'rgb(255, 99, 132)',
+						'rgb(54, 162, 235)',
+						'rgb(255, 205, 86)',
+						'rgb(200,86,86)',
+						'rgb(241,111,61)',
+						'rgb(25,246,6)',
+						'rgb(143,99,225)',
+						'rgb(86,255,204)',
+						'rgb(52,0,255)',
+						'rgb(194,185,167)',
+						'rgb(199,7,239)',
+						'rgb(96,197,69)',
+					],
+					data: {{ data }},
+					borderWidth: 1,
+				}]
+			},
+			options: {}
+		});
+	{% else %}
+		document.getElementById('none-chart').innerText = "没有活动哦"
+	{% endif %}
+
 </script>
 
 </body>

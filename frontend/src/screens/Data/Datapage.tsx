@@ -1,17 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import WebView from "react-native-webview";
 import { root_path } from "../../service/global";
-import { Tab } from "@rneui/themed";
+import { FAB, Tab } from "@rneui/themed";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Loading } from "../../components/Loading/Loading";
+import { MaterialIcons } from "@expo/vector-icons";
 
 function DataPage() {
   const [duration, setDuration] = useState("week");
   const [index, setIndex] = useState(1);
   const [refreshing, setRefreshing] = useState(true);
   const webViewRef = useRef<WebView>();
-  const [isMap, setIsMap] = useState(true);
+  const [isMap, setIsMap] = useState(false);
   const [token, setToken] = useState("");
   const getToken = async () => {
     return await AsyncStorage.getItem("token");
@@ -29,7 +30,6 @@ function DataPage() {
       {/*<Text>{"map"}</Text>*/}
       {/*  </Button>*/}
       {/*</TouchableOpacity>*/}
-
       <Tab value={index}>
         <Tab.Item
           onPressOut={() => {
@@ -76,8 +76,8 @@ function DataPage() {
         originWhitelist={["*"]}
         geolocationEnabled={true}
         javaScriptEnabled={true}
-        cacheEnabled={true}
         domStorageEnabled={true}
+        style={{ marginHorizontal: 20, marginVertical: 10 }}
         source={{
           uri: isMap
             ? `${root_path}map`
@@ -88,6 +88,31 @@ function DataPage() {
         }}
         ref={webViewRef}
       ></WebView>
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          right: 10,
+          top: 80,
+        }}
+      >
+        <FAB
+          style={{
+            height: 1,
+            backgroundColor: "white",
+          }}
+          color={"black"}
+          onPress={() => {
+            setIsMap(!isMap);
+            webViewRef.current.reload();
+          }}
+        >
+          <MaterialIcons
+            name={isMap ? "switch-left" : "switch-right"}
+            size={24}
+            color="white"
+          />
+        </FAB>
+      </TouchableOpacity>
     </View>
   );
 }

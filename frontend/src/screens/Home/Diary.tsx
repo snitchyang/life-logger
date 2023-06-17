@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { IDiary, ITag } from "../../interface";
 import { get_diary, get_tags } from "../../service/DiaryService";
 import { LayoutStyle } from "../../css/GlobalStyleSheet";
@@ -17,6 +17,7 @@ import { AddDiaryModal } from "../../components/Diary/addModal/AddDiaryModal";
 import { DiaryHeader } from "../../components/Diary/DiaryHeader";
 import { DiaryContent } from "../../components/Diary/DiaryContent";
 import { Loading } from "../../components/Loading/Loading";
+import { COLOR } from "../../constants";
 
 function Diary({ navigation }) {
   const { t, i18n } = useTranslation();
@@ -186,26 +187,26 @@ function Diary({ navigation }) {
             // justifyContent: "center"
           }}
         ></View>
-        <TouchableOpacity
-          style={{
-            position: "absolute",
-            right: 20,
-            bottom: 60,
-          }}
-        >
-          <FAB
-            icon={{ name: "add", color: "white" }}
-            color={"black"}
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            onPress={() => setAddDiary(true)}
-            size={"small"}
-          />
-        </TouchableOpacity>
       </View>
       <AddDiaryModal visible={addDiary} setVisible={setAddDiary} />
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          right: 10,
+          top: 30,
+        }}
+      >
+        <FAB
+          style={{
+            height: 1,
+            backgroundColor: "white",
+          }}
+          color={"black"}
+          onPress={() => setAddDiary(true)}
+        >
+          <AntDesign name="plus" size={24} color={COLOR.white} />
+        </FAB>
+      </TouchableOpacity>
     </View>
   );
 }
