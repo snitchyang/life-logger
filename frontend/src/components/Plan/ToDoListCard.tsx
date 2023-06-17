@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { CheckBox, Text } from "@rneui/themed";
 import { COLOR } from "../../constants";
 import { IPlan } from "../../interface";
-import { PutPlan } from "../../service/PlanService";
+import { DeletePlan, PutPlan } from "../../service/PlanService";
 import dayjs from "dayjs";
 
 interface Props {
@@ -47,6 +47,11 @@ const ToDoListCard = ({ plan, setRefresh, refreshData }: Props) => {
         onPress={async () => {
           setFinished(!finished);
           await PutPlan({ id: plan.id, finished: !plan.finished });
+          await refreshData();
+        }}
+        onLongPress={async () => {
+          setFinished(!finished);
+          await DeletePlan({ id: plan.id });
           await refreshData();
         }}
       />

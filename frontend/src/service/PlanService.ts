@@ -1,4 +1,5 @@
 import {
+  delete_request_header,
   get_request_header,
   post_request_header,
   put_request_header,
@@ -42,6 +43,14 @@ export const PutPlan = async ({
     await put_request_header(
       JSON.stringify({ id: id, content: content, due: due, finished: finished })
     )
+  )
+    .then((res) => res.json())
+    .catch((err) => console.error(err));
+};
+export const DeletePlan = async ({ id }: { id: number }) => {
+  return await fetch(
+    `${root_path}plan/add`,
+    await delete_request_header(JSON.stringify({ id: id }))
   )
     .then((res) => res.json())
     .catch((err) => console.error(err));

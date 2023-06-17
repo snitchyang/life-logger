@@ -1,23 +1,26 @@
 import {
   FlatList,
-  Modal,
   RefreshControl,
   StyleSheet,
-  Text,
   TextInput,
   View,
 } from "react-native";
 import ToDoListCard from "../../components/Plan/ToDoListCard";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Button, Divider, FAB } from "@rneui/themed";
+import { Dialog, Divider, FAB, Text } from "@rneui/themed";
 import { COLOR } from "../../constants";
-import { AntDesign } from "@expo/vector-icons";
+import {
+  AntDesign,
+  FontAwesome5,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { AddPlan, GetPlans } from "../../service/PlanService";
 import { IPlan } from "../../interface";
 import { Loading } from "../../components/Loading/Loading";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import dayjs from "dayjs";
 
 // import Modal from "react-native-modal";
 
@@ -32,6 +35,7 @@ function PlanPage() {
   const [loading, setLoading] = useState(true);
   const refreshData = async () => {
     setPlans(await GetPlans());
+    setRefreshing(false);
   };
 
   //fetch IPlan[] from backend
@@ -51,13 +55,10 @@ function PlanPage() {
   };
   const dateChange = (event, selectedDate) => {
     setIsDateShown(false);
-
     if (event.type !== "set") {
       return;
     }
-
     const currentDate = selectedDate || newEventDate;
-
     setNewEventDate(currentDate);
     setIsDateShown(false);
   };
@@ -91,37 +92,93 @@ function PlanPage() {
       <FAB style={styles.addButton} color={COLOR.primary} onPress={addEvent}>
         <AntDesign name="plus" size={24} color={COLOR.white} />
       </FAB>
-      <Modal
-        visible={isAddingEvent}
-        // onBackButtonPress={() => setIsAddingEvent(false)}
+      <Dialog
+        isVisible={isAddingEvent}
+        onBackdropPress={() => setIsAddingEvent(false)}
       >
-        <View style={styles.containerStyle}>
-          <TextInput
-            style={styles.textInput}
-            placeholder={t("Add an event")}
-            onChangeText={(text) => setNewEventName(text)}
-          />
-          <Button style={{ margin: "5%" }} onPress={() => setIsDateShown(true)}>
-            {t("Select a date")}
-          </Button>
-          {isDateShown && (
-            <DateTimePicker value={new Date()} onChange={dateChange} />
-          )}
-          <Button
-            style={{ margin: "5%" }}
+        {isDateShown && (
+          <DateTimePicker value={new Date()} onChange={dateChange} />
+        )}
+        <TextInput
+          placeholder={"计划内容"}
+          value={newEventName}
+          onChangeText={(text) => setNewEventName(text)}
+        ></TextInput>
+        <Dialog.Button
+          title={
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <FontAwesome5 name="clock" size={16} color="black" />
+              <Text style={{ marginLeft: 5 }}>
+                {dayjs(newEventDate).format("MM-DD ddd")}
+              </Text>
+            </View>
+          }
+          onPress={() => setIsDateShown(true)}
+        ></Dialog.Button>
+        <Dialog.Actions>
+          <Dialog.Button
             onPress={async () => {
               setIsAddingEvent(false);
               //add the event to the backend
               await AddPlan({ content: newEventName, due: newEventDate });
+              setNewEventName("");
+              setNewEventDate(new Date());
+              setRefreshing(true);
+              refreshData();
             }}
           >
-            <Text>{t("Add")}</Text>
-          </Button>
-          <Button onPress={() => setIsAddingEvent(false)}>
-            <Text>{"back"}</Text>
-          </Button>
-        </View>
-      </Modal>
+            <MaterialCommunityIcons
+              name="content-save-check-outline"
+              size={24}
+              color="black"
+            />
+          </Dialog.Button>
+          <Dialog.Button
+            onPress={() => {
+              setIsAddingEvent(false);
+              setNewEventName("");
+              setNewEventDate(new Date());
+            }}
+          >
+            <MaterialCommunityIcons
+              name="content-save-off-outline"
+              size={24}
+              color="black"
+            />
+          </Dialog.Button>
+        </Dialog.Actions>
+        {/*<View style={styles.containerStyle}>*/}
+        {/*  <TextInput*/}
+        {/*    style={styles.textInput}*/}
+        {/*    placeholder={t("Add an event")}*/}
+        {/*    onChangeText={(text) => setNewEventName(text)}*/}
+        {/*  />*/}
+        {/*  <Button style={{ margin: "5%" }} onPress={() => setIsDateShown(true)}>*/}
+        {/*    {t("Select a date")}*/}
+        {/*  </Button>*/}
+        {/*  {isDateShown && (*/}
+        {/*    <DateTimePicker value={new Date()} onChange={dateChange} />*/}
+        {/*  )}*/}
+        {/*  <Button*/}
+        {/*    style={{ margin: "5%" }}*/}
+        {/*    onPress={async () => {*/}
+        {/*      setIsAddingEvent(false);*/}
+        {/*      //add the event to the backend*/}
+        {/*      await AddPlan({ content: newEventName, due: newEventDate });*/}
+        {/*    }}*/}
+        {/*  >*/}
+        {/*    <Text>{t("Add")}</Text>*/}
+        {/*  </Button>*/}
+        {/*  <Button onPress={() => setIsAddingEvent(false)}>*/}
+        {/*    <Text>{"back"}</Text>*/}
+        {/*  </Button>*/}
+        {/*</View>*/}
+      </Dialog>
     </View>
   );
 }

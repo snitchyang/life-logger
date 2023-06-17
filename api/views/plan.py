@@ -45,3 +45,13 @@ class PlanAdd(APIView):
             plan.finished = finished
         plan.save()
         return Response({'message': 'success', 'success': True}, status=200)
+
+    def delete(self, request: Request):
+        data = request.data
+        id = data.get('id')
+        plans = Plan.objects.filter(id=id)
+        if len(plans) == 0:
+            return Response({'message': 'not found', 'success': False}, status=200)
+        plan = plans.first()
+        plan.delete()
+        return Response({'message': 'success', 'success': True}, status=200)
