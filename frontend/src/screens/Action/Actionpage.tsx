@@ -67,7 +67,7 @@ function ActionPage() {
               AsyncStorage.removeItem("begin_time");
               setStartTime(dayjs());
               clearInterval(timer);
-              setDate(dayjs(0));
+              setDate(dayjs(0).hour(0));
               setVisible(true);
             }
             setStop(!stop);
