@@ -14,30 +14,30 @@ import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { IDiary, IImage, IPResponse, ITag } from "../../../interface";
-import { AddImageList, AddPost } from "../../../service/PostService";
 import { OpenImageList } from "../../Image/OpenImageList";
 import { LocationPicker } from "../../Location/LocationPicker";
-import { use } from "i18next";
 import {
   add_diary,
   add_diary_image,
   get_tags,
 } from "../../../service/DiaryService";
 import { emtpy_diary } from "../../../constants/info";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
-import { ButtonStyle, LayoutStyle } from "../../../css/GlobalStyleSheet";
+import { LayoutStyle } from "../../../css/GlobalStyleSheet";
 import { TagButton } from "./TagButton";
+import dayjs from "dayjs";
 
 interface Props {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
+  start_time?: dayjs.Dayjs;
+  end_time?: dayjs.Dayjs;
 }
 
 const amap_host = "https://restapi.amap.com/v3";
 const amap_key = "3925351c690b4a56bbbfc5adac5f39e0";
 const width = Dimensions.get("window").width;
-export const AddDiaryModal = ({ visible, setVisible }: Props) => {
+export const AddDiaryModal = ({ visible, setVisible, start_time }: Props) => {
   const [cameraPermission, setCameraPermission] = useState<boolean>(false);
   const [galleryPermission, setGalleryPermission] = useState<boolean>(false);
   const [doneDisable, setDoneDisable] = useState(true);
@@ -58,6 +58,13 @@ export const AddDiaryModal = ({ visible, setVisible }: Props) => {
     get_tags().then((res) => {
       setAllTags(res);
     });
+    if (start_time) {
+      setDiary({
+        ...diary,
+        begin: start_time.toDate(),
+        end: dayjs().toDate(),
+      });
+    }
   }, []);
 
   const permissionFunc = async () => {

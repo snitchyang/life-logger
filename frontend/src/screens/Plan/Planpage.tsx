@@ -129,7 +129,7 @@ function PlanPage() {
               setNewEventName("");
               setNewEventDate(new Date());
               setRefreshing(true);
-              refreshData();
+              await refreshData();
             }}
           >
             <MaterialCommunityIcons
