@@ -187,3 +187,4 @@ CUBES_REDIS_TIMEOUT = 60 * 30
 NEVER_REDIS_TIMEOUT = 365 * 24 * 60 * 60
 # SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 # SESSION_CACHE_ALIAS = "session"
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 10

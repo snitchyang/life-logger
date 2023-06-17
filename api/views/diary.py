@@ -52,7 +52,7 @@ class DiaryAdd(APIView):
         data = request.data
         title = data.get('title')
         content = data.get('content')
-        tag_id = data.get('tag')
+        tag_id = data.get('tags')
         begin = data.get('begin')
         end = data.get('end')
         image = data.get('imgs')
