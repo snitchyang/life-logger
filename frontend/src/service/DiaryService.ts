@@ -36,6 +36,7 @@ export const change_diary = async (
 export const add_diary = async (
   diary: IDiary
 ): Promise<{ message: string }> => {
+  console.log(diary);
   const url = `${root_path}diary/add`;
   let body = JSON.stringify({
     imgs: diary.images.map((img) => img.path),

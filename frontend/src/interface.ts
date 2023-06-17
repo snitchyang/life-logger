@@ -45,6 +45,7 @@ export interface IDiary {
   content: string;
   images: IImage[];
   tag: ITag[];
+  tags: number[];
 }
 
 export interface IMessage {

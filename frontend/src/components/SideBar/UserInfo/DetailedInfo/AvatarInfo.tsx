@@ -8,7 +8,7 @@ export const AvatarInfo = ({ avaUri }) => {
   return (
     <>
       <View style={userInfoStyleSheet.boxTitle}>
-        <Text style={userInfoStyleSheet.boxTitleText}>{"Avatar:"}</Text>
+        <Text style={userInfoStyleSheet.boxTitleText}>{"头像:"}</Text>
       </View>
       <View style={userInfoStyleSheet.boxInfo}>
         <Avatar

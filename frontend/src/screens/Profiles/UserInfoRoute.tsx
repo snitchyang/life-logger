@@ -1,4 +1,4 @@
-import { SafeAreaView, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { AvatarInfo } from "../../components/SideBar/UserInfo/DetailedInfo/AvatarInfo";
 import { NameInfo } from "../../components/SideBar/UserInfo/DetailedInfo/NameInfo";
 import { GenderInfo } from "../../components/SideBar/UserInfo/DetailedInfo/GenderInfo";
@@ -9,6 +9,7 @@ import { BioInfo } from "../../components/SideBar/UserInfo/DetailedInfo/BioInfo"
 import { IUser } from "../../interface";
 import { ChangeTextInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeTextInfo";
 import { ChangeImageInfo } from "../../components/SideBar/UserInfo/InfoChange/ChangeImageInfo";
+import { FontStyle } from "../../css/GlobalStyleSheet";
 
 export const infoEnum = {
   changeProfile: 0,
@@ -27,6 +28,7 @@ export const UserInfo = ({ route, navigation }) => {
 
   return (
     <View style={{ flex: 1, marginTop: 25 }}>
+      <View style={{ marginTop: 30 }}></View>
       <ChangeTextInfo
         usr={usr}
         setUser={setUser}
@@ -43,7 +45,6 @@ export const UserInfo = ({ route, navigation }) => {
       <TouchableOpacity
         style={userInfoStyleSheet.boxContainer}
         onPress={() => {
-          console.log("haha");
           setModalVisible(true);
         }}
       >

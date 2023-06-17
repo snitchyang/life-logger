@@ -15,7 +15,8 @@ export const userInfoStyleSheet = StyleSheet.create({
     flex: 8,
   },
   boxTitleText: {
-    paddingLeft: 15,
+    paddingLeft: 20,
+    fontSize: 15,
   },
   boxInfo: {
     flex: 3,
@@ -27,7 +28,7 @@ export const userInfoStyleSheet = StyleSheet.create({
     marginLeft: 16,
   },
   boxInfoText: {
-    fontSize: 13,
+    fontSize: 15,
     paddingTop: 10,
     paddingLeft: 16,
   },

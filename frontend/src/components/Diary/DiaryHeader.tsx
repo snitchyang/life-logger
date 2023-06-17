@@ -17,6 +17,7 @@ export const DiaryHeader = ({ tags, date }: IDiaryHeader) => {
           flex: 5,
           justifyContent: "flex-start",
           flexDirection: "row",
+          overflow: "scroll",
         }}
       >
         {tags ? (

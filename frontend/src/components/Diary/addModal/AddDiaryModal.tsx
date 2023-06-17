@@ -26,6 +26,8 @@ import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { LayoutStyle } from "../../../css/GlobalStyleSheet";
 import { TagButton } from "./TagButton";
 import dayjs from "dayjs";
+import { Simulate } from "react-dom/test-utils";
+import emptied = Simulate.emptied;
 
 interface Props {
   visible: boolean;
@@ -65,6 +67,7 @@ export const AddDiaryModal = ({ visible, setVisible, start_time }: Props) => {
         end: dayjs().toDate(),
       });
     }
+    tagSet.clear();
   }, []);
 
   const permissionFunc = async () => {
@@ -148,11 +151,13 @@ export const AddDiaryModal = ({ visible, setVisible, start_time }: Props) => {
           style={{ padding: 2 }}
           onPress={async () => {
             setVisible(false);
-            let tags: ITag[] = [];
-            tagSet.forEach((tag) => tags.push(tag));
-            setDiary({ ...diary, tag: tags });
-            await add_diary(diary).then((res) => {
-              console.log(res);
+            let d = diary;
+            let tags: number[] = [];
+            tagSet.forEach((tag) => tags.push(tag.id));
+            d.tags = tags;
+            await add_diary(d).then(() => {
+              setDiary(emtpy_diary);
+              tagSet.clear();
             });
           }}
         >

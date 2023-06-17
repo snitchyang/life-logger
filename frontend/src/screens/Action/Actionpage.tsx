@@ -23,7 +23,7 @@ function ActionPage() {
     (async () => {
       let t = await AsyncStorage.getItem("begin_time");
       console.log(t);
-      if (t.length) {
+      if (t) {
         setStartTime(dayjs(t));
         setStop(false);
         setTimer(
@@ -66,21 +66,19 @@ function ActionPage() {
               AsyncStorage.removeItem("begin_time");
               setStartTime(dayjs());
               clearInterval(timer);
+              setDate(dayjs(0));
               setVisible(true);
             }
             setStop(!stop);
           }}
         >
           {!stop ? (
-            <FontAwesome5 name="stop" size={24} color="black" />
+            <FontAwesome5 name="stop" size={50} color="black" />
           ) : (
-            <AntDesign name="caretright" size={24} color="black" />
+            <AntDesign name="caretright" size={50} color="black" />
           )}
         </Pressable>
         {/* camera icon */}
-        <View style={styles.icon}>
-          <Ionicons name="ios-camera" size={24} color="white" />
-        </View>
       </View>
     </View>
   );
@@ -109,12 +107,14 @@ const styles = StyleSheet.create({
     color: "#000000",
   },
   footer: {
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-between",
     marginTop: "auto",
     paddingVertical: 10,
     paddingHorizontal: 30,
     height: 75,
+    alignItems: "center",
+    alignContent: "center",
   },
   icon: {
     backgroundColor: "#00000050",

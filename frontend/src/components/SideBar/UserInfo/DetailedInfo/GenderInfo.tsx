@@ -15,7 +15,7 @@ export const GenderInfo = ({ gender, usr, setUser }: Props) => {
   return (
     <>
       <View style={userInfoStyleSheet.boxTitle}>
-        <Text style={userInfoStyleSheet.boxTitleText}>{"Gender:"}</Text>
+        <Text style={userInfoStyleSheet.boxTitleText}>{"性别:"}</Text>
       </View>
       <ChangeGenderInfo gender={gender} usr={usr} setUser={setUser} />
       <View style={userInfoStyleSheet.boxIcon}>

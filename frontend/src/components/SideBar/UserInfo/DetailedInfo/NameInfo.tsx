@@ -7,7 +7,7 @@ export const NameInfo = ({ name }) => {
   return (
     <>
       <View style={userInfoStyleSheet.boxTitle}>
-        <Text style={userInfoStyleSheet.boxTitleText}>{"Name:"}</Text>
+        <Text style={userInfoStyleSheet.boxTitleText}>{"用户名:"}</Text>
       </View>
       <View style={userInfoStyleSheet.boxInfo}>
         <Text style={userInfoStyleSheet.boxInfoText}>{name}</Text>

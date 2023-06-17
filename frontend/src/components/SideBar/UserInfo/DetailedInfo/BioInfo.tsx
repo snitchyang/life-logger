@@ -11,7 +11,7 @@ export const BioInfo = ({ bio }) => {
   return (
     <>
       <View style={userInfoStyleSheet.boxTitle}>
-        <Text style={userInfoStyleSheet.boxTitleText}>{"Bio:"}</Text>
+        <Text style={userInfoStyleSheet.boxTitleText}>{"简介:"}</Text>
       </View>
       <View style={userInfoStyleSheet.boxInfo}>
         <Text style={userInfoStyleSheet.boxInfoText}>{bio}</Text>
