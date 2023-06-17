@@ -78,6 +78,16 @@ class DiaryAdd(APIView):
         diary.tag.bulk_create(Tag.objects.filter(pk__in=tag_id))
         diary.save()
         return Response({'message': 'success'}, status=200)
+
+    def delete(self, request):
+        data = request.data
+        id = data.get('id')
+        diaries = Diary.objects.filter(pk=id)
+        if diaries.count() == 0:
+            return Response({'message': 'not found', 'success': False}, status=200)
+        diary = diaries.first()
+        diary.delete()
+        return Response({'message': 'success', 'success': True}, status=200)
 # class DiaryDetail(generics.RetrieveUpdateDestroyAPIView):
 #     queryset = Diary.objects.all()
 #     serializer_class = DiarySerializer

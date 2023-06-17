@@ -2,12 +2,12 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import { AntDesign, FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { AntDesign, FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AddDiaryModal } from "../../components/Diary/addModal/AddDiaryModal";
 
 function ActionPage() {
-  const [date, setDate] = useState(dayjs(0));
+  const [date, setDate] = useState(dayjs(0).hour(0));
   const [stop, setStop] = useState<boolean>(true);
   const [startTime, setStartTime] = useState<dayjs.Dayjs>(dayjs());
   const [timer, setTimer] = useState<NodeJS.Timer>();
@@ -28,7 +28,7 @@ function ActionPage() {
         setStop(false);
         setTimer(
           setInterval(() => {
-            setDate(dayjs(dayjs().diff(dayjs(t))));
+            setDate(dayjs(dayjs().diff(dayjs(t))).hour(0));
           }, 1000)
         );
       }
@@ -37,7 +37,7 @@ function ActionPage() {
   return (
     <View>
       <View style={styles.header}>
-        <Text style={styles.time}>{date.format("hh:mm:ss")}</Text>
+        <Text style={styles.time}>{date.format("HH:mm:ss")}</Text>
       </View>
       <AddDiaryModal
         visible={visible}
@@ -99,29 +99,29 @@ const styles = StyleSheet.create({
     color: "#8a8a8a",
     fontSize: 20,
     fontWeight: "500",
-    marginTop: 20,
   },
   time: {
     fontSize: 75,
     fontWeight: "bold",
     color: "#000000",
+    marginTop: "30%",
   },
   footer: {
     flexDirection: "column",
     justifyContent: "space-between",
-    marginTop: "auto",
+    marginTop: "10%",
     paddingVertical: 10,
     paddingHorizontal: 30,
-    height: 75,
+    // height: 75,
     alignItems: "center",
     alignContent: "center",
   },
   icon: {
     backgroundColor: "#00000050",
-    width: 50,
+    // width: 50,
     aspectRatio: 1,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 50,
+    // borderRadius: 50,
   },
 });

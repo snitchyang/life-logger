@@ -55,7 +55,7 @@ class Diary(models.Model):
 
     class Meta:
         verbose_name_plural = '日记'
-        ordering = ['end']
+        ordering = ['begin']
 
 
 class Post(models.Model):

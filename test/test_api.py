@@ -11,7 +11,7 @@ class ApiTaskSet(TaskSet):
 class ApiUser(HttpUser):
     def on_start(self):
         self.client.headers = {
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2NTAwMzE2LCJpYXQiOjE2ODU2MzYzMTYsImp0aSI6ImZkOGZiODYzNGRiZTQwNTBhMjk1N2I5ZGNhZjQ0MWQ3IiwidXNlcl9pZCI6MX0.Ljzgku88Dmr3CfgPxy2_N8sSw4zi6RqDky4w6hZ7qfY'
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg3ODU4OTY0LCJpYXQiOjE2ODY5OTQ5NjQsImp0aSI6IjkzNTg0MWFhMjVhYTRhZWJiZjhjNTBhMGU2OWUzYjM3IiwidXNlcl9pZCI6MX0.jZKCypshF3HbrLBidTv2e3O9TYLYqlb-qGWsliXylJU'
         }
 
     tasks = [ApiTaskSet]

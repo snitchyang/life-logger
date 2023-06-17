@@ -50,7 +50,7 @@ class PlanAdd(APIView):
         data = request.data
         id = data.get('id')
         plans = Plan.objects.filter(id=id)
-        if len(plans) == 0:
+        if plans.count() == 0:
             return Response({'message': 'not found', 'success': False}, status=200)
         plan = plans.first()
         plan.delete()
