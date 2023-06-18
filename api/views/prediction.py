@@ -8,9 +8,7 @@ import random
 import numpy as np
 import pandas as pd
 # from Utils import modelsave
-from collections import defaultdict
-from operator import itemgetter
-import jieba
+
 from operator import itemgetter
 from api.serializers import DiarySerializer
 
@@ -27,7 +25,7 @@ def readweight(user):
     x = user
     result = [i for i in range(len(Map)) if Map[i] == x]
     # 截取出所需要的一行数据
-    row = pd.read_table("./templates/DistanceWeightMap.xlsx")[result]
+    row = pd.read_table("../templates/DistanceWeightMap.xlsx")[result]
     return row
 
 
@@ -84,8 +82,5 @@ def tagbasedrecommend(user):
     for i in range(w_data):
         resultlist = w_data[i]*w[[i for i in range(len(Map)) if Map[i] == User.objects.filter(user=user).select_related('id')]]
     return sorted(resultlist.items(), itemgetter(1), True)[:10]
-
-
-
 
 

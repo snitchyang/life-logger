@@ -10,7 +10,6 @@ interface Comment {
 }
 
 export const Comment = ({ comment }: Comment) => {
-  4;
   return (
     <View style={{ marginTop: 3 }}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
