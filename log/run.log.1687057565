@@ -1,0 +1,867 @@
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 12:48:30 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 12:49:57 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:04:52 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8000 fd 3
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 145840 bytes (142 KB) for 1 cores
+*** Operational MODE: single process ***
+*** no app loaded. going in full dynamic mode ***
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!
+no request plugin is loaded, you will not be able to manage requests.
+you may need to install the package for your language of choice, or simply load it with --plugin.
+!!!!!!!!!!! END OF WARNING !!!!!!!!!!
+spawned uWSGI master process (pid: 934512)
+spawned uWSGI worker 1 (pid: 934514, cores: 1)
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:07:01 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:07:54 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:09:07 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:10:33 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8000 fd 3
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 145840 bytes (142 KB) for 1 cores
+*** Operational MODE: single process ***
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!
+no request plugin is loaded, you will not be able to manage requests.
+you may need to install the package for your language of choice, or simply load it with --plugin.
+!!!!!!!!!!! END OF WARNING !!!!!!!!!!
+spawned uWSGI master process (pid: 936746)
+spawned uWSGI worker 1 (pid: 936748, cores: 1)
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:11:20 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi8000.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:11:33 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:12:11 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:12:29 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (0.0.0.0:8000).
+bind(): Address already in use [core/socket.c line 769]
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:12:50 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 0.0.0.0:8000 fd 3
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 145840 bytes (142 KB) for 1 cores
+*** Operational MODE: single process ***
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!
+no request plugin is loaded, you will not be able to manage requests.
+you may need to install the package for your language of choice, or simply load it with --plugin.
+!!!!!!!!!!! END OF WARNING !!!!!!!!!!
+spawned uWSGI master process (pid: 937655)
+spawned uWSGI worker 1 (pid: 937657, cores: 1)
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:13:06 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+invalid request block size: 21573 (max 4096)...skip
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:24:15 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:24:47 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:25:25 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:26:59 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:33:20 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:38:41 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8000 fd 3
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 145840 bytes (142 KB) for 1 cores
+*** Operational MODE: single process ***
+*** no app loaded. going in full dynamic mode ***
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!
+no request plugin is loaded, you will not be able to manage requests.
+you may need to install the package for your language of choice, or simply load it with --plugin.
+!!!!!!!!!!! END OF WARNING !!!!!!!!!!
+spawned uWSGI master process (pid: 949164)
+spawned uWSGI worker 1 (pid: 949166, cores: 1)
+-- unavailable modifier requested: 0 --
+-- unavailable modifier requested: 0 --
+-- unavailable modifier requested: 0 --
+-- unavailable modifier requested: 0 --
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:44:37 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:48:32 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 13:48:53 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (0.0.0.0:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18-debian (64bit) on [Tue May 16 14:22:42 2023] ***
+compiled with version: 10.0.1 20200405 (experimental) [master revision 0be9efad938:fcb98e4978a:705510a708d3642c9c962beb663c476167e4e8a4] on 11 April 2020 11:15:55
+os: Linux-5.4.0-125-generic #141-Ubuntu SMP Wed Aug 10 13:42:03 UTC 2022
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7541
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+The -s/--socket option is missing and stdin is not a socket.
+*** Starting uWSGI 2.0.20-debian (64bit) on [Tue May 23 10:47:44 2023] ***
+compiled with version: 11.2.0 on 21 March 2022 11:00:44
+os: Linux-5.4.0-148-generic #165-Ubuntu SMP Tue Apr 18 08:53:12 UTC 2023
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7458
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (0.0.0.0:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.20-debian (64bit) on [Tue May 23 10:48:13 2023] ***
+compiled with version: 11.2.0 on 21 March 2022 11:00:44
+os: Linux-5.4.0-148-generic #165-Ubuntu SMP Tue Apr 18 08:53:12 UTC 2023
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7458
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (0.0.0.0:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.20-debian (64bit) on [Tue May 23 10:49:48 2023] ***
+compiled with version: 11.2.0 on 21 March 2022 11:00:44
+os: Linux-5.4.0-148-generic #165-Ubuntu SMP Tue Apr 18 08:53:12 UTC 2023
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7458
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (0.0.0.0:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.20-debian (64bit) on [Tue May 23 10:52:48 2023] ***
+compiled with version: 11.2.0 on 21 March 2022 11:00:44
+os: Linux-5.4.0-148-generic #165-Ubuntu SMP Tue Apr 18 08:53:12 UTC 2023
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7458
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (0.0.0.0:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.20-debian (64bit) on [Tue May 23 13:07:56 2023] ***
+compiled with version: 11.2.0 on 21 March 2022 11:00:44
+os: Linux-5.4.0-148-generic #165-Ubuntu SMP Tue Apr 18 08:53:12 UTC 2023
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7458
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 0.0.0.0:8000 fd 3
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 656280 bytes (640 KB) for 8 cores
+*** Operational MODE: preforking ***
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!
+no request plugin is loaded, you will not be able to manage requests.
+you may need to install the package for your language of choice, or simply load it with --plugin.
+!!!!!!!!!!! END OF WARNING !!!!!!!!!!
+spawned uWSGI master process (pid: 1477292)
+spawned uWSGI worker 1 (pid: 1477298, cores: 1)
+spawned uWSGI worker 2 (pid: 1477299, cores: 1)
+spawned uWSGI worker 3 (pid: 1477300, cores: 1)
+spawned uWSGI worker 4 (pid: 1477301, cores: 1)
+spawned uWSGI worker 5 (pid: 1477302, cores: 1)
+spawned uWSGI worker 6 (pid: 1477303, cores: 1)
+spawned uWSGI worker 7 (pid: 1477304, cores: 1)
+spawned uWSGI worker 8 (pid: 1477305, cores: 1)
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+*** Starting uWSGI 2.0.20-debian (64bit) on [Tue May 23 13:10:27 2023] ***
+compiled with version: 11.2.0 on 21 March 2022 11:00:44
+os: Linux-5.4.0-148-generic #165-Ubuntu SMP Tue Apr 18 08:53:12 UTC 2023
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7458
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+invalid request block size: 21573 (max 4096)...skip
+*** Starting uWSGI 2.0.20-debian (64bit) on [Tue May 23 13:11:13 2023] ***
+compiled with version: 11.2.0 on 21 March 2022 11:00:44
+os: Linux-5.4.0-148-generic #165-Ubuntu SMP Tue Apr 18 08:53:12 UTC 2023
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7458
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (:8000).
+bind(): Address already in use [core/socket.c line 769]
+invalid request block size: 21573 (max 4096)...skip
+*** Starting uWSGI 2.0.20-debian (64bit) on [Tue May 23 13:12:22 2023] ***
+compiled with version: 11.2.0 on 21 March 2022 11:00:44
+os: Linux-5.4.0-148-generic #165-Ubuntu SMP Tue Apr 18 08:53:12 UTC 2023
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7458
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (:8000).
+bind(): Address already in use [core/socket.c line 769]
+invalid request block size: 21573 (max 4096)...skip
+*** Starting uWSGI 2.0.20-debian (64bit) on [Tue May 23 13:13:29 2023] ***
+compiled with version: 11.2.0 on 21 March 2022 11:00:44
+os: Linux-5.4.0-148-generic #165-Ubuntu SMP Tue Apr 18 08:53:12 UTC 2023
+nodename: VM-4-11-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to /home/ubuntu/life_logger/uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7458
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (:8000).
+bind(): Address already in use [core/socket.c line 769]
+invalid request block size: 21573 (max 4096)...skip
+invalid request block size: 21573 (max 4096)...skip
+Tue May 23 13:20:06 2023 - uWSGI worker 5 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Tue May 23 13:20:06 2023 - uWSGI worker 8 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Tue May 23 13:20:06 2023 - uWSGI worker 7 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Tue May 23 13:20:06 2023 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Tue May 23 13:20:06 2023 - uWSGI worker 6 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Tue May 23 13:20:06 2023 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+*** Starting uWSGI 2.0.20-debian (64bit) on [Sun Jun 18 09:51:00 2023] ***
+compiled with version: 11.2.0 on 21 March 2022 11:00:44
+os: Linux-5.15.0-72-generic #79-Ubuntu SMP Wed Apr 19 08:22:18 UTC 2023
+nodename: JS
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7412
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8080 fd 3
+Python version: 3.10.6 (main, Mar 10 2023, 10:55:28) [GCC 11.3.0]
+PEP 405 virtualenv detected: /home/ubuntu/life_logger/venv
+Set PythonHome to /home/ubuntu/life_logger/venv
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x55ee0e928830
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+setting request body buffering size to 65536 bytes
+mapped 399790 bytes (390 KB) for 1 cores
+*** Operational MODE: single process ***
+ModuleNotFoundError: No module named 'life_logger'
+unable to load app 0 (mountpoint='') (callable not found or import error)
+Traceback (most recent call last):
+  File "/home/ubuntu/life_logger/lifelogger/wsgi.py", line 12, in <module>
+    from django.core.wsgi import get_wsgi_application
+ModuleNotFoundError: No module named 'django'
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 3115763)
+spawned uWSGI worker 1 (pid: 3115764, cores: 1)
+--- no python application found, check your startup logs for errors ---
+[pid: 3115764|app: -1|req: -1/1] 127.0.0.1 () {24 vars in 260 bytes} [Sun Jun 18 09:51:49 2023] GET /api/tags => generated 21 bytes in 0 msecs (HTTP/1.1 500) 2 headers in 83 bytes (0 switches on core 0)
+SIGINT/SIGTERM received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+*** Starting uWSGI 2.0.20-debian (64bit) on [Sun Jun 18 09:51:54 2023] ***
+compiled with version: 11.2.0 on 21 March 2022 11:00:44
+os: Linux-5.15.0-72-generic #79-Ubuntu SMP Wed Apr 19 08:22:18 UTC 2023
+nodename: JS
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7412
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8080 fd 3
+Python version: 3.10.6 (main, Mar 10 2023, 10:55:28) [GCC 11.3.0]
+PEP 405 virtualenv detected: /home/ubuntu/life_logger/venv
+Set PythonHome to /home/ubuntu/life_logger/venv
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x55ed230f1830
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+setting request body buffering size to 65536 bytes
+mapped 399790 bytes (390 KB) for 1 cores
+*** Operational MODE: single process ***
+ModuleNotFoundError: No module named 'life_logger'
+unable to load app 0 (mountpoint='') (callable not found or import error)
+Traceback (most recent call last):
+  File "/home/ubuntu/life_logger/lifelogger/wsgi.py", line 12, in <module>
+    from django.core.wsgi import get_wsgi_application
+ModuleNotFoundError: No module named 'django'
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 3116037)
+spawned uWSGI worker 1 (pid: 3116038, cores: 1)
+SIGINT/SIGTERM received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+*** Starting uWSGI 2.0.20-debian (64bit) on [Sun Jun 18 11:06:04 2023] ***
+compiled with version: 11.2.0 on 21 March 2022 11:00:44
+os: Linux-5.15.0-72-generic #79-Ubuntu SMP Wed Apr 19 08:22:18 UTC 2023
+nodename: JS
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/ubuntu/life_logger
+writing pidfile to uwsgi.pid
+detected binary path: /usr/bin/uwsgi-core
+chdir() to /home/ubuntu/life_logger
+your processes number limit is 7412
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8001 fd 6
+Python version: 3.10.6 (main, Mar 10 2023, 10:55:28) [GCC 11.3.0]
+Python main interpreter initialized at 0x5625d32906b0
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+setting request body buffering size to 65536 bytes
+mapped 999475 bytes (976 KB) for 4 cores
+*** Operational MODE: preforking ***
+WSGI without exception
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x5625d32906b0 pid: 3139711 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 3139711)
+spawned uWSGI worker 1 (pid: 3139730, cores: 1)
+spawned uWSGI worker 2 (pid: 3139731, cores: 1)
+spawned uWSGI worker 3 (pid: 3139732, cores: 1)
+spawned uWSGI worker 4 (pid: 3139733, cores: 1)
+Sun Jun 18 11:06:05 2023 - logsize: 43475, triggering rotation to /home/ubuntu/life_logger/log/run.log.1687057565...

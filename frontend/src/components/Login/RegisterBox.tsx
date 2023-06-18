@@ -141,27 +141,27 @@ export const RegisterBox = ({ navigation }) => {
             onChangeText={(text) => setconfirmPassword(text)}
             labelStyle={{ backgroundColor: "0xfff" }}
           />
-          <Input
-            inputContainerStyle={{ marginLeft: 5, marginRight: 10, height: 30 }}
-            inputStyle={{ marginLeft: 15, width: 15, height: 15 }}
-            rightIconContainerStyle={{
-              margin: 0,
-              width: 40,
-            }}
-            rightIcon={
-              <FontAwesome
-                name="venus-mars"
-                color="black"
-                size={15}
-                margin={0}
-                align="center"
-              />
-            }
-            placeholder="性别"
-            defaultValue={gender}
-            onChangeText={(text) => setGender(text)}
-            labelStyle={{ backgroundColor: "0xfff" }}
-          />
+          {/*<Input*/}
+          {/*  inputContainerStyle={{ marginLeft: 5, marginRight: 10, height: 30 }}*/}
+          {/*  inputStyle={{ marginLeft: 15, width: 15, height: 15 }}*/}
+          {/*  rightIconContainerStyle={{*/}
+          {/*    margin: 0,*/}
+          {/*    width: 40,*/}
+          {/*  }}*/}
+          {/*  rightIcon={*/}
+          {/*    <FontAwesome*/}
+          {/*      name="venus-mars"*/}
+          {/*      color="black"*/}
+          {/*      size={15}*/}
+          {/*      margin={0}*/}
+          {/*      align="center"*/}
+          {/*    />*/}
+          {/*  }*/}
+          {/*  placeholder="性别"*/}
+          {/*  defaultValue={gender}*/}
+          {/*  onChangeText={(text) => setGender(text)}*/}
+          {/*  labelStyle={{ backgroundColor: "0xfff" }}*/}
+          {/*/>*/}
           <Input
             inputContainerStyle={{ marginLeft: 5, marginRight: 10, height: 30 }}
             inputStyle={{ marginLeft: 15, width: 15, height: 15 }}

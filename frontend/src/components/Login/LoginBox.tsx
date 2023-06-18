@@ -13,7 +13,7 @@ const RegisterForm = ({ navigation }) => {
   };
   useEffect(() => {
     const autologin = async () => {
-      if (getToken()) {
+      if (await getToken()) {
         setFinish(true);
         navigation.navigate("Home");
       }

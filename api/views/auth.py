@@ -36,12 +36,13 @@ class UserRegistrationView(APIView):
         username = request.data.get('username')
         password = make_password(request.data.get('password'))
         email = request.data.get('email')
-        gender = request.data.get('gender')
+        # gender = request.data.get('gender')
         # avatar = request.data.get('avatar')
         # school = request.data.get('school')
         phone_number = request.data.get('phone_number')
-        if not all([username, password, email, gender, phone_number]):
+        if not all([username, password, email, phone_number]):
             return Response({'message': 'lack params.', 'success': False})
+        print('yes')
         if User.objects.filter(username=username):
             return Response({'message': 'invalid username.', 'success': False})
         if User.objects.filter(email=email):
@@ -49,7 +50,7 @@ class UserRegistrationView(APIView):
         if User.objects.filter(phone_number=phone_number):
             return Response({'message': 'invalid email.', 'success': False})
         User.objects.create_user(username=username, password=password
-                                 , email=email, gender=gender, phone_number=phone_number
+                                 , email=email, phone_number=phone_number
                                  )
         return Response({'message': 'User registered successfully.', 'success': True})
 

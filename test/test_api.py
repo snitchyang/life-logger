@@ -4,8 +4,7 @@ from locust import *
 class ApiTaskSet(TaskSet):
     @task
     def search_by_key(self):
-        for i in range(10):
-            self.client.get('/api/tags')
+        self.client.get('/api/tags')
 
 
 class ApiUser(HttpUser):
